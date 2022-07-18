@@ -226,7 +226,7 @@ async function startRika() {
         return status
     }
 	
-    Rika.public = (`${modesp}`)
+    Rika.public = global.modepub
 
     Rika.serializeM = (m) => smsg(Rika, m, store)
 

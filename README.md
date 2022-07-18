@@ -3,9 +3,6 @@
 # RIKA
 Script WhatsApp Bot Multi Device
 
-## NOTE
-This Script is for everyone, not for Sale. Jika dijual neraka menunggumu brother !
-
 <p align="center">
 	<img src="https://telegra.ph/file/09cc0981ccf07754d0af6.jpg" width="35%" style="margin-left: auto;margin-right: auto;display: block;">
 </p>
@@ -13,14 +10,37 @@ This Script is for everyone, not for Sale. Jika dijual neraka menunggumu brother
 
 This is Script of WhatsApp multi device, working with [`@adiwajshing/baileys`](https://github.com/adiwajshing/baileys)
 
-## My Project
-* New script to replace this script [`look here`](https://github.com/zhwzein/Killua-Zoldyck) (`Support Legacy or Baileys`)
-* WhatsApp Bot normal [`RIKASHIKI/RIKA`](https://github.com/RIKASHIKI/RIKA)
-* WhatsApp Bot Multi Device [`RIKASHIKI/RIKA`](https://github.com/RIKASHIKI/RIKA)
-* WhatsApp Bot Using Library whatsapp-web.js [`hisoka-waweb.js`](https://github.com/Hisoka-Morrou/hisoka-waweb.js/)
+## SETTING
+````ts
+// sistem
+global.modepub = true //public mode or self
+global.lang = ind //change your language
 
+// profile
+global.owner = ['6287820032793','6288744328279'] // your number
+global.premium = ['6287820032793','6288744328279'] //premium member
+global.packname = 'RKS MD' //pacname sticker & name bot
+global.author = '088744328279' //author sticker
+global.ownername = 'RIKASHIKI' //your name
+global.fouter = 'RIKASHIKI | RKS-MD ©2022' //credits
+global.ownernumber = '6287820032793' //your master number
 
-## UNTUK PENGGUNA WINDOWS/RDP
+// media
+global.thumbnaili = './media/RKS.jpg' //thumbnail
+global.video = './media/VIDEOWIBU.mp4' //video to link? switch to {url: 'yourlinkvideo' }
+global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube
+global.github = 'https://github.com/RIKASHIKI/RIKA' //github
+global.email = 'hariamd210@gmail.com' //email
+global.loc = 'JAPAN' //location
+global.instagram = 'https://instagram.com/@rikashiki_san' //ig
+global.grup = 'https://chat.whatsapp.com/E4YXacQLqPh3isulcGqlSA' //grup whatsapp
+global.sessionName = 'session' //session
+global.prefa = ['','!','.','🐦','🐤','🗿'] 
+global.sp = 'Ξ' //mark
+````
+Edit in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
+
+## FOR USER WINDOWS/RDP
 
 * Unduh & Instal Git [`Klik Disini`](https://git-scm.com/downloads)
 * Unduh & Instal NodeJS [`Klik Disini`](https://nodejs.org/en/download)
@@ -92,5 +112,5 @@ Get Apikey zenz on [`zenz`](https://zenzapi.xyz/pricing)
 License: [MIT](https://en.wikipedia.org/wiki/MIT_License)
 
 Support Me
-* [`Paypal`](https://www.paypal.me/Cakhaho)
-* [`Saweria`](https://saweria.co/DikaArdnt)
+* dana  087820032793
+* pulsa 087820032793 XL

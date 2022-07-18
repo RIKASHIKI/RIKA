@@ -5,7 +5,7 @@ exports.success = () => {
     return`✅ done ok desu~`
 }
 exports.wait = () => {
-    return`⏳ wait...`
+    return`⏳ tunggu...`
 }
 exports.adminOnly = () => {
     return`hanya admin`
@@ -37,17 +37,22 @@ exports.admiGc = () => {
 exports.ownGc = () =>{
     return`owner di izinkan mengirimkan link grup`
 }
-exprots.maLin = () => {
+exports.maLin = () => {
     return`Masukkan Link Group!`
+}
+exports.choicett = () => {
+    return`pilih media yang ingin di unduh`
+}
+exports.nostic = (prefix, menu) => {
+    return`Kirim/reply image/sticker dengan caption ${prefix + menu} text1|text2`
 }
 
 
 
 
-
-
 exports.men = (pushname, salam, packname) => {
-    return`hallo ${pushname} 👋 selamat ${salam} , 
+    return`halo ${pushname} 
+    👋 selamat ${salam} , 
     saya ${packname}`
 }
 exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
@@ -55,12 +60,12 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    selamat ${salam}
    ╭──── 「 *INFO* 」
    │
-   │${sp} PREFIX  : ${prefix}
-   │${sp} USER    : ${pushname}
-   │${sp} TIME    : ${time}
-   │${sp} TANGGAL : ${tanggal}
-   │${sp} OWNER   : ${ownername}
-   ╰───────
+   │${sp} PREFIX    : ${prefix}
+   │${sp} PENGGGUNA : ${pushname}
+   │${sp} WAKTU     : ${time}
+   │${sp} TANGGAL   : ${tanggal}
+   │${sp} OWNER     : ${ownername}
+   ╰─────────
 
     ╭──── 「 *OWNER MENU* 」
     │
@@ -75,7 +80,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}setppbot [image]
     │${sp} ${prefix}setwm
     │${sp} ${prefix}setmenu [option]
-    ╰───────
+    ╰─────────
 
     ╭──── 「 *BOT MENU* 」
     │
@@ -93,7 +98,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}listonline
     │${sp} ${prefix}speed
     │${sp} ${prefix}sc
-    ╰───────
+    ╰─────────
     
     ╭──── 「 *GRUP MENU* 」
     │
@@ -118,7 +123,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}upvote
     │${sp} ${prefix}cekvote
     │${sp} ${prefix}hapusvote
-    ╰───────
+    ╰─────────
 
     ╭──── 「 *WEB MENU* 」
     │
@@ -130,7 +135,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}wattpad
     │${sp} ${prefix}webtoons
     │${sp} ${prefix}drakor
-    ╰───────
+    ╰─────────
     
     ╭──── 「 *DOWNLOAD MENU* 」
     │
@@ -149,7 +154,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}umma [url]
     │${sp} ${prefix}joox [query]
     │${sp} ${prefix}soundcloud [url]
-    ╰───────
+    ╰─────────
 
     ╭──── 「 *SEARCH MENU* 」
     │
@@ -163,7 +168,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}ytsearch [query]
     │${sp} ${prefix}ringtone [query]
     │${sp} ${prefix}stalk [option] [query]
-    ╰───────
+    ╰─────────
     
     ╭──── 「 *RANDOM MENU* 」
     │
@@ -175,7 +180,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}katasenja
     │${sp} ${prefix}puisi
     │${sp} ${prefix}couple
-    ╰───────
+    ╰─────────
 
     ╭──── 「 *ANIME MENU* 」
     │
@@ -184,7 +189,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}husbu
     │${sp} ${prefix}neko
     │${sp} ${prefix}shinobu
-    ╰───────
+    ╰─────────
 
     ╭──── 「 *NSFW MENU* 」
     │
@@ -192,7 +197,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}nekos (nsfw)
     │${sp} ${prefix}trap (nsfw)
     │${sp} ${prefix}blowjob (nsfw)
-    ╰───────
+    ╰─────────
     
     ╭──── 「 *TEXTPRO MENU* 」
     │
@@ -227,7 +232,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}3dgradient
     │${sp} ${prefix}blackpink
     │${sp} ${prefix}gluetext
-    ╰───────
+    ╰─────────
 
     ╭──── 「 *PHOTO EXY MENU* 」
     │
@@ -243,7 +248,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}butterfly
     │${sp} ${prefix}harrypotter
     │${sp} ${prefix}retrolol
-    ╰───────
+    ╰─────────
 
     ╭──── 「 *EPHOTO MENU* 」
     │
@@ -256,7 +261,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}blackpink
     │${sp} ${prefix}igcertificate
     │${sp} ${prefix}ytcertificate
-    ╰───────
+    ╰─────────
 
     ╭──── 「 *FUN MENU* 」
     │
@@ -274,7 +279,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}tebak [option]
     │${sp} ${prefix}math [mode]
     │${sp} ${prefix}suitpvp [@tag]
-    ╰───────
+    ╰─────────
 
     ╭──── 「 *PRIMBON MENU* 」
     │
@@ -308,7 +313,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}masasubur
     │${sp} ${prefix}zodiak
     │${sp} ${prefix}shio
-    ╰───────
+    ╰─────────
     
     ╭──── 「 *CONVERT MENU* 」
     │
@@ -330,7 +335,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}dbinary
     │${sp} ${prefix}styletext
     │${sp} ${prefix}smeme
-    ╰───────
+    ╰─────────
     
     ╭──── 「 *DATABASE MENU* 」
     │
@@ -342,7 +347,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}listmsg
     │${sp} ${prefix}getmsg
     │${sp} ${prefix}delmsg
-    ╰───────
+    ╰─────────
 
     ╭──── 「 *ANONYMOUS MENU* 」
     │
@@ -350,7 +355,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}start
     │${sp} ${prefix}next
     │${sp} ${prefix}keluar
-    ╰───────
+    ╰─────────
 
     ╭──── 「 *ISLAM MENU* 」
     │
@@ -359,7 +364,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}alquran
     │${sp} ${prefix}juzamma
     │${sp} ${prefix}tafsirsurah
-    ╰───────
+    ╰─────────
     
     ╭──── 「 *VOICE CHARGER* 」
     │
@@ -374,7 +379,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}robot
     │${sp} ${prefix}slow
     │${sp} ${prefix}tupai
-    ╰───────
+    ╰─────────
 
     ╭────「 *TERIMA KASIH KEPADA* 」
     │ 
@@ -393,7 +398,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} Eksa
     │${sp} Rikashiki
     │${sp} Semua pendukung
-    ╰───────
+    ╰─────────
     `
 }
 exports.sc = (github) => {

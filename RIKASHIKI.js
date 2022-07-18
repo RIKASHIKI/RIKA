@@ -22,9 +22,8 @@ const primbon = new Primbon()
 const { smsg, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom, getGroupAdmins } = require('./lib/myfunc')
 
 //language
-lang = (`${lang}`)
+lang = global.lang
 // read database
-let tebaklagu = db.data.game.tebaklagu = []
 let _family100 = db.data.game.family100 = []
 let kuismath = db.data.game.math = []
 let tebakgambar = db.data.game.tebakgambar = []
@@ -32,7 +31,6 @@ let tebakkata = db.data.game.tebakkata = []
 let caklontong = db.data.game.lontong = []
 let caklontong_desk = db.data.game.lontong_desk = []
 let tebakkalimat = db.data.game.kalimat = []
-let tebaklirik = db.data.game.lirik = []
 let tebaktebakan = db.data.game.tebakan = []
 let vote = db.data.others.vote = []
 
@@ -151,14 +149,14 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
 	  // Anti Link
         if (db.data.chats[m.chat].antilink) {
         if (budy.match(`chat.whatsapp.com`)) {
-        m.reply(lang.antilig)
-        if (!isBotAdmins) return m.reply(lang.notAdmin)
+        m.reply(lang.antilig())
+        if (!isBotAdmins) return m.reply(lang.notAdmin())
         let gclink = (`https://chat.whatsapp.com/`+await Rika.groupInviteCode(m.chat))
         let isLinkThisGc = new RegExp(gclink, 'i')
         let isgclink = isLinkThisGc.test(m.text)
-        if (isgclink) return m.reply(lang.thisGc)
-        if (isAdmins) return m.reply(lang.admiGc)
-        if (isCreator) return m.reply(lang.ownGc)
+        if (isgclink) return m.reply(lang.thisGc())
+        if (isAdmins) return m.reply(lang.admiGc())
+        if (isCreator) return m.reply(lang.ownGc())
         Rika.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
         }
         }
@@ -208,16 +206,6 @@ ${Array.from(room.jawaban, (jawaban, index) => {
             Rika.sendText(m.chat, caption, m, { contextInfo: { mentionedJid: parseMention(caption) }}).then(mes => { return _family100['family100'+m.chat].pesan = mesg }).catch(_ => _)
             if (isWin || isSurender) delete _family100['family100'+m.chat]
         }
-
-        if (tebaklagu.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
-            kuis = true
-            jawaban = tebaklagu[m.sender.split('@')[0]]
-            if (budy.toLowerCase() == jawaban) {
-                await Rika.sendButtonText(m.chat, [{ buttonId: 'tebak lagu', buttonText: { displayText: 'Tebak Lagu' }, type: 1 }], `🎮 Tebak Lagu 🎮\n\nJawaban Benar 🎉\n\nIngin bermain lagi? tekan button dibawah`, `${fouter}`, m)
-                delete tebaklagu[m.sender.split('@')[0]]
-            } else m.reply('*Jawaban Salah!*')
-        }
-
         if (kuismath.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
             kuis = true
             jawaban = kuismath[m.sender.split('@')[0]]
@@ -262,15 +250,6 @@ ${Array.from(room.jawaban, (jawaban, index) => {
             if (budy.toLowerCase() == jawaban) {
                 await Rika.sendButtonText(m.chat, [{ buttonId: 'tebak kalimat', buttonText: { displayText: 'Tebak Kalimat' }, type: 1 }], `🎮 Tebak Kalimat 🎮\n\nJawaban Benar 🎉\n\nIngin bermain lagi? tekan button dibawah`, `${fouter}`, m)
                 delete tebakkalimat[m.sender.split('@')[0]]
-            } else m.reply('*Jawaban Salah!*')
-        }
-
-        if (tebaklirik.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
-            kuis = true
-            jawaban = tebaklirik[m.sender.split('@')[0]]
-            if (budy.toLowerCase() == jawaban) {
-                await Rika.sendButtonText(m.chat, [{ buttonId: 'tebak lirik', buttonText: { displayText: 'Tebak Lirik' }, type: 1 }], `🎮 Tebak Lirik 🎮\n\nJawaban Benar 🎉\n\nIngin bermain lagi? tekan button dibawah`, `${fouter}`, m)
-                delete tebaklirik[m.sender.split('@')[0]]
             } else m.reply('*Jawaban Salah!*')
         }
 	    
@@ -578,19 +557,9 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             }
         ]
-        let setbot = db.data.settings[botNumber]
-                        if (setbot.templateImage) {
-                        Rika.send5ButImg(m.chat, lang.dona, `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
-                        } else if (setbot.templateGif) {
-                        Rika.send5ButGif(m.chat, lang.dona, `${fouter}`, `${video}`, btn,`${thumbnaili}`)
-                        } else if (setbot.templateVid) {
-                        Rika.send5ButVid(m.chat, lang.dona, `${fouter}`,`${video}`, btn, `${thumbnaili}`)
-                        } else if (setbot.templateMsg) {
-                        Rika.send5ButMsg(m.chat, lang.dona, `${fouter}`, btn)
-                        } else if (setbot.templateLocation) {
-                        Rika.send5ButLoc(m.chat, lang.dona, `${fouter}`, `${thumbnaili}`, btn)
-                        }
-                        } 
+        
+            await Rika.send5ButGif(m.chat, lang.dona(pushname, ownernumber), `${fouter}`, `${video}`, btn,`${thumbnaili}`)
+            } 
             break
             case 'sc': case 'source': {
                let btn = [
@@ -603,20 +572,20 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                     ]
                     let setbot = db.data.settings[botNumber]
                         if (setbot.templateImage) {
-                        Rika.send5ButImg(m.chat, lang.sc, `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
+                        Rika.send5ButImg(m.chat, lang.sc(github), `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
                         } else if (setbot.templateGif) {
-                        Rika.send5ButGif(m.chat, lang.sc, `${fouter}`, `${video}`, btn,`${thumbnaili}`)
+                        Rika.send5ButGif(m.chat, lang.sc(github), `${fouter}`, `${video}`, btn,`${thumbnaili}`)
                         } else if (setbot.templateVid) {
-                        Rika.send5ButVid(m.chat, lang.sc, `${fouter}`,`${video}`, btn, `${thumbnaili}`)
+                        Rika.send5ButVid(m.chat, lang.sc(github), `${fouter}`,`${video}`, btn, `${thumbnaili}`)
                         } else if (setbot.templateMsg) {
-                        Rika.send5ButMsg(m.chat, lang.sc, `${fouter}`, btn)
+                        Rika.send5ButMsg(m.chat, lang.sc(github), `${fouter}`, btn)
                         } else if (setbot.templateLocation) {
-                        Rika.send5ButLoc(m.chat, lang.sc, `${fouter}`, `${thumbnaili}`, btn)
+                        Rika.send5ButLoc(m.chat, lang.sc(github), `${fouter}`, `${thumbnaili}`, btn)
                         }
                         } 
             break
             case 'chat': {
-                if (!isCreator) throw lang.ownerOnly
+                if (!isCreator) throw lang.ownerOnly()
                 if (!q) throw 'Option : 1. mute\n2. unmute\n3. archive\n4. unarchive\n5. read\n6. unread\n7. delete'
                 if (args[0] === 'mute') {
                     Rika.chatModify({ mute: 'Infinity' }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
@@ -659,22 +628,8 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             m.reply(tex.replace(/[aiueo]/g, ter).replace(/[AIUEO]/g, ter.toUpperCase()))
             break
             case 'tebak': {
-                if (!text) throw `Example : ${prefix + menu} lagu\n\nOption : \n1. lagu\n2. gambar\n3. kata\n4. kalimat\n5. lirik\n6.lontong`
-                if (args[0] === "lagu") {
-                    if (tebaklagu.hasOwnProperty(m.sender.split('@')[0])) throw "Masih Ada Sesi Yang Belum Diselesaikan!"
-                    let anu = await fetchJson('https://fatiharridho.github.io/tebaklagu.json')
-                    let result = anu[Math.floor(Math.random() * anu.length)]
-                    let msg = await Rika.sendMessage(m.chat, { audio: { url: result.link_song }, mimetype: 'audio/mpeg' }, { quoted: m })
-                    Rika.sendText(m.chat, `Lagu Tersebut Adalah Lagu dari?\n\nArtist : ${result.artist}\nWaktu : 60s`, msg).then(() => {
-                    tebaklagu[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
-                    })
-                    await sleep(60000)
-                    if (tebaklagu.hasOwnProperty(m.sender.split('@')[0])) {
-                    console.log("Jawaban: " + result.jawaban)
-                    Rika.sendButtonText(m.chat, [{ buttonId: 'tebak lagu', buttonText: { displayText: 'Tebak Lagu' }, type: 1 }], `Waktu Habis\nJawaban:  ${tebaklagu[m.sender.split('@')[0]]}\n\nIngin bermain? tekan button dibawah`, `${fouter}`, m)
-                    delete tebaklagu[m.sender.split('@')[0]]
-                    }
-                } else if (args[0] === 'gambar') {
+                if (!text) throw `Example : ${prefix + menu} kata\n\nOption : \n1. gambar\n2. kata\n3. kalimat\n4.lontong`
+                if (args[0] === 'gambar') {
                     if (tebakgambar.hasOwnProperty(m.sender.split('@')[0])) throw "Masih Ada Sesi Yang Belum Diselesaikan!"
                     let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebakgambar.json')
                     let result = anu[Math.floor(Math.random() * anu.length)]
@@ -713,19 +668,6 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                     Rika.sendButtonText(m.chat, [{ buttonId: 'tebak kalimat', buttonText: { displayText: 'Tebak Kalimat' }, type: 1 }], `Waktu Habis\nJawaban:  ${tebakkalimat[m.sender.split('@')[0]]}\n\nIngin bermain? tekan button dibawah`, `${fouter}`, m)
                     delete tebakkalimat[m.sender.split('@')[0]]
                     }
-                } else if (args[0] === 'lirik') {
-                    if (tebaklirik.hasOwnProperty(m.sender.split('@')[0])) throw "Masih Ada Sesi Yang Belum Diselesaikan!"
-                    let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebaklirik.json')
-                    let result = anu[Math.floor(Math.random() * anu.length)]
-                    Rika.sendText(m.chat, `Ini Adalah Lirik Dari Lagu? : *${result.soal}*?\nWaktu : 60s`, m).then(() => {
-                    tebaklirik[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
-                    })
-                    await sleep(60000)
-                    if (tebaklirik.hasOwnProperty(m.sender.split('@')[0])) {
-                    console.log("Jawaban: " + result.jawaban)
-                    Rika.sendButtonText(m.chat, [{ buttonId: 'tebak lirik', buttonText: { displayText: 'Tebak Lirik' }, type: 1 }], `Waktu Habis\nJawaban:  ${tebaklirik[m.sender.split('@')[0]]}\n\nIngin bermain? tekan button dibawah`, `${fouter}`, m)
-                    delete tebaklirik[m.sender.split('@')[0]]
-                    }
                 } else if (args[0] === 'lontong') {
                     if (caklontong.hasOwnProperty(m.sender.split('@')[0])) throw "Masih Ada Sesi Yang Belum Diselesaikan!"
                     let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/caklontong.json')
@@ -761,7 +703,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             break
             case 'jodohku': {
-            if (!m.isGroup) throw lang.grupOnly
+            if (!m.isGroup) throw lang.grupOnly()
             let member = participants.map(u => u.id)
             let me = m.sender
             let jodoh = member[Math.floor(Math.random() * member.length)]
@@ -776,7 +718,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             break
             case 'jadian': {
-            if (!m.isGroup) throw lang.grupOnly
+            if (!m.isGroup) throw lang.grupOnly()
             let member = participants.map(u => u.id)
             let orang = member[Math.floor(Math.random() * member.length)]
             let jodoh = member[Math.floor(Math.random() * member.length)]
@@ -791,7 +733,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             break
             case 'react': {
-                if (!isCreator) throw lang.ownerOnly
+                if (!isCreator) throw lang.ownerOnly()
                 reactionMessage = {
                     react: {
                         text: args[0],
@@ -802,21 +744,21 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             break  
             case 'join': {
-                if (!isCreator) throw lang.ownerOnly
-                if (!text) throw lang.maLin
+                if (!isCreator) throw lang.ownerOnly()
+                if (!text) throw lang.maLin()
                 if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) throw 'Link Invalid!'
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 let result = args[0].split('https://chat.whatsapp.com/')[1]
                 await Rika.groupAcceptInvite(result).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
             }
             break
             case 'leave': {
-                if (!isCreator) throw lang.ownerOnly
+                if (!isCreator) throw lang.ownerOnly()
                 await Rika.groupLeave(m.chat).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
             }
             break
             case 'setwm': {
-               if (!isCreator) throw lang.ownerOnly
+               if (!isCreator) throw lang.ownerOnly()
                if (!text) throw `Example : ${prefix + menu} packname|author`
           global.packname = text.split("|")[0]
           global.author = text.split("|")[1]
@@ -824,90 +766,90 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             break
 	case 'kick': {
-		if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
-                if (!isAdmins) throw lang.adminOnly
+		if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 		await Rika.groupParticipantsUpdate(m.chat, [users], 'remove').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
 	case 'add': {
-		if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
-                if (!isAdmins) throw lang.adminOnly
+		if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
 		let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 		await Rika.groupParticipantsUpdate(m.chat, [users], 'add').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
 	case 'promote': {
-		if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
-                if (!isAdmins) throw lang.adminOnly
+		if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 		await Rika.groupParticipantsUpdate(m.chat, [users], 'promote').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
 	case 'demote': {
-		if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
-                if (!isAdmins) throw lang.adminOnly
+		if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 		await Rika.groupParticipantsUpdate(m.chat, [users], 'demote').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
         case 'block': {
-		if (!isCreator) throw lang.ownerOnly
+		if (!isCreator) throw lang.ownerOnly()
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 		await Rika.updateBlockStatus(users, 'block').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
         case 'unblock': {
-		if (!isCreator) throw lang.ownerOnly
+		if (!isCreator) throw lang.ownerOnly()
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 		await Rika.updateBlockStatus(users, 'unblock').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
 	    case 'setnamegc': {
-                if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
-                if (!isAdmins) throw lang.adminOnly
+                if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
                 if (!text) throw 'Text ?'
-                await Rika.groupUpdateSubject(m.chat, text).then((res) => m.reply(lang.success)).catch((err) => m.reply(jsonformat(err)))
+                await Rika.groupUpdateSubject(m.chat, text).then((res) => m.reply(lang.success())).catch((err) => m.reply(jsonformat(err)))
             }
             break
           case 'setdesc': case 'setdescgc': {
-                if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
-                if (!isAdmins) throw lang.adminOnly
+                if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
                 if (!text) throw 'Text ?'
-                await Rika.groupUpdateDescription(m.chat, text).then((res) => m.reply(lang.success)).catch((err) => m.reply(jsonformat(err)))
+                await Rika.groupUpdateDescription(m.chat, text).then((res) => m.reply(lang.success())).catch((err) => m.reply(jsonformat(err)))
             }
             break
           case 'setppbot': {
-                if (!isCreator) throw lang.ownerOnly
+                if (!isCreator) throw lang.ownerOnly()
                 if (!quoted) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
                 if (!/image/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
                 if (/webp/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
                 let media = await Rika.downloadAndSaveMediaMessage(quoted)
                 await Rika.updateProfilePicture(botNumber, { url: media }).catch((err) => fs.unlinkSync(media))
-                m.reply(lang.success)
+                m.reply(lang.success())
                 }
                 break
            case 'setppgroup': case 'setppgrup': case 'setppgc': {
-                if (!m.isGroup) throw lang.grupOnly
-                if (!isAdmins) throw lang.adminOnly
+                if (!m.isGroup) throw lang.grupOnly()
+                if (!isAdmins) throw lang.adminOnly()
                 if (!quoted) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
                 if (!/image/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
                 if (/webp/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
                 let media = await Rika.downloadAndSaveMediaMessage(quoted)
                 await Rika.updateProfilePicture(m.chat, { url: media }).catch((err) => fs.unlinkSync(media))
-                m.reply(lang.success)
+                m.reply(lang.success())
                 }
                 break
             case 'tagall': {
-                if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
-                if (!isAdmins) throw lang.adminOnly
+                if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
 let teks = `「 *TAGALL* 」
  
  *pesan : ${q ? q : 'kosong'}*\n\n`
@@ -918,22 +860,22 @@ let teks = `「 *TAGALL* 」
                 }
                 break
                 case 'hidetag': {
-            if (!m.isGroup) throw lang.grupOnly
-            if (!isBotAdmins) throw lang.notAdmin
-            if (!isAdmins) throw lang.adminOnly
+            if (!m.isGroup) throw lang.grupOnly()
+            if (!isBotAdmins) throw lang.notAdmin()
+            if (!isAdmins) throw lang.adminOnly()
             Rika.sendMessage(m.chat, { text : q ? q : '' , mentions: participants.map(a => a.id)}, { quoted: m })
             }
             break
                case 'totag': {
-               if (!m.isGroup) throw lang.grupOnly
-               if (!isBotAdmins) throw lang.notAdmin
-               if (!isAdmins) throw lang.adminOnly
+               if (!m.isGroup) throw lang.grupOnly()
+               if (!isBotAdmins) throw lang.notAdmin()
+               if (!isAdmins) throw lang.adminOnly()
                if (!m.quoted) throw `Reply pesan dengan caption ${prefix + menu}`
                Rika.sendMessage(m.chat, { forward: m.quoted.fakeObj, mentions: participants.map(a => a.id) })
                }
                break
 	    case 'style': case 'styletext': {
-	        if (!isPremium && global.db.data.users[m.sender].limit < 1) return m.reply(lang.endlimit) // respon ketika limit habis
+	        if (!isPremium && global.db.data.users[m.sender].limit < 1) return m.reply(lang.endlimit())
 		db.data.users[m.sender].limit -= 1 // -1 limit
 		let { styletext } = require('./lib/scraper')
 		if (!text) throw 'Masukkan Query text!'
@@ -946,7 +888,7 @@ let teks = `「 *TAGALL* 」
 	    }
 	    break
                case 'vote': {
-            if (!m.isGroup) throw lang.grupOnly
+            if (!m.isGroup) throw lang.grupOnly()
             if (m.chat in vote) throw `_Masih ada vote di chat ini!_\n\n*${prefix}hapusvote* - untuk menghapus vote`
             if (!text) throw `Masukkan Alasan Melakukan Vote, Example: *${prefix + menu} Owner Ganteng*`
             m.reply(`Vote dimulai!\n\n*${prefix}upvote* - untuk ya\n*${prefix}devote* - untuk tidak\n*${prefix}cekvote* - untuk mengecek vote\n*${prefix}hapusvote* - untuk menghapus vote`)
@@ -988,7 +930,7 @@ let buttonsVote = [
 	    }
             break
                case 'upvote': {
-            if (!m.isGroup) throw lang.grupOnly
+            if (!m.isGroup) throw lang.grupOnly()
             if (!(m.chat in vote)) throw `_*tidak ada voting digrup ini!*_\n\n*${prefix}vote* - untuk memulai vote`
             isVote = vote[m.chat][1].concat(vote[m.chat][2])
             wasVote = isVote.includes(m.sender)
@@ -1030,7 +972,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 	    }
              break
                 case 'devote': {
-            if (!m.isGroup) throw lang.grupOnly
+            if (!m.isGroup) throw lang.grupOnly()
             if (!(m.chat in vote)) throw `_*tidak ada voting digrup ini!*_\n\n*${prefix}vote* - untuk memulai vote`
             isVote = vote[m.chat][1].concat(vote[m.chat][2])
             wasVote = isVote.includes(m.sender)
@@ -1073,7 +1015,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
             break
                  
 case 'cekvote':
-if (!m.isGroup) throw lang.grupOnly
+if (!m.isGroup) throw lang.grupOnly()
 if (!(m.chat in vote)) throw `_*tidak ada voting digrup ini!*_\n\n*${prefix}vote* - untuk memulai vote`
 teks_vote = `*「 VOTE 」*
 
@@ -1101,16 +1043,16 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 Rika.sendTextWithMentions(m.chat, teks_vote, m)
 break
 		case 'deletevote': case'delvote': case 'hapusvote': {
-            if (!m.isGroup) throw lang.grupOnly
+            if (!m.isGroup) throw lang.grupOnly()
             if (!(m.chat in vote)) throw `_*tidak ada voting digrup ini!*_\n\n*${prefix}vote* - untuk memulai vote`
             delete vote[m.chat]
             m.reply('Berhasil Menghapus Sesi Vote Di Grup Ini')
 	    }
             break
                case 'group': case 'grup': {
-                if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
-                if (!isAdmins) throw lang.adminOnly
+                if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
                 if (args[0] === 'close'){
                     await Rika.groupSettingUpdate(m.chat, 'announcement').then((res) => m.reply(`Sukses Menutup Group`)).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === 'open'){
@@ -1126,9 +1068,9 @@ break
             }
             break
             case 'editinfo': {
-                if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
-                if (!isAdmins) throw lang.adminOnly
+                if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
              if (args[0] === 'open'){
                 await Rika.groupSettingUpdate(m.chat, 'unlocked').then((res) => m.reply(`Sukses Membuka Edit Info Group`)).catch((err) => m.reply(jsonformat(err)))
              } else if (args[0] === 'close'){
@@ -1144,9 +1086,9 @@ break
             }
             break
             case 'antilink': {
-                if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
-                if (!isAdmins) throw lang.adminOnly
+                if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
                 if (args[0] === "on") {
                 if (db.data.chats[m.chat].antilink) return m.reply(`Sudah Aktif Sebelumnya`)
                 db.data.chats[m.chat].antilink = true
@@ -1165,9 +1107,9 @@ break
              }
              break
              case 'mute': {
-                if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
-                if (!isAdmins) throw lang.adminOnly
+                if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
                 if (args[0] === "on") {
                 if (db.data.chats[m.chat].mute) return m.reply(`Sudah Aktif Sebelumnya`)
                 db.data.chats[m.chat].mute = true
@@ -1186,16 +1128,16 @@ break
              }
              break
             case 'linkgroup': case 'linkgc': {
-                if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
+                if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
                 let response = await Rika.groupInviteCode(m.chat)
                 Rika.sendText(m.chat, `https://chat.whatsapp.com/${response}\n\nLink Group : ${groupMetadata.subject}`, m, { detectLink: true })
             }
             break
             case 'ephemeral': {
-                if (!m.isGroup) throw lang.grupOnly
-                if (!isBotAdmins) throw lang.notAdmin
-                if (!isAdmins) throw lang.adminOnly
+                if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
                 if (args[0] === '1') {
                     await Rika.groupToggleEphemeral(m.chat, 1*24*3600).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === '7') {
@@ -1228,7 +1170,7 @@ break
             }
             break
             case 'bcgc': case 'bcgroup': {
-                if (!isCreator) throw lang.ownerOnly
+                if (!isCreator) throw lang.ownerOnly()
                 if (!text) throw `Text mana?\n\nExample : ${prefix + menu} RIKASHIKI`
                 let getGroups = await Rika.groupFetchAllParticipating()
                 let groups = Object.entries(getGroups).slice(0).map(entry => entry[1])
@@ -1269,13 +1211,23 @@ break
                         }
                     ]
                      let txt =`*──────「 BROADCAST 」 ──────*\n\n ${text}`
-                     Rika.send5ButImg(i, txt, `${ownername}`, `${thumbnaili}`, btn)
-                }
+                     let setbot = db.data.settings[botNumber]
+                    if (setbot.templateImage) {
+                    Rika.send5ButImg(i, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
+                    } else if (setbot.templateGif) {
+                    Rika.send5ButGif(i, txt, `${ownername}`, `${fouter}`, `${video}`, btn,`${thumbnaili}`)
+                    } else if (setbot.templateVid) {
+                    Rika.send5ButVid(i, txt, `${ownername}`, `${fouter}`,`${video}`, btn, `${thumbnaili}`)
+                    } else if (setbot.templateMsg) {
+                    Rika.send5ButMsg(i, txt, `${ownername}`, `${fouter}`, btn)
+                    } else if (setbot.templateLocation) {
+                    Rika.send5ButLoc(i, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn)
+                    }
                 m.reply(`Sukses Mengirim Broadcast Ke ${anu.length} Group`)
-            }
+            }}
             break
             case 'bc': case 'broadcast': case 'bcall': {
-                if (!isCreator) throw lang.ownerOnly
+                if (!isCreator) throw lang.ownerOnly()
                 if (!text) throw `Text mana?\n\nExample : ${prefix + menu} rika-san`
                 let anu = await store.chats.all().map(v => v.id)
                 m.reply(`Mengirim Broadcast Ke ${anu.length} Chat\nWaktu Selesai ${anu.length * 1.5} detik`)
@@ -1314,10 +1266,20 @@ break
                 }
             ]
             let txt =`*──────「 BROADCAST 」 ──────*\n\n ${text}`
-                     Rika.send5ButImg(u, txt, `${ownername}`, `${thumbnaili}`, btn)
-        }
-		m.reply('Sukses Broadcast')
+            let setbot = db.data.settings[botNumber]
+            if (setbot.templateImage) {
+            Rika.send5ButImg(u, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
+            } else if (setbot.templateGif) {
+            Rika.send5ButGif(u, txt, `${ownername}`, `${fouter}`, `${video}`, btn,`${thumbnaili}`)
+            } else if (setbot.templateVid) {
+            Rika.send5ButVid(u, txt, `${ownername}`, `${fouter}`,`${video}`, btn, `${thumbnaili}`)
+            } else if (setbot.templateMsg) {
+            Rika.send5ButMsg(u, txt, `${ownername}`, `${fouter}`, btn)
+            } else if (setbot.templateLocation) {
+            Rika.send5ButLoc(u, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn)
             }
+		m.reply('Sukses Broadcast')
+            }}
             break
             case 'infochat': {
                 if (!m.quoted) m.reply('Reply Pesan')
@@ -1369,7 +1331,7 @@ break
              break
             case 'sticker': case 's': case 'stiker': {
             if (!quoted) throw `Balas Video/Image Dengan Caption ${prefix + menu}`
-            m.reply(lang.wait)
+            m.reply(lang.wait())
                     if (/image/.test(mime)) {
                 let media = await quoted.download()
                 let encmedia = await Rika.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
@@ -1389,7 +1351,7 @@ break
                 let [teks1, teks2] = text.split`|`
                 if (!teks1) throw `Kirim/reply image/video dengan caption ${prefix + menu} teks1|teks2`
                 if (!teks2) throw `Kirim/reply image/video dengan caption ${prefix + menu} teks1|teks2`
-            	m.reply(lang.wait)
+            	m.reply(lang.wait())
                 if (/image/.test(mime)) {
                     let media = await quoted.download()
                     let encmedia = await Rika.sendImageAsSticker(m.chat, media, m, { packname: teks1, author: teks2 })
@@ -1445,10 +1407,10 @@ break
          }
          break
 	       case 'smeme': case 'stickmeme': case 'stikmeme': case 'stickermeme': case 'stikermeme': {
-	        let respond = `Kirim/reply image/sticker dengan caption ${prefix + menu} text1|text2`
+	        let respond = lang.nostic(prefix, menu)
 	        if (!/image/.test(mime)) throw respond
             if (!text) throw respond
-	        m.reply(lang.wait)
+	        m.reply(lang.wait())
             atas = text.split('|')[0] ? text.split('|')[0] : '-'
             bawah = text.split('|')[1] ? text.split('|')[1] : '-'
 	        let dwnld = await quoted.download()
@@ -1468,7 +1430,7 @@ break
             case 'toimage': case 'toimg': {
                 if (!quoted) throw 'Reply Image'
                 if (!/webp/.test(mime)) throw `Balas sticker dengan caption *${prefix + menu}*`
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 let media = await Rika.downloadAndSaveMediaMessage(quoted)
                 let ran = await getRandom('.png')
                 exec(`ffmpeg -i ${media} ${ran}`, (err) => {
@@ -1483,7 +1445,7 @@ break
 	        case 'tomp4': case 'tovideo': {
                 if (!quoted) throw 'Reply Image'
                 if (!/webp/.test(mime)) throw `balas stiker dengan caption *${prefix + menu}*`
-                m.reply(lang.wait)
+                m.reply(lang.wait())
 		let { webp2mp4File } = require('./lib/uploader')
                 let media = await Rika.downloadAndSaveMediaMessage(quoted)
                 let webpToMp4 = await webp2mp4File(media)
@@ -1494,7 +1456,7 @@ break
             case 'toaud': case 'toaudio': {
             if (!/video/.test(mime) && !/audio/.test(mime)) throw `Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + menu}`
             if (!quoted) throw `Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + menu}`
-            m.reply(lang.wait)
+            m.reply(lang.wait())
             let media = await quoted.download()
             let { toAudio } = require('./lib/converter')
             let audio = await toAudio(media, 'mp4')
@@ -1505,7 +1467,7 @@ break
             if (/document/.test(mime)) throw `Kirim/Reply Video/Audio Yang Ingin Dijadikan MP3 Dengan Caption ${prefix + menu}`
             if (!/video/.test(mime) && !/audio/.test(mime)) throw `Kirim/Reply Video/Audio Yang Ingin Dijadikan MP3 Dengan Caption ${prefix + menu}`
             if (!quoted) throw `Kirim/Reply Video/Audio Yang Ingin Dijadikan MP3 Dengan Caption ${prefix + menu}`
-            m.reply(lang.wait)
+            m.reply(lang.wait())
             let media = await quoted.download()
             let { toAudio } = require('./lib/converter')
             let audio = await toAudio(media, 'mp4')
@@ -1515,7 +1477,7 @@ break
             case 'tovn': case 'toptt': {
             if (!/video/.test(mime) && !/audio/.test(mime)) throw `Reply Video/Audio Yang Ingin Dijadikan VN Dengan Caption ${prefix + menu}`
             if (!quoted) throw `Reply Video/Audio Yang Ingin Dijadikan VN Dengan Caption ${prefix + menu}`
-            m.reply(lang.wait)
+            m.reply(lang.wait())
             let media = await quoted.download()
             let { toPTT } = require('./lib/converter')
             let audio = await toPTT(media, 'mp4')
@@ -1525,7 +1487,7 @@ break
             case 'togif': {
                 if (!quoted) throw 'Reply Image'
                 if (!/webp/.test(mime)) throw `balas stiker dengan caption *${prefix + menu}*`
-                m.reply(lang.wait)
+                m.reply(lang.wait())
 		let { webp2mp4File } = require('./lib/uploader')
                 let media = await Rika.downloadAndSaveMediaMessage(quoted)
                 let webpToMp4 = await webp2mp4File(media)
@@ -1534,7 +1496,7 @@ break
             }
             break
 	        case 'tourl': {
-                m.reply(lang.wait)
+                m.reply(lang.wait())
 		let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
                 let media = await Rika.downloadAndSaveMediaMessage(quoted)
                 if (/image/.test(mime)) {
@@ -1557,7 +1519,7 @@ break
 	    hmm = await './src/remobg-'+getRandom('')
 	    localFile = await Rika.downloadAndSaveMediaMessage(quoted, hmm)
 	    outputFile = await './src/hremo-'+getRandom('.png')
-	    m.reply(lang.wait)
+	    m.reply(lang.wait())
 	    remobg.removeBackgroundFromImageFile({
 	      path: localFile,
 	      apiKey: apinobg,
@@ -1566,7 +1528,7 @@ break
 	      scale: "100%",
 	      outputFile 
 	    }).then(async result => {
-	    Rika.sendMessage(m.chat, {image: fs.readFileSync(outputFile), caption: lang.success}, { quoted : m })
+	    Rika.sendMessage(m.chat, {image: fs.readFileSync(outputFile), caption: lang.success()}, { quoted : m })
 	    await fs.unlinkSync(localFile)
 	    await fs.unlinkSync(outputFile)
 	    })
@@ -1626,7 +1588,7 @@ break
                 let search = await yts(text)
                 let anu = search.videos[Math.floor(Math.random() * search.videos.length)]
                 let buttons = [
-                    {buttonId: `ytmp3 ${anu.url}`, buttonText: {displayText: '♫ Audio'}, type: 1},
+                    {buttonId: `ytmp3 ${anu.url}`, buttonText: {displayText: 'AUDIO'}, type: 1},
                     {buttonId: `ytmp4 ${anu.url}`, buttonText: {displayText: '► Video'}, type: 1}
                 ]
                 let buttonMessage = {
@@ -1696,7 +1658,7 @@ ${sp} Url : ${anu.url}`,
             }
             break
             case 'pinterest': {
-                m.reply(lang.wait)
+                m.reply(lang.wait())
 		let { pinterest } = require('./lib/scraper')
                 anu = await pinterest(text)
                 result = anu[Math.floor(Math.random() * anu.length)]
@@ -1704,12 +1666,12 @@ ${sp} Url : ${anu.url}`,
             }
             break
             case 'anime': case 'waifu': case 'husbu': case 'neko': case 'shinobu': case 'megumin': case 'waifus': case 'nekos': case 'trap': case 'blowjob': {
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 Rika.sendMessage(m.chat, { image: { url: api('zenz', '/api/random/'+menu, {}, 'apikey') }, caption: 'Generate Random ' + menu }, { quoted: m })
             }
             break
 	    case 'couple': {
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 let anu = await fetchJson('https://raw.githubusercontent.com/iamriz7/kopel_/main/kopel.json')
                 let random = anu[Math.floor(Math.random() * anu.length)]
                 Rika.sendMessage(m.chat, { image: { url: random.male }, caption: `Couple Male` }, { quoted: m })
@@ -1798,19 +1760,19 @@ ${sp} Url : ${anu.url}`,
             break
             case '3dchristmas': case '3ddeepsea': case 'americanflag': case '3dscifi': case '3drainbow': case '3dwaterpipe': case 'halloweenskeleton': case 'sketch': case 'bluecircuit': case 'space': case 'metallic': case 'fiction': case 'greenhorror': case 'transformer': case 'berry': case 'thunder': case 'magma': case '3dcrackedstone': case '3dneonlight': case 'impressiveglitch': case 'naturalleaves': case 'fireworksparkle': case 'matrix': case 'dropwater':  case 'harrypotter': case 'foggywindow': case 'neondevils': case 'christmasholiday': case '3dgradient': case 'blackpink': case 'gluetext': {
                 if (!text) throw `Example : ${prefix + menu} text`
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 Rika.sendMessage(m.chat, { image: { url: api('zenz', '/textpro/' + menu, { text: text }, 'apikey') }, caption: `Text Pro ${menu}` }, { quoted: m})
 	    }
             break
 	    case 'shadow': case 'romantic': case 'smoke': case 'burnpapper': case 'naruto': case 'lovemsg': case 'grassmsg': case 'lovetext': case 'coffecup': case 'butterfly': case 'harrypotter': case 'retrolol': {
                 if (!text) throw 'No Query Text'
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 Rika.sendMessage(m.chat, { image: { url: api('zenz', '/photooxy/' + menu, { text: text }, 'apikey') }, caption: `Photo Oxy ${menu}` }, { quoted: m })
             }
             break
             case 'ffcover': case 'crossfire': case 'galaxy': case 'glass': case 'neon': case 'beach': case 'blackpink': case 'igcertificate': case 'ytcertificate': {
                 if (!text) throw 'No Query Text'
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 Rika.sendMessage(m.chat, { image: { url: api('zenz', '/ephoto/' + menu, { text: text }, 'apikey') }, caption: `Ephoto ${menu}` }, { quoted: m })
             }
             break
@@ -2129,13 +2091,36 @@ ${sp} Url : ${anu.url}`,
                 }
             }
             break
-	        case 'tiktok': case 'tiktoknowm' :case 'tt': {
-                if (!text) throw 'add link'
-                m.reply(lang.wait)
+            case 'tiktok': case 'tt': case 'ttdl': case 'tiktokdl': case 'tiktokdownload': {
+              if (!text) throw 'add link'
+              let btn = [{
+                    quickReplyButton: {
+                    displayText: "NO WATERMARK",
+                    id: `ttnowm ${text}`
+                    }
+                    },
+                    {
+                    quickReplyButton: {
+                    displayText: "WATERMARK",
+                    id: `ttwm ${text}`
+                    }
+                    },
+                    {
+                    quickReplyButton: {
+                    displayText: "AUDIO",
+                    id: `ttmp3 ${text}`
+                    }
+                    }
+                    ]
+              await Rika.send5ButLoc(m.chat, lang.choicett(), `${fouter}`, `${thumbnaili}`, btn)
+            }
+            break
+	        case 'tiktoknowatermark': case 'tiktoknowm' :case 'ttnowm': {
+                m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
                 let buttons = [
                     {buttonId: `tiktokwm ${text}`, buttonText: {displayText: 'WATERMARK'}, type: 1},
-                    {buttonId: `tiktokmp3 ${text}`, buttonText: {displayText: '♫ Audio'}, type: 1}
+                    {buttonId: `tiktokmp3 ${text}`, buttonText: {displayText: 'AUDIO'}, type: 1}
                 ]
                 let buttonMessage = {
                     video: { url: anu.result.nowatermark },
@@ -2148,12 +2133,11 @@ ${sp} Url : ${anu.url}`,
             }
             break
             case 'tiktokwm': case 'tiktokwatermark': case 'ttwm': {
-                if (!text) throw 'add link'
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
                 let buttons = [
-                    {buttonId: `tiktoknowm ${text}`, buttonText: {displayText: '► No Watermark'}, type: 1},
-                    {buttonId: `tiktokmp3 ${text}`, buttonText: {displayText: '♫ Audio'}, type: 1}
+                    {buttonId: `tiktoknowm ${text}`, buttonText: {displayText: 'NO WATERMARK'}, type: 1},
+                    {buttonId: `tiktokmp3 ${text}`, buttonText: {displayText: 'AUDIO'}, type: 1}
                 ]
                 let buttonMessage = {
                     video: { url: anu.result.watermark },
@@ -2166,12 +2150,11 @@ ${sp} Url : ${anu.url}`,
             }
             break
             case 'tiktokmp3': case 'tiktokaudio':case'ttmp3': {
-                if (!text) throw 'add link'
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/musically', { url: text }, 'apikey'))
                 let buttons = [
-                    {buttonId: `tiktoknowm ${text}`, buttonText: {displayText: '► No Watermark'}, type: 1},
-                    {buttonId: `tiktokwm ${text}`, buttonText: {displayText: '► With Watermark'}, type: 1}
+                    {buttonId: `tiktoknowm ${text}`, buttonText: {displayText: 'NO WATERMARK'}, type: 1},
+                    {buttonId: `tiktokwm ${text}`, buttonText: {displayText: 'WATERMARK'}, type: 1}
                 ]
                 let buttonMessage = {
                     text: `Download From ${text}`,
@@ -2185,7 +2168,7 @@ ${sp} Url : ${anu.url}`,
             break
 	        case 'instagram': case 'ig': case 'igdl': {
                 if (!text) throw 'No link!'
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 if (/(?:\/p\/|\/reel\/|\/tv\/)([^\s&]+)/.test(isUrl(text)[0])) {
                     let anu = await fetchJson(api('zenz', '/downloader/instagram2', { url: isUrl(text)[0] }, 'apikey'))
                     for (let media of anu.data) Rika.sendFileUrl(m.chat, media, `Download Url Instagram From ${isUrl(text)[0]}`, m)
@@ -2197,7 +2180,7 @@ ${sp} Url : ${anu.url}`,
             break
             case 'joox': case 'jooxdl': {
                 if (!text) throw 'No Text'
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/joox', { query: text }, 'apikey'))
                 let msg = await Rika.sendImage(m.chat, anu.result.img, `${sp} Title : ${anu.result.lagu}\n${sp} Album : ${anu.result.album}\n${sp} Singer : ${anu.result.penyanyi}\n${sp} Publish : ${anu.result.publish}\n${sp} Lirik :\n${anu.result.lirik.result}`, m)
                 Rika.sendMessage(m.chat, { audio: { url: anu.result.mp4aLink }, mimetype: 'audio/mpeg', fileName: anu.result.lagu+'.m4a' }, { quoted: msg })
@@ -2205,7 +2188,7 @@ ${sp} Url : ${anu.url}`,
             break
             case 'soundcloud': case 'scdl': {
                 if (!text) throw 'No text'
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/soundcloud', { url: isUrl(text)[0] }, 'apikey'))
                 let msg = await Rika.sendImage(m.chat, anu.result.thumb, `${sp} Title : ${anu.result.title}\n${sp} Url : ${isUrl(text)[0]}`)
                 Rika.sendMessage(m.chat, { audio: { url: anu.result.url }, mimetype: 'audio/mpeg', fileName: anu.result.title+'.m4a' }, { quoted: msg })
@@ -2213,7 +2196,7 @@ ${sp} Url : ${anu.url}`,
             break
 	        case 'twitdl': case 'twitter':case'twitterdl': {
                 if (!text) throw 'add link'
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/api/downloader/twitter', { url: text }, 'apikey'))
                 let buttons = [
                     {buttonId: `twittermp3 ${text}`, buttonText: {displayText: '► Audio'}, type: 1}
@@ -2230,7 +2213,7 @@ ${sp} Url : ${anu.url}`,
             break
             case 'twittermp3': case 'twitteraudio': {
                 if (!text) throw 'add link'
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/api/downloader/twitter', { url: text }, 'apikey'))
                 let buttons = [
                     {buttonId: `twitter ${text}`, buttonText: {displayText: '► Video'}, type: 1}
@@ -2248,14 +2231,14 @@ ${sp} Url : ${anu.url}`,
             break
 	        case 'fbdl': case 'fb': case 'facebook': {
                 if (!text) throw 'add link'
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/api/downloader/facebook', { url: text }, 'apikey'))
                 Rika.sendMessage(m.chat, { video: { url: anu.result.url }, caption: `${sp} Title : ${anu.result.title}`}, { quoted: m })
             }
             break
 	        case 'pindl': case 'pinterestdl': {
                 if (!text) throw 'add link'
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/api/downloader/pinterestdl', { url: text }, 'apikey'))
                 Rika.sendMessage(m.chat, { video: { url: anu.result }, caption: `Download From ${text}` }, { quoted: m })
             }
@@ -2266,7 +2249,7 @@ ${sp} Url : ${anu.url}`,
 		let anu = await umma(isUrl(text)[0])
 		if (anu.type == 'video') {
 		    let buttons = [
-                        {buttonId: `ytmp3 ${anu.media[0]} 128kbps`, buttonText: {displayText: '♫ Audio'}, type: 1},
+                        {buttonId: `ytmp3 ${anu.media[0]} 128kbps`, buttonText: {displayText: 'AUDIO'}, type: 1},
                         {buttonId: `ytmp4 ${anu.media[0]} 360p`, buttonText: {displayText: '► Video'}, type: 1}
                     ]
 		    let buttonMessage = {
@@ -2308,16 +2291,16 @@ Untuk Download Media Silahkan Klik salah satu Button dibawah ini atau masukkan m
 		break
 		case 'juzamma': {
 		if (args[0] === 'pdf') {
-		m.reply(lang.wait)
+		m.reply(lang.wait())
 		Rika.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.pdf'}, mimetype: 'application/pdf', fileName: 'juz-amma-arab-latin-indonesia.pdf'}, {quoted:m})
 		} else if (args[0] === 'docx') {
-		m.reply(lang.wait)
+		m.reply(lang.wait())
 		Rika.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.docx'}, mimetype: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', fileName: 'juz-amma-arab-latin-indonesia.docx'}, {quoted:m})
 		} else if (args[0] === 'pptx') {
-		m.reply(lang.wait)
+		m.reply(lang.wait())
 		Rika.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.pptx'}, mimetype: 'application/vnd.openxmlformats-officedocument.presentationml.presentation', fileName: 'juz-amma-arab-latin-indonesia.pptx'}, {quoted:m})
 		} else if (args[0] === 'xlsx') {
-		m.reply(lang.wait)
+		m.reply(lang.wait())
 		Rika.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.xlsx'}, mimetype: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', fileName: 'juz-amma-arab-latin-indonesia.xlsx'}, {quoted:m})
 		} else {
 		m.reply(`Mau format apa ? Example : ${prefix + menu} pdf
@@ -2407,7 +2390,7 @@ ${id}`)
                 if (/smooth/.test(menu)) set = '-filter:v "minterpolate=\'mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=120\'"'
                 if (/tupai/.test(menu)) set = '-filter:a "atempo=0.5,asetrate=65100"'
                 if (/audio/.test(mime)) {
-                m.reply(lang.wait)
+                m.reply(lang.wait())
                 let media = await Rika.downloadAndSaveMediaMessage(quoted)
                 let ran = getRandom('.mp3')
                 exec(`ffmpeg -i ${media} ${set} ${ran}`, (err, stderr, stdout) => {
@@ -2456,7 +2439,7 @@ ${Object.entries(global.db.data.sticker).map(([key, value], index) => `${index +
             }
             break
             case 'lockcmd': {
-                if (!isCreator) throw lang.ownerOnly
+                if (!isCreator) throw lang.ownerOnly()
                 if (!m.quoted) throw 'Reply Pesan!'
                 if (!m.quoted.fileSha256) throw 'SHA256 Hash Missing'
                 let hash = m.quoted.fileSha256.toString('base64')
@@ -2645,13 +2628,13 @@ Lihat list Pesan Dengan ${prefix}listmsg`)
                 break
             }
             case 'public': {
-                if (!isCreator) throw lang.ownerOnly
+                if (!isCreator) throw lang.ownerOnly()
                 Rika.public = true
                 m.reply('Sukse Change To Public')
             }
             break
             case 'self': {
-                if (!isCreator) throw lang.ownerOnly
+                if (!isCreator) throw lang.ownerOnly()
                 Rika.public = false
                 m.reply('Sukses Change To Self')
             }
@@ -2830,35 +2813,35 @@ ${sp} Detail      : ${detail}`
                 setbot.templateGif = false
                 setbot.templateMsg = false
                 setbot.templateLocation = false
-                m.reply(lang.success)
+                m.reply(lang.success())
                 } else if (args[0] === 'templateVideo'){
                 setbot.templateImage = false
                 setbot.templateVideo = true
                 setbot.templateGif = false
                 setbot.templateMsg = false
                 setbot.templateLocation = false
-                m.reply(lang.success)
+                m.reply(lang.success())
                 } else if (args[0] === 'templateGif'){
                 setbot.templateImage = false
                 setbot.templateVideo = false
                 setbot.templateGif = true
                 setbot.templateMsg = false
                 setbot.templateLocation = false
-                m.reply(lang.success)
+                m.reply(lang.success())
                 } else if (args[0] === 'templateMessage'){
                 setbot.templateImage = false
                 setbot.templateVideo = false
                 setbot.templateGif = false
                 setbot.templateMsg = true
                 setbot.templateLocation = false
-                m.reply(lang.success)
+                m.reply(lang.success())
                 } else if (args[0] === 'templateLocation'){
                 setbot.templateImage = false
                 setbot.templateVideo = false
                 setbot.templateGif = false
                 setbot.templateMsg = false
                 setbot.templateLocation = true
-                m.reply(lang.success)
+                m.reply(lang.success())
                 } else {
                 let sections = [
                 {
@@ -2904,15 +2887,15 @@ ${sp} Detail      : ${detail}`
                 ]
                let setbot = db.data.settings[botNumber]
                         if (setbot.templateImage) {
-                        Rika.send5ButImg(m.chat, lang.rules, `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
+                        Rika.send5ButImg(m.chat, lang.rules(), `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
                         } else if (setbot.templateGif) {
-                        Rika.send5ButGif(m.chat, lang.rules, `${fouter}`, `${video}`, btn,`${thumbnaili}`)
+                        Rika.send5ButGif(m.chat, lang.rules(), `${fouter}`, `${video}`, btn,`${thumbnaili}`)
                         } else if (setbot.templateVid) {
-                        Rika.send5ButVid(m.chat, lang.rules, `${fouter}`,`${video}`, btn, `${thumbnaili}`)
+                        Rika.send5ButVid(m.chat, lang.rules(), `${fouter}`,`${video}`, btn, `${thumbnaili}`)
                         } else if (setbot.templateMsg) {
-                        Rika.send5ButMsg(m.chat, lang.rules, `${fouter}`, btn)
+                        Rika.send5ButMsg(m.chat, lang.rules(), `${fouter}`, btn)
                         } else if (setbot.templateLocation) {
-                        Rika.send5ButLoc(m.chat, lang.rules, `${fouter}`, `${thumbnaili}`, btn)
+                        Rika.send5ButLoc(m.chat, lang.rules(), `${fouter}`, `${thumbnaili}`, btn)
                         }
                         } 
             break
@@ -3010,7 +2993,7 @@ ${sp} Detail      : ${detail}`
             break
             default:
                 if (budy.startsWith('=>')) {
-                    if (!isCreator) return m.reply(lang.ownerOnly)
+                    if (!isCreator) return m.reply(lang.ownerOnly())
                     function Return(sul) {
                         sat = JSON.stringify(sul, null, 2)
                         bang = util.format(sat)
@@ -3027,7 +3010,7 @@ ${sp} Detail      : ${detail}`
                 }
 
                 if (budy.startsWith('>')) {
-                    if (!isCreator) return m.reply(lang.ownerOnly)
+                    if (!isCreator) return m.reply(lang.ownerOnly())
                     try {
                         let evaled = await eval(budy.slice(2))
                         if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
@@ -3038,7 +3021,7 @@ ${sp} Detail      : ${detail}`
                 }
 
                 if (budy.startsWith('$')) {
-                    if (!isCreator) return m.reply(lang.ownerOnly)
+                    if (!isCreator) return m.reply(ownerOnly)
                     exec(budy.slice(2), (err, stdout) => {
                         if(err) return m.reply(err)
                         if (stdout) return m.reply(stdout)

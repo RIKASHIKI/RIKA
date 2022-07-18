@@ -1,9 +1,3 @@
-/**
-   * Create By Dika Ardnt.
-   * Contact Me on wa.me/6288292024190
-   * Follow https://github.com/DikaArdnt
-*/
-
 const fs = require('fs')
 const chalk = require('chalk')
 const  { ind, eng} = require(`./language`)
@@ -15,30 +9,34 @@ global.APIs = {
 
 // Apikey Website Api
 global.APIKeys = {
-	'https://zenzapis.xyz': 'sonelstone',
+	'https://zenzapis.xyz': 'yourapikeys',
 }
 
-// Other
-global.modesp = false //true or false
+// sistem
+global.modepub = true //true for public | false for self
+global.lang = ind //ind for indonesia | eng for english
+
+// profile
 global.owner = ['6287820032793','6288744328279'] // owner
-global.premium = ['6287820032793','6288744328279'] // premium member
+global.premium = ['6287820032793','6288744328279'] //premium member
 global.packname = 'RKS MD' //pacname sticker & nama bot
 global.author = '088744328279' //author sticker
 global.ownername = 'RIKASHIKI' //your name
-global.fouter = '© RIKASHIKI | RKS MD 2022' //sesuai keinginan
-global.ownernumber = '6287820032793' // nomer owner
+global.fouter = 'RIKASHIKI | RKS-MD ©2022' //whatever
+global.ownernumber = '6287820032793' //owner number
+
+// media
 global.thumbnaili = './media/RKS.jpg' //thumbnail
-global.lang = 'ind' // [ind for indonesia] [eng for english]
-global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube if have
+global.video = './media/VIDEOWIBU.mp4' //video to link? switch to {url: 'yourlinkvideo' }
+global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube
 global.github = 'https://github.com/RIKASHIKI/RIKA' //github
 global.email = 'hariamd210@gmail.com' //email
 global.loc = 'JAPAN' //location
-global.instagram = 'https://instagram/@rikashiki_san' //ig
-global.grup = 'https://chat.whatsapp.com/E4YXacQLqPh3isulcGqlSA' //grup wa
-global.sessionName = 'session' // name session
+global.instagram = 'https://instagram.com/@rikashiki_san' //ig
+global.grup = 'https://chat.whatsapp.com/E4YXacQLqPh3isulcGqlSA' //grup whatsapp
+global.sessionName = 'session' //session
 global.prefa = ['','!','.','🐦','🐤','🗿'] 
 global.sp = 'Ξ' //mark
-global.video = './media/VIDEOWIBU.mp4' //video to link ? switch to {url: 'yourlinkvideo' }
 
 global.limitawal = {
     premium: "Infinity", //premium user
