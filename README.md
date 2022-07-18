@@ -6,9 +6,9 @@ Script WhatsApp Bot Multi Device
 <p align="center">
 	<img src="https://telegra.ph/file/09cc0981ccf07754d0af6.jpg" width="35%" style="margin-left: auto;margin-right: auto;display: block;">
 </p>
-<h1 align="center">Rika</h1>
+<h1 align="center">RIKA</h1>
 
-This is Script of WhatsApp multi device, working with [`@adiwajshing/baileys`](https://github.com/adiwajshing/baileys)
+WhatsApp multi device,script working with [`@adiwajshing/baileys`](https://github.com/adiwajshing/baileys)
 
 ## SETTING
 ````ts
@@ -39,6 +39,10 @@ global.prefa = ['','!','.','🐦','🐤','🗿']
 global.sp = 'Ξ' //mark
 ````
 Edit in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
+
+## MY GROUP
+
+- [click here](https://chat.whatsapp.com/E4YXacQLqPh3isulcGqlSA)
 
 ## FOR USER WINDOWS/RDP
 
