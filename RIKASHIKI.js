@@ -15,10 +15,10 @@ const path = require('path')
 const os = require('os')
 const moment = require('moment-timezone')
 const { JSDOM } = require('jsdom')
+const BodyForm = require('form-data')
 const speed = require('performance-now')
 const { performance } = require('perf_hooks')
-const { Primbon } = require('scrape-primbon')
-const primbon = new Primbon()
+
 const { smsg, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom, getGroupAdmins } = require('./lib/myfunc')
 
 //language
@@ -121,7 +121,7 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
         // Push Message To Console && Auto Read
         if (m.message) {
             Rika.readMessages([m.key])
-            console.log(chalk.black(chalk.bgWhite('[MSG]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('=> FROM'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('=> IN'), chalk.green(m.isGroup ? pushname : 'Private Chat', m.chat))
+            console.log(chalk.black(chalk.bgWhite('[MSG]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('> FROM'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('> IN'), chalk.green(m.isGroup ? pushname : 'Private Chat', m.chat))
         }
 	
 	// reset limit every 12 hours
@@ -1541,7 +1541,7 @@ break
                 let teks = 'YouTube Search\n\n Result From '+text+'\n\n'
                 let no = 1
                 for (let i of search.all) {
-                    teks += `${sp} No : ${no++}\n${sp} Type : ${i.type}\n${sp} Video ID : ${i.videoId}\n${sp} Title : ${i.title}\n${sp} Views : ${i.views}\n${sp} Duration : ${i.timestamp}\n${sp} Upload At : ${i.ago}\n${sp} Author : ${i.author.name}\n${sp} Url : ${i.url}\n\n─────────────────\n\n`
+                    teks += `${sp} ─── ${no++} ───\n${sp} Title : ${i.title}\n${sp} Type : ${i.type}\n${sp} Video ID : ${i.videoId}\n${sp} Views : ${i.views}\n${sp} Duration : ${i.timestamp}\n${sp} Upload At : ${i.ago}\n${sp} Author : ${i.author.name}\n${sp} Url : ${i.url}\n\n─────────────────\n\n`
                 }
                 Rika.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: teks }, { quoted: m })
             }
@@ -1589,7 +1589,7 @@ break
                 let anu = search.videos[Math.floor(Math.random() * search.videos.length)]
                 let buttons = [
                     {buttonId: `ytmp3 ${anu.url}`, buttonText: {displayText: 'AUDIO'}, type: 1},
-                    {buttonId: `ytmp4 ${anu.url}`, buttonText: {displayText: '► Video'}, type: 1}
+                    {buttonId: `ytmp4 ${anu.url}`, buttonText: {displayText: 'VIDEO'}, type: 1}
                 ]
                 let buttonMessage = {
                     image: { url: anu.thumbnail },
@@ -1602,8 +1602,8 @@ ${sp} Viewers : ${anu.views}
 ${sp} Upload At : ${anu.ago}
 ${sp} Author : ${anu.author.name}
 ${sp} Channel : ${anu.author.url}
-${sp} Description : ${anu.description}
-${sp} Url : ${anu.url}`,
+${sp} Url : ${anu.url}
+${sp} Description : ${anu.description}`,
                     footer: `${fouter}`,
                     buttons: buttons,
                     headerType: 4
@@ -1776,269 +1776,6 @@ ${sp} Url : ${anu.url}`,
                 Rika.sendMessage(m.chat, { image: { url: api('zenz', '/ephoto/' + menu, { text: text }, 'apikey') }, caption: `Ephoto ${menu}` }, { quoted: m })
             }
             break
-	    case 'nomerhoki': case 'nomorhoki': {
-                if (!Number(text)) throw `Example : ${prefix + menu} 6288292024190`
-                let anu = await primbon.nomer_hoki(Number(text))
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Nomor HP :* ${anu.message.nomer_hp}\n${sp} *Angka Shuzi :* ${anu.message.angka_shuzi}\n${sp} *Energi Positif :*\n- Kekayaan : ${anu.message.energi_positif.kekayaan}\n- Kesehatan : ${anu.message.energi_positif.kesehatan}\n- Cinta : ${anu.message.energi_positif.cinta}\n- Kestabilan : ${anu.message.energi_positif.kestabilan}\n- Persentase : ${anu.message.energi_positif.persentase}\n${sp} *Energi Negatif :*\n- Perselisihan : ${anu.message.energi_negatif.perselisihan}\n- Kehilangan : ${anu.message.energi_negatif.kehilangan}\n- Malapetaka : ${anu.message.energi_negatif.malapetaka}\n- Kehancuran : ${anu.message.energi_negatif.kehancuran}\n- Persentase : ${anu.message.energi_negatif.persentase}`, m)
-            }
-            break
-            case 'artimimpi': case 'tafsirmimpi': {
-                if (!text) throw `Example : ${prefix + menu} belanja`
-                let anu = await primbon.tafsir_mimpi(text)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Mimpi :* ${anu.message.mimpi}\n${sp} *Arti :* ${anu.message.arti}\n${sp} *Solusi :* ${anu.message.solusi}`, m)
-            }
-            break
-            case 'ramalanjodoh': case 'ramaljodoh': {
-                if (!text) throw `Example : ${prefix + menu} Dika, 7, 7, 2005, Novia, 16, 11, 2004`
-                let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
-                let anu = await primbon.ramalan_jodoh(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Nama Anda :* ${anu.message.nama_anda.nama}\n${sp} *Lahir Anda :* ${anu.message.nama_anda.tgl_lahir}\n${sp} *Nama Pasangan :* ${anu.message.nama_pasangan.nama}\n${sp} *Lahir Pasangan :* ${anu.message.nama_pasangan.tgl_lahir}\n${sp} *Hasil :* ${anu.message.result}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'ramalanjodohbali': case 'ramaljodohbali': {
-                if (!text) throw `Example : ${prefix + menu} Dika, 7, 7, 2005, Novia, 16, 11, 2004`
-                let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
-                let anu = await primbon.ramalan_jodoh_bali(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Nama Anda :* ${anu.message.nama_anda.nama}\n${sp} *Lahir Anda :* ${anu.message.nama_anda.tgl_lahir}\n${sp} *Nama Pasangan :* ${anu.message.nama_pasangan.nama}\n${sp} *Lahir Pasangan :* ${anu.message.nama_pasangan.tgl_lahir}\n${sp} *Hasil :* ${anu.message.result}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'suamiistri': {
-                if (!text) throw `Example : ${prefix + menu} Dika, 7, 7, 2005, Novia, 16, 11, 2004`
-                let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
-                let anu = await primbon.suami_istri(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Nama Suami :* ${anu.message.suami.nama}\n${sp} *Lahir Suami :* ${anu.message.suami.tgl_lahir}\n${sp} *Nama Istri :* ${anu.message.istri.nama}\n${sp} *Lahir Istri :* ${anu.message.istri.tgl_lahir}\n${sp} *Hasil :* ${anu.message.result}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'ramalancinta': case 'ramalcinta': {
-                if (!text) throw `Example : ${prefix + menu} Dika, 7, 7, 2005, Novia, 16, 11, 2004`
-                let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
-                let anu = await primbon.ramalan_cinta(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Nama Anda :* ${anu.message.nama_anda.nama}\n${sp} *Lahir Anda :* ${anu.message.nama_anda.tgl_lahir}\n${sp} *Nama Pasangan :* ${anu.message.nama_pasangan.nama}\n${sp} *Lahir Pasangan :* ${anu.message.nama_pasangan.tgl_lahir}\n${sp} *Sisi Positif :* ${anu.message.sisi_positif}\n${sp} *Sisi Negatif :* ${anu.message.sisi_negatif}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'artinama': {
-                if (!text) throw `Example : ${prefix + menu} Dika Ardianta`
-                let anu = await primbon.arti_nama(text)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Nama :* ${anu.message.nama}\n${sp} *Arti :* ${anu.message.arti}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'kecocokannama': case 'cocoknama': {
-                if (!text) throw `Example : ${prefix + menu} Dika, 7, 7, 2005`
-                let [nama, tgl, bln, thn] = text.split`,`
-                let anu = await primbon.kecocokan_nama(nama, tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Nama :* ${anu.message.nama}\n${sp} *Lahir :* ${anu.message.tgl_lahir}\n${sp} *Life Path :* ${anu.message.life_path}\n${sp} *Destiny :* ${anu.message.destiny}\n${sp} *Destiny Desire :* ${anu.message.destiny_desire}\n${sp} *Personality :* ${anu.message.personality}\n${sp} *Persentase :* ${anu.message.persentase_kecocokan}`, m)
-            }
-            break
-            case 'kecocokanpasangan': case 'cocokpasangan': case 'pasangan': {
-                if (!text) throw `Example : ${prefix + menu} Dika|Novia`
-                let [nama1, nama2] = text.split`|`
-                let anu = await primbon.kecocokan_nama_pasangan(nama1, nama2)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendImage(m.chat,  anu.message.gambar, `${sp} *Nama Anda :* ${anu.message.nama_anda}\n${sp} *Nama Pasangan :* ${anu.message.nama_pasangan}\n${sp} *Sisi Positif :* ${anu.message.sisi_positif}\n${sp} *Sisi Negatif :* ${anu.message.sisi_negatif}`, m)
-            }
-            break
-            case 'jadianpernikahan': case 'jadiannikah': {
-                if (!text) throw `Example : ${prefix + menu} 6, 12, 2020`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.tanggal_jadian_pernikahan(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Tanggal Pernikahan :* ${anu.message.tanggal}\n${sp} *karakteristik :* ${anu.message.karakteristik}`, m)
-            }
-            break
-            case 'sifatusaha': {
-                if (!ext)throw `Example : ${prefix+ menu} 28, 12, 2021`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.sifat_usaha_bisnis(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Lahir :* ${anu.message.hari_lahir}\n${sp} *Usaha :* ${anu.message.usaha}`, m)
-            }
-            break
-            case 'rejeki': case 'rezeki': {
-                if (!text) throw `Example : ${prefix + menu} 7, 7, 2005`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.rejeki_hoki_weton(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Lahir :* ${anu.message.hari_lahir}\n${sp} *Rezeki :* ${anu.message.rejeki}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'pekerjaan': case 'kerja': {
-                if (!text) throw `Example : ${prefix + menu} 7, 7, 2005`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.pekerjaan_weton_lahir(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Lahir :* ${anu.message.hari_lahir}\n${sp} *Pekerjaan :* ${anu.message.pekerjaan}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'ramalannasib': case 'ramalnasib': case 'nasib': {
-                if (!text) throw `Example : 7, 7, 2005`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.ramalan_nasib(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Analisa :* ${anu.message.analisa}\n${sp} *Angka Akar :* ${anu.message.angka_akar}\n${sp} *Sifat :* ${anu.message.sifat}\n${sp} *Elemen :* ${anu.message.elemen}\n${sp} *Angka Keberuntungan :* ${anu.message.angka_keberuntungan}`, m)
-            }
-            break
-            case 'potensipenyakit': case 'penyakit': {
-                if (!text) throw `Example : ${prefix + menu} 7, 7, 2005`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.cek_potensi_penyakit(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Analisa :* ${anu.message.analisa}\n${sp} *Sektor :* ${anu.message.sektor}\n${sp} *Elemen :* ${anu.message.elemen}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'artitarot': case 'tarot': {
-                if (!text) throw `Example : ${prefix + menu} 7, 7, 2005`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.arti_kartu_tarot(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendImage(m.chat, anu.message.image, `${sp} *Lahir :* ${anu.message.tgl_lahir}\n${sp} *Simbol Tarot :* ${anu.message.simbol_tarot}\n${sp} *Arti :* ${anu.message.arti}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'fengshui': {
-                if (!text) throw `Example : ${prefix + menu} Dika, 1, 2005\n\nNote : ${prefix + menu} Nama, gender, tahun lahir\nGender : 1 untuk laki-laki & 2 untuk perempuan`
-                let [nama, gender, tahun] = text.split`,`
-                let anu = await primbon.perhitungan_feng_shui(nama, gender, tahun)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Nama :* ${anu.message.nama}\n${sp} *Lahir :* ${anu.message.tahun_lahir}\n${sp} *Gender :* ${anu.message.jenis_kelamin}\n${sp} *Angka Kua :* ${anu.message.angka_kua}\n${sp} *Kelompok :* ${anu.message.kelompok}\n${sp} *Karakter :* ${anu.message.karakter}\n${sp} *Sektor Baik :* ${anu.message.sektor_baik}\n${sp} *Sektor Buruk :* ${anu.message.sektor_buruk}`, m)
-            }
-            break
-            case 'haribaik': {
-                if (!text) throw `Example : ${prefix + menu} 7, 7, 2005`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.petung_hari_baik(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Lahir :* ${anu.message.tgl_lahir}\n${sp} *Kala Tinantang :* ${anu.message.kala_tinantang}\n${sp} *Info :* ${anu.message.info}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'harisangar': case 'taliwangke': {
-                if (!text) throw `Example : ${prefix + menu} 7, 7, 2005`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.hari_sangar_taliwangke(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Lahir :* ${anu.message.tgl_lahir}\n${sp} *Hasil :* ${anu.message.result}\n${sp} *Info :* ${anu.message.info}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'harinaas': case 'harisial': {
-                if (!text) throw `Example : ${prefix + menu} 7, 7, 2005`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.primbon_hari_naas(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Hari Lahir :* ${anu.message.hari_lahir}\n${sp} *Tanggal Lahir :* ${anu.message.tgl_lahir}\n${sp} *Hari Naas :* ${anu.message.hari_naas}\n${sp} *Info :* ${anu.message.catatan}\n${sp} *Catatan :* ${anu.message.info}`, m)
-            }
-            break
-            case 'nagahari': case 'harinaga': {
-                if (!text) throw `Example : ${prefix + menu} 7, 7, 2005`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.rahasia_naga_hari(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Hari Lahir :* ${anu.message.hari_lahir}\n${sp} *Tanggal Lahir :* ${anu.message.tgl_lahir}\n${sp} *Arah Naga Hari :* ${anu.message.arah_naga_hari}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'arahrejeki': case 'arahrezeki': {
-                if (!text) throw `Example : ${prefix + menu} 7, 7, 2005`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.primbon_arah_rejeki(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Hari Lahir :* ${anu.message.hari_lahir}\n${sp} *tanggal Lahir :* ${anu.message.tgl_lahir}\n${sp} *Arah Rezeki :* ${anu.message.arah_rejeki}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'peruntungan': {
-                if (!text) throw `Example : ${prefix + menu} DIka, 7, 7, 2005, 2022\n\nNote : ${prefix + menu} Nama, tanggal lahir, bulan lahir, tahun lahir, untuk tahun`
-                let [nama, tgl, bln, thn, untuk] = text.split`,`
-                let anu = await primbon.ramalan_peruntungan(nama, tgl, bln, thn, untuk)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Nama :* ${anu.message.nama}\n${sp} *Lahir :* ${anu.message.tgl_lahir}\n${sp} *Peruntungan Tahun :* ${anu.message.peruntungan_tahun}\n${sp} *Hasil :* ${anu.message.result}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'weton': case 'wetonjawa': {
-                if (!text) throw `Example : ${prefix + menu} 7, 7, 2005`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.weton_jawa(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Tanggal :* ${anu.message.tanggal}\n${sp} *Jumlah Neptu :* ${anu.message.jumlah_neptu}\n${sp} *Watak Hari :* ${anu.message.watak_hari}\n${sp} *Naga Hari :* ${anu.message.naga_hari}\n${sp} *Jam Baik :* ${anu.message.jam_baik}\n${sp} *Watak Kelahiran :* ${anu.message.watak_kelahiran}`, m)
-            }
-            break
-            case 'sifat': case 'karakter': {
-                if (!text) throw `Example : ${prefix + menu} Dika, 7, 7, 2005`
-                let [nama, tgl, bln, thn] = text.split`,`
-                let anu = await primbon.sifat_karakter_tanggal_lahir(nama, tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Nama :* ${anu.message.nama}\n${sp} *Lahir :* ${anu.message.tgl_lahir}\n${sp} *Garis Hidup :* ${anu.message.garis_hidup}`, m)
-            }
-            break
-            case 'keberuntungan': {
-                if (!text) throw `Example : ${prefix + menu} Dika, 7, 7, 2005`
-                let [nama, tgl, bln, thn] = text.split`,`
-                let anu = await primbon.potensi_keberuntungan(nama, tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Nama :* ${anu.message.nama}\n${sp} *Lahir :* ${anu.message.tgl_lahir}\n${sp} *Hasil :* ${anu.message.result}`, m)
-            }
-            break
-            case 'memancing': {
-                if (!text) throw `Example : ${prefix + menu} 12, 1, 2022`
-                let [tgl, bln, thn] = text.split`,`
-                let anu = await primbon.primbon_memancing_ikan(tgl, bln, thn)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Tanggal :* ${anu.message.tgl_memancing}\n${sp} *Hasil :* ${anu.message.result}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'masasubur': {
-                if (!text) throw `Example : ${prefix + menu} 12, 1, 2022, 28\n\nNote : ${prefix + menu} hari pertama menstruasi, siklus`
-                let [tgl, bln, thn, siklus] = text.split`,`
-                let anu = await primbon.masa_subur(tgl, bln, thn, siklus)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Hasil :* ${anu.message.result}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'zodiak': case 'zodiac': {
-                if (!text) throw `Example : ${prefix+ menu} 7 7 2005`
-                let zodiak = [
-                    ["capricorn", new Date(1970, 0, 1)],
-                    ["aquarius", new Date(1970, 0, 20)],
-                    ["pisces", new Date(1970, 1, 19)],
-                    ["aries", new Date(1970, 2, 21)],
-                    ["taurus", new Date(1970, 3, 21)],
-                    ["gemini", new Date(1970, 4, 21)],
-                    ["cancer", new Date(1970, 5, 22)],
-                    ["leo", new Date(1970, 6, 23)],
-                    ["virgo", new Date(1970, 7, 23)],
-                    ["libra", new Date(1970, 8, 23)],
-                    ["scorpio", new Date(1970, 9, 23)],
-                    ["sagittarius", new Date(1970, 10, 22)],
-                    ["capricorn", new Date(1970, 11, 22)]
-                ].reverse()
-
-                function getZodiac(month, day) {
-                    let d = new Date(1970, month - 1, day)
-                    return zodiak.find(([_,_d]) => d >= _d)[0]
-                }
-                let date = new Date(text)
-                if (date == 'Invalid Date') throw date
-                let d = new Date()
-                let [tahun, bulan, tanggal] = [d.getFullYear(), d.getMonth() + 1, d.getDate()]
-                let birth = [date.getFullYear(), date.getMonth() + 1, date.getDate()]
-
-                let zodiac = await getZodiac(birth[1], birth[2])
-                
-                let anu = await primbon.zodiak(zodiac)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Zodiak :* ${anu.message.zodiak}\n${sp} *Nomor :* ${anu.message.nomor_keberuntungan}\n${sp} *Aroma :* ${anu.message.aroma_keberuntungan}\n${sp} *Planet :* ${anu.message.planet_yang_mengitari}\n${sp} *Bunga :* ${anu.message.bunga_keberuntungan}\n${sp} *Warna :* ${anu.message.warna_keberuntungan}\n${sp} *Batu :* ${anu.message.batu_keberuntungan}\n${sp} *Elemen :* ${anu.message.elemen_keberuntungan}\n${sp} *Pasangan Zodiak :* ${anu.message.pasangan_zodiak}\n${sp} *Catatan :* ${anu.message.catatan}`, m)
-            }
-            break
-            case 'shio': {
-                if (!text) throw `Example : ${prefix + menu} tikus\n\nNote : For Detail https://primbon.com/shio.htm`
-                let anu = await primbon.shio(text)
-                if (anu.status == false) return m.reply(anu.message)
-                Rika.sendText(m.chat, `${sp} *Hasil :* ${anu.message}`, m)
-            }
-            break
 	    case 'stalker': case 'stalk': {
 		if (!isPremium && global.db.data.users[m.sender].limit < 1) return m.reply('Limit Harian Anda Telah Habis')
                 if (!text) return m.reply(`Example : ${prefix +menu} type id\n\nList Type :\n1. ff (Free Fire)\n2. ml (Mobile Legends)\n3. aov (Arena Of Valor)\n4. cod (Call Of Duty)\n5. pb (point Blank)\n6. ig (Instagram)\n7. npm (https://npmjs.com)`)
@@ -2081,7 +1818,7 @@ ${sp} Url : ${anu.url}`,
                     Rika.sendMedia(m.chat, anu.caption.profile_hd, '', `${sp} Full Name : ${anu.caption.full_name}\n${sp} User Name : ${anu.caption.user_name}\n${sp} ID ${anu.caption.user_id}\n${sp} Followers : ${anu.caption.followers}\n${sp} Following : ${anu.caption.following}\n${sp} Bussines : ${anu.caption.bussines}\n${sp} Profesional : ${anu.caption.profesional}\n${sp} Verified : ${anu.caption.verified}\n${sp} Private : ${anu.caption.private}\n${sp} Bio : ${anu.caption.biography}\n${sp} Bio Url : ${anu.caption.bio_url}`, m)
 		    db.data.users[m.sender].limit -= 1
                 } else if (type.toLowerCase() == 'npm') {
-                    if (!id) throw `No Query username, Example : ${prefix + menu} npm scrape-primbon`
+                    if (!id) throw `No Query username, Example : ${prefix + menu} npm performance-now`
                     let { result: anu } = await fetchJson(api('zenz', '/api/stalker/npm', { query: id }, 'apikey'))
                     if (anu.status == false) return m.reply(anu.result.message)
                     m.reply(`${sp} Name : ${anu.name}\n${sp} Version : ${Object.keys(anu.versions)}\n${sp} Created : ${tanggal(anu.time.created)}\n${sp} Modified : ${tanggal(anu.time.modified)}\n${sp} Maintainers :\n ${anu.maintainers.map(v => `- ${v.name} : ${v.email}`).join('\n')}\n\n${sp} Description : ${anu.description}\n${sp} Homepage : ${anu.homepage}\n${sp} Keywords : ${anu.keywords}\n${sp} Author : ${anu.author.name}\n${sp} License : ${anu.license}\n${sp} Readme : ${anu.readme}`)
@@ -2216,7 +1953,7 @@ ${sp} Url : ${anu.url}`,
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/api/downloader/twitter', { url: text }, 'apikey'))
                 let buttons = [
-                    {buttonId: `twitter ${text}`, buttonText: {displayText: '► Video'}, type: 1}
+                    {buttonId: `twitter ${text}`, buttonText: {displayText: 'VIDEO'}, type: 1}
                 ]
                 let buttonMessage = {
 		    image: { url: anu.result.tumb },
@@ -2250,7 +1987,7 @@ ${sp} Url : ${anu.url}`,
 		if (anu.type == 'video') {
 		    let buttons = [
                         {buttonId: `ytmp3 ${anu.media[0]} 128kbps`, buttonText: {displayText: 'AUDIO'}, type: 1},
-                        {buttonId: `ytmp4 ${anu.media[0]} 360p`, buttonText: {displayText: '► Video'}, type: 1}
+                        {buttonId: `ytmp4 ${anu.media[0]} 360p`, buttonText: {displayText: 'VIDEO'}, type: 1}
                     ]
 		    let buttonMessage = {
 		        image: { url: anu.author.profilePic },

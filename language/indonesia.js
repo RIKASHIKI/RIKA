@@ -1,50 +1,50 @@
 exports.ownerOnly = () => {
-    return `hanya owner`
+    return `owner only`
 }
 exports.success = () => {
     return`✅ done ok desu~`
 }
 exports.wait = () => {
-    return`⏳ tunggu...`
+    return`⏳ wait...`
 }
 exports.adminOnly = () => {
-    return`hanya admin`
+    return`admin only`
 }
-exports.grupOnly = () => {
-    return`hanya grup`
+exports.groupOnly = () => {
+    return`group only`
 }
 exports.notAdmin = () => {
-    return`bot bukan admin`
+    return`bot not admin`
 }
 exports.endlimit = () => {
-    return`limit anda telah habis`
+    return`your limit has expired`
 }
 exports.premiumOnly = () => {
-    return'hanya premium'
+    return'premium only'
 }
 exports.bane = () => {
-    return`kamu telah dibanned`
+    return`you have been banned`
 }
 exports.antlig = () => {
-    return`「 ANTI LINK 」\n\n kamu terdeteksi mengirim link grup, kamu akan di kick !`
+    return`「 ANTI LINK \n\n You have been detected sending a group link, you will be kicked !`
 }
 exports.thisGc = () => {
-    return`kamu di izinkan mengrim link grup ini`
+    return`you are allowed to send this group link`
 }
 exports.admiGc = () => {
-    return`admin di izinkan mengirimkan link grup`
+    return`admin allowed to send group link`
 }
 exports.ownGc = () =>{
-    return`owner di izinkan mengirimkan link grup`
+    return`owner allowed to send group link`
 }
 exports.maLin = () => {
-    return`Masukkan Link Group!`
+    return`Enter Link Group!`
 }
 exports.choicett = () => {
-    return`pilih media yang ingin di unduh`
+    return`select the media you want to download`
 }
 exports.nostic = (prefix, menu) => {
-    return`Kirim/reply image/sticker dengan caption ${prefix + menu} text1|text2`
+    return`Send/reply image/sticker with caption ${prefix + menu} text1|text2`
 }
 
 
@@ -52,18 +52,18 @@ exports.nostic = (prefix, menu) => {
 
 exports.men = (pushname, salam, packname) => {
     return`halo ${pushname} 
-    👋 selamat ${salam} , 
-    saya ${packname}`
+    👋 good ${salam}
+    i ${packname}`
 }
 exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    return`
-   selamat ${salam}
+   good ${salam}
    ╭──── 「 *INFO* 」
    │
    │${sp} PREFIX    : ${prefix}
-   │${sp} PENGGGUNA : ${pushname}
-   │${sp} WAKTU     : ${time}
-   │${sp} TANGGAL   : ${tanggal}
+   │${sp} USER      : ${pushname}
+   │${sp} TIME      : ${time}
+   │${sp} DATE      : ${tanggal}
    │${sp} OWNER     : ${ownername}
    ╰─────────
 
@@ -280,40 +280,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}math [mode]
     │${sp} ${prefix}suitpvp [@tag]
     ╰─────────
-
-    ╭──── 「 *PRIMBON MENU* 」
-    │
-    │${sp} ${prefix}nomorhoki
-    │${sp} ${prefix}artimimpi
-    │${sp} ${prefix}artinama
-    │${sp} ${prefix}ramaljodoh
-    │${sp} ${prefix}ramaljodohbali
-    │${sp} ${prefix}suamiistri
-    │${sp} ${prefix}ramalcinta
-    │${sp} ${prefix}cocoknama
-    │${sp} ${prefix}pasangan
-    │${sp} ${prefix}jadiannikah
-    │${sp} ${prefix}sifatusaha
-    │${sp} ${prefix}rezeki
-    │${sp} ${prefix}pekerjaan
-    │${sp} ${prefix}nasib
-    │${sp} ${prefix}penyakit
-    │${sp} ${prefix}tarot
-    │${sp} ${prefix}fengshui
-    │${sp} ${prefix}haribaik
-    │${sp} ${prefix}harisangar
-    │${sp} ${prefix}harisial
-    │${sp} ${prefix}nagahari
-    │${sp} ${prefix}arahrezeki
-    │${sp} ${prefix}peruntungan
-    │${sp} ${prefix}weton
-    │${sp} ${prefix}karakter
-    │${sp} ${prefix}keberuntungan
-    │${sp} ${prefix}memancing
-    │${sp} ${prefix}masasubur
-    │${sp} ${prefix}zodiak
-    │${sp} ${prefix}shio
-    ╰─────────
     
     ╭──── 「 *CONVERT MENU* 」
     │
@@ -392,12 +358,12 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} Nurutomo
     │${sp} Rashid
     │${sp} ZeeoneOfc
-    │${sp} Penyedia Module
+    │${sp} Provider Module
     │${sp} Faiz bastomi
     │${sp} Bremana
     │${sp} Eksa
     │${sp} Rikashiki
-    │${sp} Semua pendukung
+    │${sp} all aupport
     ╰─────────
     `
 }
@@ -406,54 +372,54 @@ exports.sc = (github) => {
 
     Base    : https://github.com/DikaArdnt/Hisoka-Morou
     recode  : ${github}`
-}
+} 
 exports.dona = (pushname, ownernumber) => {
-    return `*──────「 DONASI 」 ──────*
-    hai ${pushname}
-    Kalian bisa mendukung agar bot ini tetap aktif dengan cara donasi
+    return `*──────「 DONATION *
+    hi ${pushname}
+    You can support this bot to stay active by donating
 
-    Berapapun donasi kalian akan sangat berarti 👍
+    Any amount of your donation will mean a lot 👍
 
 
-dana  : 087820032793
-pulsa : 087820032793 [XL]
-terima kasih!
+fund : 087820032793
+pulse : 087820032793 [XL]
+Thank you!
 
-kontak pertama:
+first contact:
 wa.me/${ownernumber}`
 }
 exports.rules = () => {
-    return`*────── 「 ATURAN 」 ──────*
+    return`*────── RULE *
 
 
-    # *SYARAT DAN KETENTUAN*
-     — Jangan spam ,telepon atau mengekploitasi bot 
+    # *TERMS AND CONDITIONS*
+     — Don't spam, call or exploit bots
 
 
-    # *PRIVASI*
-     — pemilik dapat melihat segala aktifitas pengguna
-     — bot tidak menyimpan, membagikan , atau menyalahgunakan data pengguna
+    # *PRIVACY*
+     — owner can see all user activity
+     — bots don't store, share or abuse user data
     
     
     # *FAQ*
-    🗯️ Bot tidak / lambat merespon ?
-     — dipengaruhi signal, banned, masalah pada server dan beberapa asalan
+    ️ Bot not / slow to respond ?
+     — affected by signal, banned, server problems and some random things
     
-    🗯️ Dimana bisa mendapatkan Script bot ini ?
-     — Script private dan tidak diperjual belikan
+    ️ Where can I get this bot script?
+     — Script private and not for sale
     
-    🗯️ bagaimana menambahkan bot ke grup?
-     — info lebih lanjut tanya kepada pemilik
+    ️ how to add bot to group?
+     — more info ask the owner
     
-    🗯️ Prefixnya apa ?
+    ️ What's the prefix?
      — multi prefix
     
-    🗯️ pemilik tidak merespon / menjawab?
-     — pemilik hanya menjawab chat penting
+    ️ owner not responding / answering?
+     — the owner only answers important chats
     
 
 
-    _dengan menggunakan bot ini maka pengguna setuju dengan syarat dan ketentuan yang berlaku._
-    _jika melanggar maka akan dikenakan sanksi banned permanen_ ⚠
+    _by using this bot, the user agrees to the terms and conditions that apply._
+    _if it violates it will be subject to permanent ban sanctions_
     `
 }

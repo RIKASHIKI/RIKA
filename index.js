@@ -58,7 +58,7 @@ global.loadDatabase = async function loadDatabase() {
 }
 loadDatabase()
 
-// save database every 1 minute
+// save database every 30seconds
 if (global.db) setInterval(async () => {
     if (global.db.data) await global.db.write()
   }, 60 * 1000)

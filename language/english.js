@@ -284,40 +284,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}suitpvp [@tag]
     ╰─────────
 
-    ╭──── 「 *PRIMBON MENU* 」
-    │
-    │${sp} ${prefix}nomorhoki
-    │${sp} ${prefix}artimimpi
-    │${sp} ${prefix}artinama
-    │${sp} ${prefix}ramaljodoh
-    │${sp} ${prefix}ramaljodohbali
-    │${sp} ${prefix}suamiistri
-    │${sp} ${prefix}ramalcinta
-    │${sp} ${prefix}cocoknama
-    │${sp} ${prefix}pasangan
-    │${sp} ${prefix}jadiannikah
-    │${sp} ${prefix}sifatusaha
-    │${sp} ${prefix}rezeki
-    │${sp} ${prefix}pekerjaan
-    │${sp} ${prefix}nasib
-    │${sp} ${prefix}penyakit
-    │${sp} ${prefix}tarot
-    │${sp} ${prefix}fengshui
-    │${sp} ${prefix}haribaik
-    │${sp} ${prefix}harisangar
-    │${sp} ${prefix}harisial
-    │${sp} ${prefix}nagahari
-    │${sp} ${prefix}arahrezeki
-    │${sp} ${prefix}peruntungan
-    │${sp} ${prefix}weton
-    │${sp} ${prefix}karakter
-    │${sp} ${prefix}keberuntungan
-    │${sp} ${prefix}memancing
-    │${sp} ${prefix}masasubur
-    │${sp} ${prefix}zodiak
-    │${sp} ${prefix}shio
-    ╰─────────
-    
     ╭──── 「 *CONVERT MENU* 」
     │
     │${sp} ${prefix}attp
