@@ -31,11 +31,11 @@ global.api = (name, path = '/', query = {}, apikeyqueryname) => (name in global.
 const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
 
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
-global.db = new low(
-  /https?:\/\//.test(opts['db'] || '') ?
-    new cloudDBAdapter(opts['db']) : /mongodb/.test(opts['db']) ?
-      new mongoDB(opts['db']) :
-      new JSONFile(`src/database.json`)
+global.db = new Low(
+    /https?:\/\//.test(opts['db'] || '') ?
+      new cloudDBAdapter(opts['db']) : /mongodb/.test(opts['db']) ?
+        new mongoDB(opts['db']) :
+        new JSONFile(`src/database.json`)
 )
 global.DATABASE = global.db // Backwards Compatibility
 global.loadDatabase = async function loadDatabase() {

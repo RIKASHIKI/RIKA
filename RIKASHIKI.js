@@ -1612,8 +1612,9 @@ ${sp} Description : ${anu.description}`,
             }
             break
             case 'ytdl': case'youtubedl': case'youtubedownload': {
-                if (!text) throw lang.adlin
-                let media = await yta(text, quality)
+                if (!text) throw lang.adlin()
+		    let { yta } = require('./lib/y2mate')
+		    let media = await yta(text)
                     let btn = [{
                           quickReplyButton: {
                           displayText: "VIDEO",

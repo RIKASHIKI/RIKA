@@ -1,10 +1,10 @@
+## 
 <p align="center">
 	<img src="https://telegra.ph/file/09cc0981ccf07754d0af6.jpg" width="35%" style="margin-left: auto;margin-right: auto;display: block;">
 </p>
 <h1 align="center">RIKA</h1>
 <h4 align="center">beta whatsapp bot multidevice</h4>
 
-WhatsApp multi device,script working with [`@adiwajshing/baileys`](https://github.com/adiwajshing/baileys)
 
 ## SETTING
 ````ts
@@ -90,7 +90,7 @@ WhatsApp Connection (BETA, not working perfectly)
 Editing Number Owner & session name in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
 Get Apikey zenz on [`zenz`](https://zenzapi.xyz/pricing)
 
-
+WhatsApp multi device,script working with [`@adiwajshing/baileys`](https://github.com/adiwajshing/baileys)
 ## Thanks To
 * [`@adiwajshing/baileys`](https://github.com/adiwajshing/baileys)
 * [`Nurutomo`](https://github.com/Nurutomo)
@@ -102,7 +102,7 @@ Get Apikey zenz on [`zenz`](https://zenzapi.xyz/pricing)
 * [`zhwzein`](https://github.com/zhwzein)
 * [`CAF-ID`](https://github.com/CAF-ID)
 * [`bintang`](https://github.com/Bintangp02)
-*[`rikashiki`](https://github.com/RIKASHIKI)
+* [`rikashiki`](https://github.com/RIKASHIKI)
 
 ```Thanks to all who have participated in the development of this script```
 
