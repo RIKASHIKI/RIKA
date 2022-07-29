@@ -1,12 +1,8 @@
-
-
-# RIKA
-Script WhatsApp Bot Multi Device
-
 <p align="center">
 	<img src="https://telegra.ph/file/09cc0981ccf07754d0af6.jpg" width="35%" style="margin-left: auto;margin-right: auto;display: block;">
 </p>
 <h1 align="center">RIKA</h1>
+<h4 align="center">beta whatsapp bot multidevice</h4>
 
 WhatsApp multi device,script working with [`@adiwajshing/baileys`](https://github.com/adiwajshing/baileys)
 
@@ -40,9 +36,6 @@ global.sp = 'Ξ' //mark
 ````
 Edit in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
 
-## MY GROUP
-
-- [click here](https://chat.whatsapp.com/E4YXacQLqPh3isulcGqlSA)
 
 ## FOR USER WINDOWS/RDP
 
@@ -109,6 +102,7 @@ Get Apikey zenz on [`zenz`](https://zenzapi.xyz/pricing)
 * [`zhwzein`](https://github.com/zhwzein)
 * [`CAF-ID`](https://github.com/CAF-ID)
 * [`bintang`](https://github.com/Bintangp02)
+*[`rikashiki`](https://github.com/RIKASHIKI)
 
 ```Thanks to all who have participated in the development of this script```
 
@@ -118,3 +112,6 @@ License: [MIT](https://en.wikipedia.org/wiki/MIT_License)
 Support Me
 * dana  087820032793
 * pulsa 087820032793 XL
+## MY GROUP
+
+- [WHATSAPP GROUP](https://chat.whatsapp.com/E4YXacQLqPh3isulcGqlSA)
