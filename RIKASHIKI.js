@@ -417,7 +417,7 @@ its been ${clockString(new Date - afkTime)}
         if (db.data.users[m.sender].afkTime > -1) {
             let user = global.db.data.users[m.sender]
             m.reply(`
-you cam back online from AFK${user.afkReason ? ' after ' + user.afkReason : ''}
+you come back online from AFK${user.afkReason ? ' after ' + user.afkReason : ''}
 Selama ${clockString(new Date - user.afkTime)}
 `.trim())
             user.afkTime = -1
@@ -586,7 +586,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             break
             case 'chat': {
                 if (!isCreator) throw lang.ownerOnly()
-                if (!q) throw 'Option : 1. mute\n2. unmute\n3. archive\n4. unarchive\n5. read\n6. unread\n7. delete'
+                if (!q) throw lang.chochat()
                 if (args[0] === 'mute') {
                     Rika.chatModify({ mute: 'Infinity' }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === 'unmute') {
@@ -813,7 +813,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                 if (!m.isGroup) throw lang.grupOnly()
                 if (!isBotAdmins) throw lang.notAdmin()
                 if (!isAdmins) throw lang.adminOnly()
-                if (!text) throw 'Text ?'
+                if (!text) throw lang.wetext()
                 await Rika.groupUpdateSubject(m.chat, text).then((res) => m.reply(lang.success())).catch((err) => m.reply(jsonformat(err)))
             }
             break
@@ -821,7 +821,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                 if (!m.isGroup) throw lang.grupOnly()
                 if (!isBotAdmins) throw lang.notAdmin()
                 if (!isAdmins) throw lang.adminOnly()
-                if (!text) throw 'Text ?'
+                if (!text) throw lang.wetext()
                 await Rika.groupUpdateDescription(m.chat, text).then((res) => m.reply(lang.success())).catch((err) => m.reply(jsonformat(err)))
             }
             break
@@ -878,7 +878,7 @@ let teks = `「 *TAGALL* 」
 	        if (!isPremium && global.db.data.users[m.sender].limit < 1) return m.reply(lang.endlimit())
 		db.data.users[m.sender].limit -= 1 // -1 limit
 		let { styletext } = require('./lib/scraper')
-		if (!text) throw 'Masukkan Query text!'
+		if (!text) throw lang.wetext()
                 let anu = await styletext(text)
                 let teks = `Style Text From ${text}\n\n`
                 for (let i of anu) {
@@ -1090,11 +1090,11 @@ break
                 if (!isBotAdmins) throw lang.notAdmin()
                 if (!isAdmins) throw lang.adminOnly()
                 if (args[0] === "on") {
-                if (db.data.chats[m.chat].antilink) return m.reply(`Sudah Aktif Sebelumnya`)
+                if (db.data.chats[m.chat].antilink) return m.reply(lang.onbefo())
                 db.data.chats[m.chat].antilink = true
                 m.reply(`Antilink Aktif !`)
                 } else if (args[0] === "off") {
-                if (!db.data.chats[m.chat].antilink) return m.reply(`Sudah Tidak Aktif Sebelumnya`)
+                if (!db.data.chats[m.chat].antilink) return m.reply(lang.offbefo())
                 db.data.chats[m.chat].antilink = false
                 m.reply(`Antilink Tidak Aktif !`)
                 } else {
@@ -1111,11 +1111,11 @@ break
                 if (!isBotAdmins) throw lang.notAdmin()
                 if (!isAdmins) throw lang.adminOnly()
                 if (args[0] === "on") {
-                if (db.data.chats[m.chat].mute) return m.reply(`Sudah Aktif Sebelumnya`)
+                if (db.data.chats[m.chat].mute) return m.reply(lang.onbefo())
                 db.data.chats[m.chat].mute = true
                 m.reply(`${`${fouter}`} telah di mute di group ini !`)
                 } else if (args[0] === "off") {
-                if (!db.data.chats[m.chat].mute) return m.reply(`Sudah Tidak Aktif Sebelumnya`)
+                if (!db.data.chats[m.chat].mute) return m.reply(lang.offbefo())
                 db.data.chats[m.chat].mute = false
                 m.reply(`${`${fouter}`} telah di unmute di group ini !`)
                 } else {
@@ -1127,7 +1127,7 @@ break
                 }
              }
              break
-            case 'linkgroup': case 'linkgc': {
+            case 'linkgroup': case 'linkgc': case 'gclink': {
                 if (!m.isGroup) throw lang.grupOnly()
                 if (!isBotAdmins) throw lang.notAdmin()
                 let response = await Rika.groupInviteCode(m.chat)
@@ -1171,7 +1171,7 @@ break
             break
             case 'bcgc': case 'bcgroup': {
                 if (!isCreator) throw lang.ownerOnly()
-                if (!text) throw `Text mana?\n\nExample : ${prefix + menu} RIKASHIKI`
+                if (!text) throw `textnya ? \n\nExample : ${prefix + menu} RIKASHIKI`
                 let getGroups = await Rika.groupFetchAllParticipating()
                 let groups = Object.entries(getGroups).slice(0).map(entry => entry[1])
                 let anu = groups.map(v => v.id)
@@ -1541,7 +1541,7 @@ break
                 let teks = 'YouTube Search\n\n Result From '+text+'\n\n'
                 let no = 1
                 for (let i of search.all) {
-                    teks += `${sp} ─── ${no++} ───\n${sp} Title : ${i.title}\n${sp} Type : ${i.type}\n${sp} Video ID : ${i.videoId}\n${sp} Views : ${i.views}\n${sp} Duration : ${i.timestamp}\n${sp} Upload At : ${i.ago}\n${sp} Author : ${i.author.name}\n${sp} Url : ${i.url}\n\n─────────────────\n\n`
+                    teks += `─────── ${no++} ───────\n${sp} Title : ${i.title}\n${sp} Type : ${i.type}\n${sp} Video ID : ${i.videoId}\n${sp} Views : ${i.views}\n${sp} Duration : ${i.timestamp}\n${sp} Upload At : ${i.ago}\n${sp} Author : ${i.author.name}\n${sp} Url : ${i.url}\n\n─────────────────\n\n`
                 }
                 Rika.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: teks }, { quoted: m })
             }
@@ -1571,7 +1571,7 @@ break
                 ]
                 let buttonMessage = {
                     image: { url: images },
-                    caption: `*-------「 GIMAGE SEARCH 」-------*
+                    caption: `*────────「 GIMAGE SEARCH 」────────*
 🤠 *Query* : ${text}
 🔗 *Media Url* : ${images}`,
                     footer: `${fouter}`,
@@ -1611,22 +1611,54 @@ ${sp} Description : ${anu.description}`,
                 Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             break
+            case 'ytdl': case'youtubedl': case'youtubedownload': {
+                if (!text) throw lang.adlin
+                let media = await yta(text, quality)
+                    let btn = [{
+                          quickReplyButton: {
+                          displayText: "VIDEO",
+                          id: `ytmp4 ${text}`
+                          }
+                          },
+                          {
+                          quickReplyButton: {
+                          displayText: "AUDIO",
+                          id: `ytmp3 ${text}`
+                          }
+                          },
+                          {
+                          quickReplyButton: {
+                          displayText: "FILE AUDIO",
+                          id: `ytfilemp3 ${text}`
+                          }
+                          }
+                          ]
+                          await Rika.send5ButLoc(m.chat, lang.choicemed(), `${fouter}`, media.thumb, btn)
+                  }
+        break
 	    case 'ytmp3': case 'ytaudio': {
                 let { yta } = require('./lib/y2mate')
                 if (!text) throw `Example : ${prefix + menu} https://youtube.com/watch?v=PtFMh6Tccag%27 128kbps`
                 let quality = args[1] ? args[1] : '128kbps'
                 let media = await yta(text, quality)
                 if (media.filesize >= 100000) return m.reply('File Melebihi Batas '+util.format(media))
-                Rika.sendImage(m.chat, media.thumb, `${sp} Title : ${media.title}\n${sp} File Size : ${media.filesizeF}\n${sp} Url : ${isUrl(text)}\n${sp} Ext : MP3\n${sp} Resolusi : ${args[1] || '128kbps'}`, m)
                 Rika.sendMessage(m.chat, { audio: { url: media.dl_link }, mimetype: 'audio/mpeg', fileName: `${media.title}.mp3` }, { quoted: m })
             }
             break
+        case 'ytfileaudio': case 'ytfilemp3': {
+            let { yta } = require('./lib/y2mate')
+            if (!text) throw `contoh :  ${prefix + menu} https://youtube.com/watch?v=PtFMh6Tccag%27` 
+            let quality = args[1] ? args[1] : '128kbps'
+            let media = await yta(text, quality)
+            if (media.filesize >= 100000) return m.reply('File Melebihi Batas '+util.format(media))
+            Rika.sendMessage(m.chat,{document:{url: media.dl_link }, mimetype:'audio/mpeg', fileName: `${media.title}.mp3`},{quoted:m})
+}      
             case 'ytmp4': case 'ytvideo': {
                 let { ytv } = require('./lib/y2mate')
                 if (!text) throw `Example : ${prefix + menu} https://youtube.com/watch?v=PtFMh6Tccag%27 360p`
                 let quality = args[1] ? args[1] : '360p'
                 let media = await ytv(text, quality)
-                if (media.filesize >= 100000) return m.reply('File Melebihi Batas '+util.format(media))
+                if (media.filesize >= 200000) return m.reply('File Melebihi Batas '+util.format(media))
                 Rika.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `${sp} Title : ${media.title}\n${sp} File Size : ${media.filesizeF}\n${sp} Url : ${isUrl(text)}\n${sp} Ext : MP3\n${sp} Resolusi : ${args[1] || '360p'}` }, { quoted: m })
             }
             break
@@ -1657,7 +1689,7 @@ ${sp} Description : ${anu.description}`,
                 Rika.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `${sp} Title : ${media.title}\n${sp} File Size : ${media.filesizeF}\n${sp} Url : ${urls[text - 1]}\n${sp} Ext : MP3\n${sp} Resolusi : ${args[1] || '360p'}` }, { quoted: m })
             }
             break
-            case 'pinterest': {
+            case 'pinterest': case'pin':{
                 m.reply(lang.wait())
 		let { pinterest } = require('./lib/scraper')
                 anu = await pinterest(text)
@@ -1829,7 +1861,7 @@ ${sp} Description : ${anu.description}`,
             }
             break
             case 'tiktok': case 'tt': case 'ttdl': case 'tiktokdl': case 'tiktokdownload': {
-              if (!text) throw 'add link'
+              if (!text) throw lang.adlin()
               let btn = [{
                     quickReplyButton: {
                     displayText: "NO WATERMARK",
@@ -1849,58 +1881,25 @@ ${sp} Description : ${anu.description}`,
                     }
                     }
                     ]
-              await Rika.send5ButLoc(m.chat, lang.choicett(), `${fouter}`, `${thumbnaili}`, btn)
+              await Rika.send5ButLoc(m.chat,lang.choicemed(), `${fouter}`, `${thumbnaili}`, btn)
             }
             break
 	        case 'tiktoknowatermark': case 'tiktoknowm' :case 'ttnowm': {
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
-                let buttons = [
-                    {buttonId: `tiktokwm ${text}`, buttonText: {displayText: 'WATERMARK'}, type: 1},
-                    {buttonId: `tiktokmp3 ${text}`, buttonText: {displayText: 'AUDIO'}, type: 1}
-                ]
-                let buttonMessage = {
-                    video: { url: anu.result.nowatermark },
-                    caption: `Download From ${text}`,
-                    footer: `${fouter}`,
-                    buttons: buttons,
-                    headerType: 5
-                }
-                Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
+                Rika.sendMessage(m.chat, {video:{url: anu.result.nowatermark},mimetype: 'video/mp4'},{quoted: m})
             }
             break
             case 'tiktokwm': case 'tiktokwatermark': case 'ttwm': {
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
-                let buttons = [
-                    {buttonId: `tiktoknowm ${text}`, buttonText: {displayText: 'NO WATERMARK'}, type: 1},
-                    {buttonId: `tiktokmp3 ${text}`, buttonText: {displayText: 'AUDIO'}, type: 1}
-                ]
-                let buttonMessage = {
-                    video: { url: anu.result.watermark },
-                    caption: `Download From ${text}`,
-                    footer: `${fouter}`,
-                    buttons: buttons,
-                    headerType: 5
-                }
-                Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
+                Rika.sendMessage(m.chat, {video:{url: anu.result.watermark},mimetype: 'video/mp4'},{quoted: m})
             }
             break
             case 'tiktokmp3': case 'tiktokaudio':case'ttmp3': {
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/musically', { url: text }, 'apikey'))
-                let buttons = [
-                    {buttonId: `tiktoknowm ${text}`, buttonText: {displayText: 'NO WATERMARK'}, type: 1},
-                    {buttonId: `tiktokwm ${text}`, buttonText: {displayText: 'WATERMARK'}, type: 1}
-                ]
-                let buttonMessage = {
-                    text: `Download From ${text}`,
-                    footer: `${fouter}`,
-                    buttons: buttons,
-                    headerType: 2
-                }
-                let msg = await Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
-                Rika.sendMessage(m.chat, { audio: { url: anu.result.audio }, mimetype: 'audio/mpeg'}, { quoted: msg })
+                Rika.sendMessage(m.chat, { audio: { url: anu.result.audio }, mimetype: 'audio/mpeg'}, { quoted: m })
             }
             break
 	        case 'instagram': case 'ig': case 'igdl': {
@@ -1932,7 +1931,7 @@ ${sp} Description : ${anu.description}`,
             }
             break
 	        case 'twitdl': case 'twitter':case'twitterdl': {
-                if (!text) throw 'add link'
+                if (!text) throw lang.adlin()
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/api/downloader/twitter', { url: text }, 'apikey'))
                 let buttons = [
@@ -1949,7 +1948,7 @@ ${sp} Description : ${anu.description}`,
             }
             break
             case 'twittermp3': case 'twitteraudio': {
-                if (!text) throw 'add link'
+                if (!text) throw lang.adlin()
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/api/downloader/twitter', { url: text }, 'apikey'))
                 let buttons = [
@@ -1967,14 +1966,14 @@ ${sp} Description : ${anu.description}`,
             }
             break
 	        case 'fbdl': case 'fb': case 'facebook': {
-                if (!text) throw 'add link'
+                if (!text) throw lang.adlin()
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/api/downloader/facebook', { url: text }, 'apikey'))
                 Rika.sendMessage(m.chat, { video: { url: anu.result.url }, caption: `${sp} Title : ${anu.result.title}`}, { quoted: m })
             }
             break
 	        case 'pindl': case 'pinterestdl': {
-                if (!text) throw 'add link'
+                if (!text) throw lang.adlin()
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/api/downloader/pinterestdl', { url: text }, 'apikey'))
                 Rika.sendMessage(m.chat, { video: { url: anu.result }, caption: `Download From ${text}` }, { quoted: m })

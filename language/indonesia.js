@@ -1,70 +1,90 @@
 exports.ownerOnly = () => {
-    return `owner only`
+    return `hanya owner`
 }
 exports.success = () => {
     return`✅ done ok desu~`
 }
 exports.wait = () => {
-    return`⏳ wait...`
+    return`⏳ tunggu...`
 }
 exports.adminOnly = () => {
-    return`admin only`
+    return`hanya admin`
 }
-exports.groupOnly = () => {
-    return`group only`
+exports.grupOnly = () => {
+    return`hanya grup`
 }
 exports.notAdmin = () => {
-    return`bot not admin`
+    return`bot bukan admin`
 }
 exports.endlimit = () => {
-    return`your limit has expired`
+    return`limit anda telah habis`
 }
 exports.premiumOnly = () => {
-    return'premium only'
+    return'hanya Premium'
 }
 exports.bane = () => {
-    return`you have been banned`
+    return`kamu telah dibanned`
 }
 exports.antlig = () => {
-    return`「 ANTI LINK \n\n You have been detected sending a group link, you will be kicked !`
+    return`「 ANTI LINK 」\n\n kamu terdeteksi mengirim link grup, kamu akan di kick !`
 }
 exports.thisGc = () => {
-    return`you are allowed to send this group link`
+    return`kamu di izinkan mengrim link grup ini`
 }
 exports.admiGc = () => {
-    return`admin allowed to send group link`
+    return`admin di izinkan mengirimkan link grup`
 }
 exports.ownGc = () =>{
-    return`owner allowed to send group link`
+    return`owner di izinkan mengirimkan link grup`
 }
 exports.maLin = () => {
-    return`Enter Link Group!`
+    return`tambahkan tautan Grup!`
 }
-exports.choicett = () => {
-    return`select the media you want to download`
+exports.choicemed = () => {
+    return`pilih media yang ingin di unduh`
 }
 exports.nostic = (prefix, menu) => {
-    return`Send/reply image/sticker with caption ${prefix + menu} text1|text2`
+    return`kirim/balas gambar/stiker dengan keterangan ${prefix + menu} text1|text2`
 }
+exports.onbefo = () => {
+    return`sudah aktif sebelumnya`
+}
+exports.offbefo = () => {
+    return`Sudah Tidak Aktif Sebelumnya`
+}
+exports.adlin = () => {
+    return`tambahkan tautan`
+}
+exports.chochat = () => {
+    return`Pilihan : 1. mute\n2. unmute\n3. archive\n4. unarchive\n5. read\n6. unread\n7. delete`
+}
+exports.wetext = () => {
+    return`dimana teksnya ?`
+}
+
+
+
+
 
 
 
 
 exports.men = (pushname, salam, packname) => {
-    return`halo ${pushname} 
-    👋 good ${salam}
-    i ${packname}`
+    return`hallo ${pushname} 
+    👋selamat ${salam} , 
+    saya ${packname} `
 }
 exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    return`
-   good ${salam}
+   selamat ${salam}
+
    ╭──── 「 *INFO* 」
    │
-   │${sp} PREFIX    : ${prefix}
-   │${sp} USER      : ${pushname}
-   │${sp} TIME      : ${time}
-   │${sp} DATE      : ${tanggal}
-   │${sp} OWNER     : ${ownername}
+   │${sp} PREFIX  : ${prefix}
+   │${sp} USER    : ${pushname}
+   │${sp} TIME    : ${time}
+   │${sp} DATE    : ${tanggal}
+   │${sp} OWNER   : ${ownername}
    ╰─────────
 
     ╭──── 「 *OWNER MENU* 」
@@ -139,6 +159,8 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     
     ╭──── 「 *DOWNLOAD MENU* 」
     │
+    │${sp} ${prefix}ytdl [url]
+    │${sp} ${prefix}ttdl [url]
     │${sp} ${prefix}tiktoknowm [url]
     │${sp} ${prefix}tiktokwm [url]
     │${sp} ${prefix}tiktokmp3 [url]
@@ -165,7 +187,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}pinterest [query]
     │${sp} ${prefix}wallpaper [query]
     │${sp} ${prefix}wikimedia [query]
-    │${sp} ${prefix}ytsearch [query]
     │${sp} ${prefix}ringtone [query]
     │${sp} ${prefix}stalk [option] [query]
     ╰─────────
@@ -280,7 +301,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}math [mode]
     │${sp} ${prefix}suitpvp [@tag]
     ╰─────────
-    
+
     ╭──── 「 *CONVERT MENU* 」
     │
     │${sp} ${prefix}attp
@@ -347,7 +368,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}tupai
     ╰─────────
 
-    ╭────「 *TERIMA KASIH KEPADA* 」
+    ╭────「 *THANK TO* 」
     │ 
     │${sp} My God
     │${sp} My Parents
@@ -358,12 +379,12 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} Nurutomo
     │${sp} Rashid
     │${sp} ZeeoneOfc
-    │${sp} Provider Module
+    │${sp} Penyedia Module
     │${sp} Faiz bastomi
     │${sp} Bremana
     │${sp} Eksa
     │${sp} Rikashiki
-    │${sp} all aupport
+    │${sp} all support
     ╰─────────
     `
 }
@@ -372,54 +393,54 @@ exports.sc = (github) => {
 
     Base    : https://github.com/DikaArdnt/Hisoka-Morou
     recode  : ${github}`
-} 
+}
 exports.dona = (pushname, ownernumber) => {
-    return `*──────「 DONATION *
-    hi ${pushname}
-    You can support this bot to stay active by donating
+    return `*──────「 DONATE 」 ──────*
+    hai ${pushname}
+    Kalian bisa mendukung agar bot ini tetap aktif dengan cara donasi
 
-    Any amount of your donation will mean a lot 👍
+    Berapapun donasi kalian akan sangat berarti 👍
 
 
-fund : 087820032793
-pulse : 087820032793 [XL]
-Thank you!
+dana  : 087820032793
+pulsa : 087820032793 [XL]
 
-first contact:
+
+contact person:
 wa.me/${ownernumber}`
 }
 exports.rules = () => {
-    return`*────── RULE *
+    return`*────── 「 RULES 」 ──────*
 
 
-    # *TERMS AND CONDITIONS*
-     — Don't spam, call or exploit bots
+    # *SYARAT & KETENTUAN*
+     — jangan spam ,menelpon atau eksploitasi bot 
 
 
-    # *PRIVACY*
-     — owner can see all user activity
-     — bots don't store, share or abuse user data
+    # *PRIVASI*
+     — pemilik dapat melihat segala aktifitas pengguna
+     — bot tidak menyimpan, membagikan , atau menyalahgunakan data pengguna
     
     
-    # *FAQ*
-    ️ Bot not / slow to respond ?
-     — affected by signal, banned, server problems and some random things
+    # *PERTANYAAN YANG SERING DI AJUKAN*
+    🗯️ bot tidak / lambat menjawab ?
+     — disebabkan oleh sinyal, banned, masalah dari server dan alasan lainnya
     
-    ️ Where can I get this bot script?
-     — Script private and not for sale
+    🗯️ dimana bisa mendapatkan script ini ?
+     — cari sendiri di github
     
-    ️ how to add bot to group?
-     — more info ask the owner
+    🗯️ bagaimana menambahkan bot ke grup?
+     — info lebih lanjut tanya kepada pemilik
     
-    ️ What's the prefix?
+    🗯️ prefix nya apa ?
      — multi prefix
     
-    ️ owner not responding / answering?
-     — the owner only answers important chats
+    🗯️ pemilik tidak merespon / menjawab?
+     — pemilik hanya menjawab chat penting
     
 
 
-    _by using this bot, the user agrees to the terms and conditions that apply._
-    _if it violates it will be subject to permanent ban sanctions_
+    _dengan menggunakan bot ini maka pengguna setuju dengan syarat dan ketentuan yang berlaku._
+    _jika melanggar maka akan dikenakan sanksi banned permanen_ ⚠
     `
 }

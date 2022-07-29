@@ -6,11 +6,11 @@ const  { ind, eng} = require(`./language`)
 global.APIs = {
 	zenz: 'https://zenzapis.xyz',
 }
-
 // Apikey Website Api
 global.APIKeys = {
-	'https://zenzapis.xyz': 'yourapikeys',
+	'https://zenzapis.xyz': 'sonelstore',
 }
+
 
 // sistem
 global.modepub = true //true for public | false for self
@@ -19,7 +19,7 @@ global.lang = ind //ind for indonesia | eng for english
 // profile
 global.owner = ['6287820032793','6288744328279'] // owner
 global.premium = ['6287820032793','6288744328279'] //premium member
-global.packname = 'RKS MD' //pacname sticker & nama bot
+global.packname = 'RKS MD' //pacname sticker & name bot
 global.author = '088744328279' //author sticker
 global.ownername = 'RIKASHIKI' //your name
 global.fouter = 'RIKASHIKI | RKS-MD ©2022' //whatever
@@ -36,11 +36,11 @@ global.instagram = 'https://instagram.com/@rikashiki_san' //ig
 global.grup = 'https://chat.whatsapp.com/E4YXacQLqPh3isulcGqlSA' //grup whatsapp
 global.sessionName = 'session' //session
 global.prefa = ['','!','.','🐦','🐤','🗿'] 
-global.sp = 'Ξ' //mark
+global.sp = '□' //mark
 
 global.limitawal = {
     premium: "Infinity", //premium user
-    free: 15 //free user
+    free: 10 //free user
 }
 /*
 //limit

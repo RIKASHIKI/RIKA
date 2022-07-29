@@ -31,7 +31,7 @@ global.api = (name, path = '/', query = {}, apikeyqueryname) => (name in global.
 const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
 
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
-global.db = new Low(
+global.db = new low(
   /https?:\/\//.test(opts['db'] || '') ?
     new cloudDBAdapter(opts['db']) : /mongodb/.test(opts['db']) ?
       new mongoDB(opts['db']) :
@@ -58,11 +58,13 @@ global.loadDatabase = async function loadDatabase() {
 }
 loadDatabase()
 
-// save database every 30seconds
+/* save database every 4 minutes
 if (global.db) setInterval(async () => {
     if (global.db.data) await global.db.write()
-  }, 60 * 1000)
-
+  }, 120 * 1000)
+if (global.db) clearInterval(async () =>{
+    if (global.db.data) await global.db.clear()},240 * 5000);
+*/
 async function startRika() {
     const Rika = RikaConnect({
         logger: pino({ level: 'silent' }),
