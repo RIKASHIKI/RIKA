@@ -1,9 +1,9 @@
-## 
+## <h1 align="center">RIKA</h1>
+<h4 align="center">bot whatsapp multidevice beta</h4>
 <p align="center">
 	<img src="https://telegra.ph/file/09cc0981ccf07754d0af6.jpg" width="35%" style="margin-left: auto;margin-right: auto;display: block;">
 </p>
-<h1 align="center">RIKA</h1>
-<h4 align="center">beta whatsapp bot multidevice</h4>
+
 
 
 ## SETTING
@@ -14,7 +14,6 @@ global.lang = ind //change your language
 
 // profile
 global.owner = ['6287820032793','6288744328279'] // your number
-global.premium = ['6287820032793','6288744328279'] //premium member
 global.packname = 'RKS MD' //pacname sticker & name bot
 global.author = '088744328279' //author sticker
 global.ownername = 'RIKASHIKI' //your name
@@ -70,7 +69,10 @@ git clone https://github.com/RIKASHIKI/RIKA
 cd Rika
 npm install
 ```
-
+```bash
+pkg update && pkg upgrade
+pkg install git
+```
 ## RECOMMENDED INSTALL ON TERMUX
 
 ```bash

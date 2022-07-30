@@ -16,17 +16,11 @@ exports.grupOnly = () => {
 exports.notAdmin = () => {
     return`bot not admin`
 }
-exports.endlimit = () => {
-    return`your limit has expired`
-}
-exports.premiumOnly = () => {
-    return'premium only'
-}
 exports.bane = () => {
     return`you have been banned`
 }
 exports.antlig = () => {
-    return`「 ANTI LINK \n\n You have been detected sending a group link, you will be kicked !`
+    return`「 ANTI LINK 」\n\n You have been detected sending a group link, you will be kicked !`
 }
 exports.thisGc = () => {
     return`you are allowed to send this group link`
@@ -72,7 +66,7 @@ exports.wetext = () => {
 exports.men = (pushname, salam, packname) => {
     return`halo ${pushname} 
     👋 good ${salam}
-    i ${packname}`
+    i'am ${packname}`
 }
 exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    return`
@@ -368,7 +362,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}tupai
     ╰─────────
 
-    ╭────「 *TERIMA KASIH KEPADA* 」
+    ╭────「 *THANK TO* 」
     │ 
     │${sp} My God
     │${sp} My Parents
@@ -395,15 +389,15 @@ exports.sc = (github) => {
     recode  : ${github}`
 } 
 exports.dona = (pushname, ownernumber) => {
-    return `*──────「 DONATION *
+    return `*──────「 DONATION 」──────*
     hi ${pushname}
     You can support this bot to stay active by donating
 
     Any amount of your donation will mean a lot 👍
 
 
-fund : 087820032793
-pulse : 087820032793 [XL]
+dana : 087820032793
+pulsa : 087820032793 [XL]
 
 
 first contact:
@@ -427,7 +421,7 @@ exports.rules = () => {
      — affected by signal, banned, server problems and some random things
     
     ️🗯️ Where can I get this bot script?
-     — Script private and not for sale
+     — search in github or you can make it
     
     ️🗯️ how to add bot to group?
      — more info ask the owner

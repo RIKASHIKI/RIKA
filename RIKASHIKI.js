@@ -61,22 +61,18 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
         const groupAdmins = m.isGroup ? await getGroupAdmins(participants) : ''
     	const isBotAdmins = m.isGroup ? groupAdmins.includes(botNumber) : false
     	const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : false
-    	const isPremium = isCreator || global.premium.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender) || false
 	
 	
 	try {
             let isNumber = x => typeof x === 'number' && !isNaN(x)
-            let limitUser = isPremium ? global.limitawal.premium : global.limitawal.free
             let user = global.db.data.users[m.sender]
             if (typeof user !== 'object') global.db.data.users[m.sender] = {}
             if (user) {
                 if (!isNumber(user.afkTime)) user.afkTime = -1
                 if (!('afkReason' in user)) user.afkReason = ''
-                if (!isNumber(user.limit)) user.limit = limitUser
             } else global.db.data.users[m.sender] = {
                 afkTime: -1,
                 afkReason: '',
-                limit: limitUser,
             }
     
             let chats = global.db.data.chats[m.chat]
@@ -124,18 +120,6 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
             console.log(chalk.black(chalk.bgWhite('[MSG]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('> FROM'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('> IN'), chalk.green(m.isGroup ? pushname : 'Private Chat', m.chat))
         }
 	
-	// reset limit every 12 hours
-        let cron = require('node-cron')
-        cron.schedule('00 12 * * *', () => {
-            let user = Object.keys(global.db.data.users)
-            let limitUser = isPremium ? global.limitawal.premium : global.limitawal.free
-            for (let jid of user) global.db.data.users[jid].limit = limitUser
-            console.log('Reseted Limit')
-        }, {
-            scheduled: true,
-            timezone: "Asia/Jakarta"
-        })
-        
 	// auto set bio
 	if (db.data.settings[botNumber].autobio) {
 	    let setting = global.db.data.settings[botNumber]
@@ -524,7 +508,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             }
             break
-	    case 'donasi': case 'sewabot': case 'sewa': case 'buypremium': case 'donate': {
+	    case 'donasi': case 'sewabot': case 'sewa': case 'donate': {
              let btn = [
             {
             urlButton: {
@@ -558,7 +542,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
         ]
         
-            await Rika.send5ButGif(m.chat, lang.dona(pushname, ownernumber), `${fouter}`, `${video}`, btn,`${thumbnaili}`)
+            await Rika.send5ButImg(m.chat, lang.dona(pushname, ownernumber), `${fouter}`, `${donasnya}`, btn,`${donasnya}`)
             } 
             break
             case 'sc': case 'source': {
@@ -875,8 +859,6 @@ let teks = `「 *TAGALL* 」
                }
                break
 	    case 'style': case 'styletext': {
-	        if (!isPremium && global.db.data.users[m.sender].limit < 1) return m.reply(lang.endlimit())
-		db.data.users[m.sender].limit -= 1 // -1 limit
 		let { styletext } = require('./lib/scraper')
 		if (!text) throw lang.wetext()
                 let anu = await styletext(text)
@@ -1134,7 +1116,7 @@ break
                 Rika.sendText(m.chat, `https://chat.whatsapp.com/${response}\n\nLink Group : ${groupMetadata.subject}`, m, { detectLink: true })
             }
             break
-            case 'ephemeral': {
+            case 'ephemeral':case'ephe': {
                 if (!m.isGroup) throw lang.grupOnly()
                 if (!isBotAdmins) throw lang.notAdmin()
                 if (!isAdmins) throw lang.adminOnly()
@@ -1810,7 +1792,6 @@ ${sp} Description : ${anu.description}`,
             }
             break
 	    case 'stalker': case 'stalk': {
-		if (!isPremium && global.db.data.users[m.sender].limit < 1) return m.reply('Limit Harian Anda Telah Habis')
                 if (!text) return m.reply(`Example : ${prefix +menu} type id\n\nList Type :\n1. ff (Free Fire)\n2. ml (Mobile Legends)\n3. aov (Arena Of Valor)\n4. cod (Call Of Duty)\n5. pb (point Blank)\n6. ig (Instagram)\n7. npm (https://npmjs.com)`)
                 let [type, id, zone] = args
                 if (type.toLowerCase() == 'ff') {
@@ -1818,44 +1799,37 @@ ${sp} Description : ${anu.description}`,
                     let anu = await fetchJson(api('zenz', '/api/nickff', { apikey: global.APIKeys[global.APIs['zenz']], query: id }))
                     if (anu.status == false) return m.reply(anu.result.message)
                     m.reply(`ID : ${anu.result.gameId}\nUsername : ${anu.result.userName}`)
-		    db.data.users[m.sender].limit -= 1
-                } else if (type.toLowerCase() == 'ml') {
+                } if (type.toLowerCase() == 'ml') {
                     if (!id) throw `No Query id, Example : ${prefix + menu} ml 214885010 2253`
                     if (!zone) throw `No Query id, Example : ${prefix + menu} ml 214885010 2253`
                     let anu = await fetchJson(api('zenz', '/api/nickml', { apikey: global.APIKeys[global.APIs['zenz']], query: id, query2: zone }))
                     if (anu.status == false) return m.reply(anu.result.message)
                     m.reply(`ID : ${anu.result.gameId}\nZone : ${anu.result.zoneId}\nUsername : ${anu.result.userName}`)
-		    db.data.users[m.sender].limit -= 1
-                } else if (type.toLowerCase() == 'aov') {
+                } if (type.toLowerCase() == 'aov') {
                     if (!id) throw `No Query id, Example ${prefix + menu} aov 293306941441181`
                     let anu = await fetchJson(api('zenz', '/api/nickaov', { apikey: global.APIKeys[global.APIs['zenz']], query: id }))
                     if (anu.status == false) return m.reply(anu.result.message)
                     m.reply(`ID : ${anu.result.gameId}\nUsername : ${anu.result.userName}`)
-		    db.data.users[m.sender].limit -= 1
-                } else if (type.toLowerCase() == 'cod') {
+                } if (type.toLowerCase() == 'cod') {
                     if (!id) throw `No Query id, Example ${prefix + menu} cod 6290150021186841472`
                     let anu = await fetchJson(api('zenz', '/api/nickcod', { apikey: global.APIKeys[global.APIs['zenz']], query: id }))
                     if (anu.status == false) return m.reply(anu.result.message)
                     m.reply(`ID : ${anu.result.gameId}\nUsername : ${anu.result.userName}`)
-		    db.data.users[m.sender].limit -= 1
-                } else if (type.toLowerCase() == 'pb') {
+                } if (type.toLowerCase() == 'pb') {
                     if (!id) throw `No Query id, Example ${prefix + menu} pb riio46`
                     let anu = await fetchJson(api('zenz', '/api/nickpb', { apikey: global.APIKeys[global.APIs['zenz']], query: id }))
                     if (anu.status == false) return m.reply(anu.result.message)
                     m.reply(`ID : ${anu.result.gameId}\nUsername : ${anu.result.userName}`)
-		    db.data.users[m.sender].limit -= 1
-                } else if (type.toLowerCase() == 'ig') {
+                } if (type.toLowerCase() == 'ig') {
                     if (!id) throw `No Query username, Example : ${prefix + menu} ig cak_haho`
                     let { result: anu } = await fetchJson(api('zenz', '/api/stalker/ig', { username: id }, 'apikey'))
                     if (anu.status == false) return m.reply(anu.result.message)
                     Rika.sendMedia(m.chat, anu.caption.profile_hd, '', `${sp} Full Name : ${anu.caption.full_name}\n${sp} User Name : ${anu.caption.user_name}\n${sp} ID ${anu.caption.user_id}\n${sp} Followers : ${anu.caption.followers}\n${sp} Following : ${anu.caption.following}\n${sp} Bussines : ${anu.caption.bussines}\n${sp} Profesional : ${anu.caption.profesional}\n${sp} Verified : ${anu.caption.verified}\n${sp} Private : ${anu.caption.private}\n${sp} Bio : ${anu.caption.biography}\n${sp} Bio Url : ${anu.caption.bio_url}`, m)
-		    db.data.users[m.sender].limit -= 1
-                } else if (type.toLowerCase() == 'npm') {
+                } if (type.toLowerCase() == 'npm') {
                     if (!id) throw `No Query username, Example : ${prefix + menu} npm performance-now`
                     let { result: anu } = await fetchJson(api('zenz', '/api/stalker/npm', { query: id }, 'apikey'))
                     if (anu.status == false) return m.reply(anu.result.message)
                     m.reply(`${sp} Name : ${anu.name}\n${sp} Version : ${Object.keys(anu.versions)}\n${sp} Created : ${tanggal(anu.time.created)}\n${sp} Modified : ${tanggal(anu.time.modified)}\n${sp} Maintainers :\n ${anu.maintainers.map(v => `- ${v.name} : ${v.email}`).join('\n')}\n\n${sp} Description : ${anu.description}\n${sp} Homepage : ${anu.homepage}\n${sp} Keywords : ${anu.keywords}\n${sp} Author : ${anu.author.name}\n${sp} License : ${anu.license}\n${sp} Readme : ${anu.readme}`)
-		    db.data.users[m.sender].limit -= 1
                 } else {
                     m.reply(`Example : ${prefix +menu} type id\n\nList Type :\n1. ff (Free Fire)\n2. ml (Mobile Legends)\n3. aov (Arena Of Valor)\n4. cod (Call Of Duty)\n5. pb (point Blank)\n6. ig (Instagram)\n7. npm (https://npmjs.com)`)
                 }
@@ -1866,19 +1840,19 @@ ${sp} Description : ${anu.description}`,
               let btn = [{
                     quickReplyButton: {
                     displayText: "NO WATERMARK",
-                    id: `ttnowm ${text}`
+                    id: `ttnowm ${anu.url}`
                     }
                     },
                     {
                     quickReplyButton: {
                     displayText: "WATERMARK",
-                    id: `ttwm ${text}`
+                    id: `ttwm ${anu.url}`
                     }
                     },
                     {
                     quickReplyButton: {
                     displayText: "AUDIO",
-                    id: `ttmp3 ${text}`
+                    id: `ttmp3 ${anu.url}`
                     }
                     }
                     ]
@@ -1888,19 +1862,19 @@ ${sp} Description : ${anu.description}`,
 	        case 'tiktoknowatermark': case 'tiktoknowm' :case 'ttnowm': {
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
-                Rika.sendMessage(m.chat, {video:{url: anu.result.nowatermark},mimetype: 'video/mp4'},{quoted: m})
+                Rika.sendMessage(m.chat, {video:{url: anu.result.nowatermark},mimetype: 'video/mp4', caption: lang.success},{quoted: m})
             }
             break
             case 'tiktokwm': case 'tiktokwatermark': case 'ttwm': {
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
-                Rika.sendMessage(m.chat, {video:{url: anu.result.watermark},mimetype: 'video/mp4'},{quoted: m})
+                Rika.sendMessage(m.chat, {video:{url: anu.result.watermark},mimetype: 'video/mp4',caption: lang.success},{quoted: m})
             }
             break
             case 'tiktokmp3': case 'tiktokaudio':case'ttmp3': {
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/musically', { url: text }, 'apikey'))
-                Rika.sendMessage(m.chat, { audio: { url: anu.result.audio }, mimetype: 'audio/mpeg'}, { quoted: m })
+                Rika.sendMessage(m.chat, { audio: { url: anu.result.audio }, mimetype: 'audio/mpeg',filename: `downlaod from rika.mp3`}, { quoted: m })
             }
             break
 	        case 'instagram': case 'ig': case 'igdl': {

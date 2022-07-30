@@ -18,7 +18,6 @@ global.lang = ind //ind for indonesia | eng for english
 
 // profile
 global.owner = ['6287820032793','6288744328279'] // owner
-global.premium = ['6287820032793','6288744328279'] //premium member
 global.packname = 'RKS MD' //pacname sticker & name bot
 global.author = '088744328279' //author sticker
 global.ownername = 'RIKASHIKI' //your name
@@ -27,6 +26,7 @@ global.ownernumber = '6287820032793' //owner number
 
 // media
 global.thumbnaili = './media/RKS.jpg' //thumbnail
+global.donasnya ='./media/RKS.jpg' //donate image
 global.video = './media/VIDEOWIBU.mp4' //video to link? switch to {url: 'yourlinkvideo' }
 global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube
 global.github = 'https://github.com/RIKASHIKI/RIKA' //github
@@ -37,16 +37,7 @@ global.grup = 'https://chat.whatsapp.com/E4YXacQLqPh3isulcGqlSA' //grup whatsapp
 global.sessionName = 'session' //session
 global.prefa = ['','!','.','🐦','🐤','🗿'] 
 global.sp = '□' //mark
-
-global.limitawal = {
-    premium: "Infinity", //premium user
-    free: 10 //free user
-}
 /*
-//limit
-global.premium = 'infinity'
-global.free = 15
-
 //api
 global.APIs= {
 	lolhuman: 'https://api.lolhuman.xyz',

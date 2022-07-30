@@ -16,12 +16,6 @@ exports.grupOnly = () => {
 exports.notAdmin = () => {
     return`bot bukan admin`
 }
-exports.endlimit = () => {
-    return`limit anda telah habis`
-}
-exports.premiumOnly = () => {
-    return'hanya Premium'
-}
 exports.bane = () => {
     return`kamu telah dibanned`
 }
@@ -427,7 +421,7 @@ exports.rules = () => {
      — disebabkan oleh sinyal, banned, masalah dari server dan alasan lainnya
     
     🗯️ dimana bisa mendapatkan script ini ?
-     — cari sendiri di github
+     — cari di github atau bikin sendiri
     
     🗯️ bagaimana menambahkan bot ke grup?
      — info lebih lanjut tanya kepada pemilik
