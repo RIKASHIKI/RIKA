@@ -50,7 +50,7 @@ exports.adlin = () => {
     return`tambahkan tautan`
 }
 exports.chochat = () => {
-    return`Pilihan : 1. mute\n2. unmute\n3. archive\n4. unarchive\n5. read\n6. unread\n7. delete`
+    return`pilihan : 1. mute\n2. unmute\n3. archive\n4. unarchive\n5. read\n6. unread\n7. delete`
 }
 exports.wetext = () => {
     return`dimana teksnya ?`
@@ -64,8 +64,8 @@ exports.wetext = () => {
 
 
 exports.men = (pushname, salam, packname) => {
-    return`hallo ${pushname} 
-    👋selamat ${salam} , 
+    return`hallo ${pushname}👋
+    selamat ${salam}
     saya ${packname} `
 }
 exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
@@ -74,11 +74,11 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
 
    ╭──── 「 *INFO* 」
    │
-   │${sp} PREFIX  : ${prefix}
-   │${sp} USER    : ${pushname}
-   │${sp} TIME    : ${time}
-   │${sp} DATE    : ${tanggal}
-   │${sp} OWNER   : ${ownername}
+   │${sp} PREFIX   : ${prefix}
+   │${sp} PENGGUNA : ${pushname}
+   │${sp} WAKTU    : ${time}
+   │${sp} TANGGAL  : ${tanggal}
+   │${sp} PEMILIK  : ${ownername}
    ╰─────────
 
     ╭──── 「 *OWNER MENU* 」

@@ -64,8 +64,8 @@ exports.wetext = () => {
 
 
 exports.men = (pushname, salam, packname) => {
-    return`halo ${pushname} 
-    👋 good ${salam}
+    return`halo ${pushname}👋
+    good ${salam}
     i'am ${packname}`
 }
 exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {

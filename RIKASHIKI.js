@@ -541,8 +541,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             }
         ]
-        
-            await Rika.send5ButImg(m.chat, lang.dona(pushname, ownernumber), `${fouter}`, `${donasnya}`, btn,`${donasnya}`)
+         await Rika.send5ButVid(m.chat, lang.dona(pushname, ownernumber), `${fouter}`,`${video}`, btn, `${thumbnaili}`)
             } 
             break
             case 'sc': case 'source': {
@@ -1328,11 +1327,9 @@ break
                 }
             }
             break
-            case 'stickerwm': case 'swm': case 'stickergifwm': case 'sgifwm': {
+            case 'stickerwm': case 'swm': case 'stickergifwm': case 'sgifwm': case'take':{
                 if (!quoted) throw `Balas Video/Image Dengan Caption ${prefix + menu} teks1|teks2`
                 let [teks1, teks2] = text.split`|`
-                if (!teks1) throw `Kirim/reply image/video dengan caption ${prefix + menu} teks1|teks2`
-                if (!teks2) throw `Kirim/reply image/video dengan caption ${prefix + menu} teks1|teks2`
             	m.reply(lang.wait())
                 if (/image/.test(mime)) {
                     let media = await quoted.download()
@@ -1840,19 +1837,19 @@ ${sp} Description : ${anu.description}`,
               let btn = [{
                     quickReplyButton: {
                     displayText: "NO WATERMARK",
-                    id: `ttnowm ${anu.url}`
+                    id: `ttnowm ${text}`
                     }
                     },
                     {
                     quickReplyButton: {
                     displayText: "WATERMARK",
-                    id: `ttwm ${anu.url}`
+                    id: `ttwm ${text}`
                     }
                     },
                     {
                     quickReplyButton: {
                     displayText: "AUDIO",
-                    id: `ttmp3 ${anu.url}`
+                    id: `ttmp3 ${text}`
                     }
                     }
                     ]
@@ -1862,19 +1859,19 @@ ${sp} Description : ${anu.description}`,
 	        case 'tiktoknowatermark': case 'tiktoknowm' :case 'ttnowm': {
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
-                Rika.sendMessage(m.chat, {video:{url: anu.result.nowatermark},mimetype: 'video/mp4', caption: lang.success},{quoted: m})
+                Rika.sendMessage(m.chat, {video:{url: anu.result.nowatermark},caption: lang.success(),mimetype: 'video/mp4'},{quoted: m})
             }
             break
             case 'tiktokwm': case 'tiktokwatermark': case 'ttwm': {
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
-                Rika.sendMessage(m.chat, {video:{url: anu.result.watermark},mimetype: 'video/mp4',caption: lang.success},{quoted: m})
+                Rika.sendMessage(m.chat, {video:{url: anu.result.watermark},caption: lang.success(),mimetype: 'video/mp4'},{quoted: m})
             }
             break
             case 'tiktokmp3': case 'tiktokaudio':case'ttmp3': {
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/musically', { url: text }, 'apikey'))
-                Rika.sendMessage(m.chat, { audio: { url: anu.result.audio }, mimetype: 'audio/mpeg',filename: `downlaod from rika.mp3`}, { quoted: m })
+                Rika.sendMessage(m.chat, { audio: { url: anu.result.audio },caption: lang.success(), mimetype: 'audio/mpeg'}, { quoted: m})
             }
             break
 	        case 'instagram': case 'ig': case 'igdl': {
@@ -1930,7 +1927,7 @@ ${sp} Description : ${anu.description}`,
                     {buttonId: `twitter ${text}`, buttonText: {displayText: 'VIDEO'}, type: 1}
                 ]
                 let buttonMessage = {
-		    image: { url: anu.result.tumb },
+		            image: { url: anu.result.tumb },
                     caption: util.format(anu.result),
                     footer: `${fouter}`,
                     buttons: buttons,

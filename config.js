@@ -26,7 +26,7 @@ global.ownernumber = '6287820032793' //owner number
 
 // media
 global.thumbnaili = './media/RKS.jpg' //thumbnail
-global.donasnya ='./media/RKS.jpg' //donate image
+// global.donasnya ='./media/VIDEOWIBU.mp4' //donate image
 global.video = './media/VIDEOWIBU.mp4' //video to link? switch to {url: 'yourlinkvideo' }
 global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube
 global.github = 'https://github.com/RIKASHIKI/RIKA' //github

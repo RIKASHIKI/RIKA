@@ -58,13 +58,11 @@ global.loadDatabase = async function loadDatabase() {
 }
 loadDatabase()
 
-/* save database every 4 minutes
+// save database every 4 minutes
 if (global.db) setInterval(async () => {
     if (global.db.data) await global.db.write()
   }, 120 * 1000)
-if (global.db) clearInterval(async () =>{
-    if (global.db.data) await global.db.clear()},240 * 5000);
-*/
+
 async function startRika() {
     const Rika = RikaConnect({
         logger: pino({ level: 'silent' }),
