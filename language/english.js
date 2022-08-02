@@ -40,6 +40,9 @@ exports.choicemed = () => {
 exports.nostic = (prefix, menu) => {
     return`Send/reply image/sticker with caption ${prefix + menu} text1|text2`
 }
+exports.exampel = (prefix, menu) =>{
+    return`example : ${prefix + menu} text|text`
+}
 exports.onbefo = () => {
     return`been active before`
 }
@@ -55,6 +58,27 @@ exports.chochat = () => {
 exports.wetext = () => {
     return`where the text ?`
 }
+exports.otoban = () => {
+    return`Auto block sistem!\nDon't call bot!\nchat owner for unblock!`
+}
+exports.timenight = () =>{
+    return`night`
+}
+exports.timeevening = () =>{
+    return`evening`
+}
+exports.timeafternoon = () =>{
+    return`afternoon`
+}
+exports.timemidday = () =>{
+    return`midday`
+}
+exports.timemorning = () =>{
+    return`morning`
+}
+
+
+
 
 
 
@@ -305,7 +329,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}sticker
     │${sp} ${prefix}stickerwm
     │${sp} ${prefix}emojimix
-    │${sp} ${prefix}emojimix2
     │${sp} ${prefix}tovideo
     │${sp} ${prefix}togif
     │${sp} ${prefix}tourl
@@ -382,11 +405,11 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     ╰─────────
     `
 }
-exports.sc = (github) => {
+exports.sc = () => {
     return `*──────「 SOURCE CODE 」 ──────*
 
     Base    : https://github.com/DikaArdnt/Hisoka-Morou
-    recode  : ${github}`
+    recode  : https://github.com/RIKASHIKI`
 } 
 exports.dona = (pushname, ownernumber) => {
     return `*──────「 DONATION 」──────*

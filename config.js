@@ -8,28 +8,28 @@ global.APIs = {
 }
 // Apikey Website Api
 global.APIKeys = {
-	'https://zenzapis.xyz': 'sonelstore',
+	'https://zenzapis.xyz': 'yourapikey',
 }
 
 
 // sistem
 global.modepub = true //true for public | false for self
-global.lang = ind //ind for indonesia | eng for english
+global.lang = eng //ind for indonesia | eng for english
 
 // profile
-global.owner = ['6287820032793','6288744328279'] // owner
+global.owner = ['6287820032793','62882020044760'] // owner
 global.packname = 'RKS MD' //pacname sticker & name bot
-global.author = '088744328279' //author sticker
+global.author = '088202004476' //author sticker
 global.ownername = 'RIKASHIKI' //your name
 global.fouter = 'RIKASHIKI | RKS-MD ©2022' //whatever
 global.ownernumber = '6287820032793' //owner number
 
 // media
 global.thumbnaili = './media/RKS.jpg' //thumbnail
-// global.donasnya ='./media/VIDEOWIBU.mp4' //donate image
+global.donasnya ='./media/RKS,jpg' //donate image
 global.video = './media/VIDEOWIBU.mp4' //video to link? switch to {url: 'yourlinkvideo' }
 global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube
-global.github = 'https://github.com/RIKASHIKI/RIKA' //github
+global.webyou = 'https://github.com/RIKASHIKI/RIKA' //github
 global.email = 'hariamd210@gmail.com' //email
 global.loc = 'JAPAN' //location
 global.instagram = 'https://instagram.com/@rikashiki_san' //ig

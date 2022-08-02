@@ -40,6 +40,9 @@ exports.choicemed = () => {
 exports.nostic = (prefix, menu) => {
     return`kirim/balas gambar/stiker dengan keterangan ${prefix + menu} text1|text2`
 }
+exports.exampel = (prefix, menu) =>{
+    return`contoh : ${prefix + menu} teks|teks`
+}
 exports.onbefo = () => {
     return`sudah aktif sebelumnya`
 }
@@ -55,9 +58,24 @@ exports.chochat = () => {
 exports.wetext = () => {
     return`dimana teksnya ?`
 }
-
-
-
+exports.otoban = () => {
+    return`「 OTOMATIS LARANGAN SISTEM 」\njangan telpon bot!\nhubungi owner untuk menghentikan larangan!`
+}
+exports.timenight = () =>{
+    return`malam`
+}
+exports.timeevening = () =>{
+    return`petang`
+}
+exports.timeafternoon = () =>{
+    return`sore`
+}
+exports.timemidday = () =>{
+    return`siang`
+}
+exports.timemorning = () =>{
+    return`pagi`
+}
 
 
 
@@ -305,7 +323,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     │${sp} ${prefix}sticker
     │${sp} ${prefix}stickerwm
     │${sp} ${prefix}emojimix
-    │${sp} ${prefix}emojimix2
     │${sp} ${prefix}tovideo
     │${sp} ${prefix}togif
     │${sp} ${prefix}tourl
@@ -382,11 +399,11 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
     ╰─────────
     `
 }
-exports.sc = (github) => {
+exports.sc = () => {
     return `*──────「 SOURCE CODE 」 ──────*
 
     Base    : https://github.com/DikaArdnt/Hisoka-Morou
-    recode  : ${github}`
+    recode  : https://github.com/RIKASHIKI`
 }
 exports.dona = (pushname, ownernumber) => {
     return `*──────「 DONATE 」 ──────*

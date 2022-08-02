@@ -1,9 +1,3 @@
-/**
-   * Create By Dika Ardnt.
-   * Contact Me on wa.me/6288292024190
-   * Follow https://github.com/DikaArdnt
-*/
-
 require('./config')
 const { BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType } = require('@adiwajshing/baileys')
 const fs = require('fs')
@@ -518,8 +512,8 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             },
             {
             urlButton: {
-              displayText: "GITHUB",              
-              url: `${github}`
+              displayText: "WEB",              
+              url: `${webyou}`
             }
             },
             {
@@ -541,7 +535,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             }
         ]
-         await Rika.send5ButVid(m.chat, lang.dona(pushname, ownernumber), `${fouter}`,`${video}`, btn, `${thumbnaili}`)
+         await Rika.send5ButImg(m.chat, lang.dona(pushname, ownernumber), `${fouter}`, `${donasnya}`, btn,`${donasnya}`)
             } 
             break
             case 'sc': case 'source': {
@@ -555,15 +549,15 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                     ]
                     let setbot = db.data.settings[botNumber]
                         if (setbot.templateImage) {
-                        Rika.send5ButImg(m.chat, lang.sc(github), `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
+                        Rika.send5ButImg(m.chat, lang.sc(), `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
                         } else if (setbot.templateGif) {
-                        Rika.send5ButGif(m.chat, lang.sc(github), `${fouter}`, `${video}`, btn,`${thumbnaili}`)
+                        Rika.send5ButGif(m.chat, lang.sc(), `${fouter}`, `${video}`, btn,`${thumbnaili}`)
                         } else if (setbot.templateVid) {
-                        Rika.send5ButVid(m.chat, lang.sc(github), `${fouter}`,`${video}`, btn, `${thumbnaili}`)
+                        Rika.send5ButVid(m.chat, lang.sc(), `${fouter}`,`${video}`, btn, `${thumbnaili}`)
                         } else if (setbot.templateMsg) {
-                        Rika.send5ButMsg(m.chat, lang.sc(github), `${fouter}`, btn)
+                        Rika.send5ButMsg(m.chat, lang.sc(), `${fouter}`, btn)
                         } else if (setbot.templateLocation) {
-                        Rika.send5ButLoc(m.chat, lang.sc(github), `${fouter}`, `${thumbnaili}`, btn)
+                        Rika.send5ButLoc(m.chat, lang.sc(), `${fouter}`, `${thumbnaili}`, btn)
                         }
                         } 
             break
@@ -1168,8 +1162,8 @@ break
                         },
                         {
                         urlButton: {
-                          displayText: "GITHUB",              
-                          "url": `${github}`
+                          displayText: "WEB",              
+                          "url": `${webyou}`
                         }
                         },
                         {
@@ -1223,8 +1217,8 @@ break
                 },
                 {
                 urlButton: {
-                  displayText: "GITHUB",              
-                  url: `${github}`
+                  displayText: "WEB",              
+                  url: `${webyou}`
                 }
                 },
                 {
@@ -1307,7 +1301,7 @@ break
              case 'listonline': case 'liston': {
                     let id = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : m.chat
                     let online = [...Object.keys(store.presences[id]), botNumber]
-                    Rika.sendText(m.chat, 'List Online:\n\n' + online.map(v => '${sp} @' + v.replace(/@.+/, '')).join`\n`, m, { mentions: online })
+                    Rika.sendText(m.chat, 'List Online:\n\n' + online.map(v => `${sp} @` + v.replace(/@.+/, '')).join`\n`, m, { mentions: online })
              }
              break
             case 'sticker': case 's': case 'stiker': {
@@ -1369,23 +1363,14 @@ break
 		    await fs.unlinkSync(encmedia)
 		}
 	    }
-	    break
-	    case 'emojimix2': {
-	    if (!text) throw `Example : ${prefix + menu} 😅`
-		let anu = await fetchJson(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(text)}`)
-		for (let res of anu.results) {
-		    let encmedia = await Rika.sendImageAsSticker(m.chat, res.url, m, { packname: global.packname, author: global.author, categories: res.tags })
-		    await fs.unlinkSync(encmedia)
-		}
-	    }
-	    break
+	     break
 	       case 'attp': case 'ttp': {
            if (!text) throw `Example : ${prefix + menu} text`
-           await Rika.sendMedia(m.chat, `https://xteam.xyz/${menu}?file&text=${text}`, 'Rika', 'morou', m, {asSticker: true})
+           await Rika.sendMedia(m.chat, `https://xteam.xyz/${menu}?file&text=${text}`, 'Rika', 'shiki', m, {asSticker: true})
 
          }
          break
-	       case 'smeme': case 'stickmeme': case 'stikmeme': case 'stickermeme': case 'stikermeme': {
+	       case 'smeme': case 'stickmeme': case 'stickermeme': case 'stikermeme': {
 	        let respond = lang.nostic(prefix, menu)
 	        if (!/image/.test(mime)) throw respond
             if (!text) throw respond
@@ -1396,8 +1381,8 @@ break
 	        let { floNime } = require('./lib/uploader')
 	        let fatGans = await floNime(dwnld)
 	        let smeme = `https://api.memegen.link/images/custom/${encodeURIComponent(atas)}/${encodeURIComponent(bawah)}.png?background=${fatGans.result.url}`
-	        let FaTiH = await Rika.sendImageAsSticker(m.chat, smeme, m, { packname: `${packname}`, author: `${author}` })
-	        await fs.unlinkSync(FaTiH)
+	        let SHIkI = await Rika.sendImageAsSticker(m.chat, smeme, m, { packname: `${packname}`, author: `${author}` })
+	        await fs.unlinkSync(SHIkI)
             }
 	       break     
 	        case 'simih': case 'simisimi': {
@@ -1668,13 +1653,22 @@ ${sp} Description : ${anu.description}`,
                 if (media.filesize >= 100000) return m.reply('File Melebihi Batas '+util.format(media))
                 Rika.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `${sp} Title : ${media.title}\n${sp} File Size : ${media.filesizeF}\n${sp} Url : ${urls[text - 1]}\n${sp} Ext : MP3\n${sp} Resolusi : ${args[1] || '360p'}` }, { quoted: m })
             }
-            break
             case 'pinterest': case'pin':{
                 m.reply(lang.wait())
 		let { pinterest } = require('./lib/scraper')
                 anu = await pinterest(text)
                 result = anu[Math.floor(Math.random() * anu.length)]
-                Rika.sendMessage(m.chat, { image: { url: result }, caption: '${sp} Media Url : '+result }, { quoted: m })
+                let buttons = [
+                    {buttonId: `pin ${text}`, buttonText: {displayText: 'Next'}, type: 1}
+                ]
+                let buttonMessage = {
+                    image: { url: result },
+                    caption: `${sp} Url : ${result}`,
+                    footer: `${fouter}`,
+                    buttons: buttons,
+                    headerType: 2
+                }
+                Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             break
             case 'anime': case 'waifu': case 'husbu': case 'neko': case 'shinobu': case 'megumin': case 'waifus': case 'nekos': case 'trap': case 'blowjob': {
@@ -1859,19 +1853,19 @@ ${sp} Description : ${anu.description}`,
 	        case 'tiktoknowatermark': case 'tiktoknowm' :case 'ttnowm': {
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
-                Rika.sendMessage(m.chat, {video:{url: anu.result.nowatermark},caption: lang.success(),mimetype: 'video/mp4'},{quoted: m})
+                await Rika.sendMessage(m.chat, { video: { url: anu.result.nowatermark }, mimetype: 'video/mp4', fileName: `RKSMD.mp4`, caption: lang.success() }, { quoted: m })
             }
             break
             case 'tiktokwm': case 'tiktokwatermark': case 'ttwm': {
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
-                Rika.sendMessage(m.chat, {video:{url: anu.result.watermark},caption: lang.success(),mimetype: 'video/mp4'},{quoted: m})
+                await Rika.sendMessage(m.chat, { video: { url: anu.result.watermark }, mimetype: 'video/mp4', fileName: `RKSMD.mp4`, caption: lang.success() }, { quoted: m })
             }
             break
             case 'tiktokmp3': case 'tiktokaudio':case'ttmp3': {
                 m.reply(lang.wait())
                 let anu = await fetchJson(api('zenz', '/downloader/musically', { url: text }, 'apikey'))
-                Rika.sendMessage(m.chat, { audio: { url: anu.result.audio },caption: lang.success(), mimetype: 'audio/mpeg'}, { quoted: m})
+                await Rika.sendMessage(m.chat, { audio: { url: anu.result.audio }, mimetype: 'audio/mpeg', fileName: `RKSMD.mp3` }, { quoted: m })
             }
             break
 	        case 'instagram': case 'ig': case 'igdl': {
@@ -2000,16 +1994,16 @@ Untuk Download Media Silahkan Klik salah satu Button dibawah ini atau masukkan m
 		case 'juzamma': {
 		if (args[0] === 'pdf') {
 		m.reply(lang.wait())
-		Rika.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.pdf'}, mimetype: 'application/pdf', fileName: 'juz-amma-arab-latin-indonesia.pdf'}, {quoted:m})
+		Rika.sendMessage(m.chat, {document: {url: 'https://SHIKIarridho.my.id/database/islam/juz-amma-arab-latin-indonesia.pdf'}, mimetype: 'application/pdf', fileName: 'juz-amma-arab-latin-indonesia.pdf'}, {quoted:m})
 		} else if (args[0] === 'docx') {
 		m.reply(lang.wait())
-		Rika.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.docx'}, mimetype: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', fileName: 'juz-amma-arab-latin-indonesia.docx'}, {quoted:m})
+		Rika.sendMessage(m.chat, {document: {url: 'https://SHIKIarridho.my.id/database/islam/juz-amma-arab-latin-indonesia.docx'}, mimetype: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', fileName: 'juz-amma-arab-latin-indonesia.docx'}, {quoted:m})
 		} else if (args[0] === 'pptx') {
 		m.reply(lang.wait())
-		Rika.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.pptx'}, mimetype: 'application/vnd.openxmlformats-officedocument.presentationml.presentation', fileName: 'juz-amma-arab-latin-indonesia.pptx'}, {quoted:m})
+		Rika.sendMessage(m.chat, {document: {url: 'https://SHIKIarridho.my.id/database/islam/juz-amma-arab-latin-indonesia.pptx'}, mimetype: 'application/vnd.openxmlformats-officedocument.presentationml.presentation', fileName: 'juz-amma-arab-latin-indonesia.pptx'}, {quoted:m})
 		} else if (args[0] === 'xlsx') {
 		m.reply(lang.wait())
-		Rika.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.xlsx'}, mimetype: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', fileName: 'juz-amma-arab-latin-indonesia.xlsx'}, {quoted:m})
+		Rika.sendMessage(m.chat, {document: {url: 'https://SHIKIarridho.my.id/database/islam/juz-amma-arab-latin-indonesia.xlsx'}, mimetype: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', fileName: 'juz-amma-arab-latin-indonesia.xlsx'}, {quoted:m})
 		} else {
 		m.reply(`Mau format apa ? Example : ${prefix + menu} pdf
 
@@ -2043,7 +2037,7 @@ muslim
 1 - 5362`
 		if (!args[1]) throw `Hadis yang ke berapa?\n\ncontoh:\n${prefix + menu} muslim 1`
 		try {
-		let res = await fetchJson(`https://fatiharridho.herokuapp.com/api/islamic/hadits?list=${args[0]}`)
+		let res = await fetchJson(`https://SHIKIarridho.herokuapp.com/api/islamic/hadits?list=${args[0]}`)
 		let { number, arab, id } = res.result.find(v => v.number == args[1])
 		m.reply(`No. ${number}
 
@@ -2056,8 +2050,8 @@ ${id}`)
 		}
 		break
 		case 'alquran': {
-		if (!args[0]) throw `Contoh penggunaan:\n${prefix + menu} 1 2\n\nmaka hasilnya adalah surah Al-Fatihah ayat 2 beserta audionya, dan ayatnya 1 aja`
-		if (!args[1]) throw `Contoh penggunaan:\n${prefix + menu} 1 2\n\nmaka hasilnya adalah surah Al-Fatihah ayat 2 beserta audionya, dan ayatnya 1 aja`
+		if (!args[0]) throw `Contoh penggunaan:\n${prefix + menu} 1 2\n\nmaka hasilnya adalah surah Al-SHIKIah ayat 2 beserta audionya, dan ayatnya 1 aja`
+		if (!args[1]) throw `Contoh penggunaan:\n${prefix + menu} 1 2\n\nmaka hasilnya adalah surah Al-SHIKIah ayat 2 beserta audionya, dan ayatnya 1 aja`
 		let res = await fetchJson(`https://islamic-api-indonesia.herokuapp.com/api/data/quran?surah=${args[0]}&ayat=${args[1]}`)
 		let txt = `*Arab* : ${res.result.data.text.arab}
 *English* : ${res.result.data.translation.en}
@@ -2069,8 +2063,8 @@ ${id}`)
 		}
 		break
 		case 'tafsirsurah': {
-		if (!args[0]) throw `Contoh penggunaan:\n${prefix + menu} 1 2\n\nmaka hasilnya adalah tafsir surah Al-Fatihah ayat 2`
-		if (!args[1]) throw `Contoh penggunaan:\n${prefix + menu} 1 2\n\nmaka hasilnya adalah tafsir surah Al-Fatihah ayat 2`
+		if (!args[0]) throw `Contoh penggunaan:\n${prefix + menu} 1 2\n\nmaka hasilnya adalah tafsir surah Al-SHIKIah ayat 2`
+		if (!args[1]) throw `Contoh penggunaan:\n${prefix + menu} 1 2\n\nmaka hasilnya adalah tafsir surah Al-SHIKIah ayat 2`
 		let res = await fetchJson(`https://islamic-api-indonesia.herokuapp.com/api/data/quran?surah=${args[0]}&ayat=${args[1]}`)
 		let txt = `「 *Tafsir Surah*  」
 
@@ -2616,8 +2610,8 @@ ${sp} Detail      : ${detail}`
                     },
                     {
                     urlButton: {
-                      displayText: "GITHUB",              
-                      url: `${github}`
+                      displayText: "WEB",              
+                      url: `${webyou}`
                     }
                     },
                     {
@@ -2662,8 +2656,8 @@ ${sp} Detail      : ${detail}`
                     },
                     {
                     urlButton: {
-                      displayText: "GITHUB",              
-                      url: `${github}`
+                      displayText: "WEB",              
+                      url: `${webyou}`
                     }
                     },
                     {

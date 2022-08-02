@@ -58,10 +58,10 @@ global.loadDatabase = async function loadDatabase() {
 }
 loadDatabase()
 
-// save database every 4 minutes
+//save database every 5 minutes
 if (global.db) setInterval(async () => {
     if (global.db.data) await global.db.write()
-  }, 120 * 1000)
+  }, 180 * 1000)
 
 async function startRika() {
     const Rika = RikaConnect({
@@ -78,7 +78,7 @@ async function startRika() {
     const callerId = json.content[0].attrs['call-creator']
     if (json.content[0].tag == 'offer') {
     let pa7rick = await Rika.sendContact(callerId, global.owner)
-    Rika.sendMessage(callerId, { text: `Auto block sistem!\nDon't call bot!\nchat owner for unblock!`}, { quoted : pa7rick })
+    Rika.sendMessage(callerId, { text: lang.otoban()}, { quoted : pa7rick })
     await sleep(8000)
     await Rika.updateBlockStatus(callerId, "block")
     }
@@ -111,17 +111,17 @@ async function startRika() {
        } catch {
        ppgc = 'https://tinyurl.com/yx93l6da'
        }
-       let wm_fatih = { url : ppgc }
+       let wm_rks = { url : ppgc }
        if (shiki.announce == true) {
-       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup telah ditutup oleh admin, Sekarang hanya admin yang dapat mengirim pesan !`, `Group Settings Change Message`, wm_fatih, [])
+       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup telah ditutup oleh admin, Sekarang hanya admin yang dapat mengirim pesan !`, `Group Settings Change Message`, wm_rks, [])
        } else if (shiki.announce == false) {
-       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup telah dibuka oleh admin, Sekarang peserta dapat mengirim pesan !`, `Group Settings Change Message`, wm_fatih, [])
+       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup telah dibuka oleh admin, Sekarang peserta dapat mengirim pesan !`, `Group Settings Change Message`, wm_rks, [])
        } else if (shiki.restrict == true) {
-       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nInfo group telah dibatasi, Sekarang hanya admin yang dapat mengedit info group !`, `Group Settings Change Message`, wm_fatih, [])
+       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nInfo group telah dibatasi, Sekarang hanya admin yang dapat mengedit info group !`, `Group Settings Change Message`, wm_rks, [])
        } else if (shiki.restrict == false) {
-       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nInfo group telah dibuka, Sekarang peserta dapat mengedit info group !`, `Group Settings Change Message`, wm_fatih, [])
+       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nInfo group telah dibuka, Sekarang peserta dapat mengedit info group !`, `Group Settings Change Message`, wm_rks, [])
        } else {
-       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup Subject telah diganti menjadi *${shiki.subject}*`, `Group Settings Change Message`, wm_fatih, [])
+       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup Subject telah diganti menjadi *${shiki.subject}*`, `Group Settings Change Message`, wm_rks, [])
      }
     }
     } catch (err){
