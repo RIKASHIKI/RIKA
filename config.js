@@ -8,7 +8,7 @@ global.APIs = {
 }
 // Apikey Website Api
 global.APIKeys = {
-	'https://zenzapis.xyz': 'yourapikey',
+	'https://zenzapis.xyz': 'sonelstore',
 }
 
 
@@ -26,8 +26,8 @@ global.ownernumber = '6287820032793' //owner number
 
 // media
 global.thumbnaili = './media/RKS.jpg' //thumbnail
-global.donasnya ='./media/RKS,jpg' //donate image
-global.video = './media/VIDEOWIBU.mp4' //video to link? switch to {url: 'yourlinkvideo' }
+global.donasnya ='./media/RKS.jpg' //donate image
+global.video = {url:'https://a.uguu.se/glUCYBBc.mp4'} //video to link? switch to {url: 'yourlinkvideo' }
 global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube
 global.webyou = 'https://github.com/RIKASHIKI/RIKA' //github
 global.email = 'hariamd210@gmail.com' //email
