@@ -69,10 +69,6 @@ git clone https://github.com/RIKASHIKI/RIKA
 cd Rika
 npm install
 ```
-```bash
-pkg update && pkg upgrade
-pkg install git
-```
 ## RECOMMENDED INSTALL ON TERMUX
 
 ```bash

@@ -128,7 +128,7 @@ exports.rules = () => {
  — search in github or you can make it
     
 🗯️ how to add bot to group?
- — more info ask the owner
+ — type #join linkgrup
     
 🗯️ What's the prefix?
  — multi prefix
@@ -186,7 +186,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │
    │${sp} ${prefix}react [emoji]
    │${sp} ${prefix}chat [option]
-   │${sp} ${prefix}join [link]
    │${sp} ${prefix}leave
    │${sp} ${prefix}block @user
    │${sp} ${prefix}unblock @user
@@ -201,6 +200,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │
    │${sp} ${prefix}ping
    │${sp} ${prefix}owner
+   │${sp} ${prefix}join [link]
    │${sp} ${prefix}menu
    │${sp} ${prefix}allmenu
    │${sp} ${prefix}rules
@@ -487,7 +487,6 @@ exports.ownermen = (sp, prefix) =>{
    │
    │${sp} ${prefix}react [emoji]
    │${sp} ${prefix}chat [option]
-   │${sp} ${prefix}join [link]
    │${sp} ${prefix}leave
    │${sp} ${prefix}block @user
    │${sp} ${prefix}unblock @user
@@ -504,6 +503,7 @@ exports.botmen = (sp, prefix) =>{
    │
    │${sp} ${prefix}ping
    │${sp} ${prefix}owner
+   │${sp} ${prefix}join [link]
    │${sp} ${prefix}menu
    │${sp} ${prefix}allmenu
    │${sp} ${prefix}rules

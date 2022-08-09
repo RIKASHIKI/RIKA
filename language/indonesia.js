@@ -127,7 +127,7 @@ exports.rules = () => {
  — cari di github atau bikin sendiri
     
 🗯️ bagaimana menambahkan bot ke grup?
- — info lebih lanjut tanya kepada pemilik
+ — ketik #join linkgrup
     
 🗯️ prefix nya apa ?
  — multi prefix

@@ -8,13 +8,13 @@ global.APIs = {
 }
 // Apikey Website Api
 global.APIKeys = {
-	'https://zenzapis.xyz': 'yourapi',
+	'https://zenzapis.xyz': 'yourapikeys',
 }
 
 
 // sistem
 global.modepub = true //true for public | false for self
-global.lang = eng //ind for indonesia | eng for english
+global.lang = ind //ind for indonesia | eng for english
 
 // profile
 global.owner = ['6287820032793','62882020044760'] // owner
@@ -29,7 +29,7 @@ global.thumbnaili = './media/RKS.jpg' //thumbnail
 global.donasnya ='./media/RKS.jpg' //donate image
 global.video = {url:'https://a.uguu.se/glUCYBBc.mp4'} //video to link? switch to {url: 'yourlinkvideo' }
 global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube
-global.webyou = 'https://github.com/RIKASHIKI/RIKA' //github
+global.webyou = 'https://github.com/RIKASHIKI' //github
 global.email = 'hariamd210@gmail.com' //email
 global.loc = 'JAPAN' //location
 global.instagram = 'https://instagram.com/@rikashiki_san' //ig

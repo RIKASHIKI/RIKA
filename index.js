@@ -117,15 +117,15 @@ async function startRika() {
        }
        let wm_rks = { url : ppgc }
        if (shiki.announce == true) {
-       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup telah ditutup oleh admin, Sekarang hanya admin yang dapat mengirim pesan !`, `Group Settings Change Message`, wm_rks, [])
+       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup close by admin, now only admin can ssend message !`, `Group Settings Change Message`, wm_rks, [])
        } else if (shiki.announce == false) {
-       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup telah dibuka oleh admin, Sekarang peserta dapat mengirim pesan !`, `Group Settings Change Message`, wm_rks, [])
+       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup open by admin, now member can send message !`, `Group Settings Change Message`, wm_rks, [])
        } else if (shiki.restrict == true) {
-       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nInfo group telah dibatasi, Sekarang hanya admin yang dapat mengedit info group !`, `Group Settings Change Message`, wm_rks, [])
+       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nInfo group close, now only admin can change info group !`, `Group Settings Change Message`, wm_rks, [])
        } else if (shiki.restrict == false) {
-       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nInfo group telah dibuka, Sekarang peserta dapat mengedit info group !`, `Group Settings Change Message`, wm_rks, [])
+       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nInfo group open, now member can change info group !`, `Group Settings Change Message`, wm_rks, [])
        } else {
-       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup Subject telah diganti menjadi *${shiki.subject}*`, `Group Settings Change Message`, wm_rks, [])
+       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup Subject has change to *${shiki.subject}*`, `Group Settings Change Message`, wm_rks, [])
      }
     }
     } catch (err){
@@ -154,7 +154,7 @@ async function startRika() {
                 }
 
                 if (anu.action == 'add') {
-                    Rika.sendMessage(anu.id, { image: { url: ppuser }, mentions: [num], caption: `WELCOME TO ${metadata.subject} @${num.split("@")[0]} \n\n ${groupMetadata.desc}` })
+                    Rika.sendMessage(anu.id, { image: { url: ppuser }, mentions: [num], caption: `WELCOME TO ${metadata.subject} @${num.split("@")[0]}\n\n ${metadata.desc}` })
                 } else if (anu.action == 'remove') {
                     Rika.sendMessage(anu.id, { image: { url: ppuser }, mentions: [num], caption: `@${num.split("@")[0]} LEAVING FROM ${metadata.subject}` })
                 } else if (anu.action == 'promote') {
