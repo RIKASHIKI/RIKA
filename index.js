@@ -59,13 +59,9 @@ global.loadDatabase = async function loadDatabase() {
 loadDatabase()
 
 //save database every 5 minutes
-/*if (global.db) setInterval(async () => {
+if (global.db) setInterval(async () => {
     if (global.db.data) await global.db.write()
   }, 180 * 1000)
-*/
-if (global.db) setInterval(async () => {
- if (global.db.data) await global.db.write()
-  }, 30 * 1000)
 
 async function startRika() {
     const Rika = RikaConnect({
@@ -81,8 +77,8 @@ async function startRika() {
     Rika.ws.on('CB:call', async (json) => {
     const callerId = json.content[0].attrs['call-creator']
     if (json.content[0].tag == 'offer') {
-    let pa7rick = await Rika.sendContact(callerId, global.owner)
-    Rika.sendMessage(callerId, { text: `Auto block sistem!\nDon't call bot!\nchat owner for unblock!`}, { quoted : pa7rick })
+    let pa7rick = await Rika.sendContact(callerId,`${ownernumber}`)
+    Rika.sendMessage(callerId, lang.otoban(), { quoted : pa7rick })
     await sleep(8000)
     await Rika.updateBlockStatus(callerId, "block")
     }

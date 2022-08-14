@@ -41,7 +41,7 @@ exports.nostic = (prefix, menu) => {
     return`Send/reply image/sticker with caption ${prefix + menu} text1|text2`
 }
 exports.exampel = (prefix, menu) =>{
-    return`example : ${prefix + menu} text|text`
+    return`ex : ${prefix + menu} text|text`
 }
 exports.onbefo = () => {
     return`been active before`
@@ -58,8 +58,14 @@ exports.chochat = () => {
 exports.wetext = () => {
     return`where the text ?`
 }
+exports.memlimit = (limitMember) =>{
+    return`minimum members must be more than ${limitMember} people`
+}
+exports.linvalid = () =>{
+    return`Link Invalid!`
+}
 exports.otoban = () => {
-    return`Auto block sistem!\nDon't call bot!\nchat owner for unblock!`
+    return`「 AUTO BLOCK SISTEM 」\nDon't call bot!\nchat owner for unblock!`
 }
 exports.afkbefore = (reason) =>{
     return`
@@ -255,7 +261,9 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    ╭──── 「 *DOWNLOAD MENU* 」
    │
    │${sp} ${prefix}ytdl [url]
-   │${sp} ${prefix}ttdl [url] 
+   │${sp} ${prefix}ttdl [url]
+   │${sp} ${prefix}gitrepo [text|text]
+   |${sp} ${prefix}gitclone [url]
    │${sp} ${prefix}tiktoknowm [url]
    │${sp} ${prefix}tiktokwm [url]
    │${sp} ${prefix}tiktokmp3 [url]
@@ -268,7 +276,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}ytmp4 [url]
    │${sp} ${prefix}getmusic [query]
    │${sp} ${prefix}getvideo [query]
-   │${sp} ${prefix}umma [url]
    │${sp} ${prefix}joox [query]
    │${sp} ${prefix}soundcloud [url]
    ╰─────────
@@ -472,12 +479,12 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} Mhankbarbar
    │${sp} Nurutomo
    │${sp} Rashid
-   │${sp} ZeeoneOfc
-   │${sp} Penyedia Module
+   │${sp} tobz
    │${sp} Faiz bastomi
    │${sp} Bremana
    │${sp} Eksa
    │${sp} Rikashiki
+   │${sp} Penyedia Module
    │${sp} all support
    ╰─────────`
 }
@@ -495,6 +502,7 @@ exports.ownermen = (sp, prefix) =>{
    │${sp} ${prefix}setppbot [image]
    │${sp} ${prefix}setwm
    │${sp} ${prefix}setmenu [option]
+   │${sp} ${prefix}jointes [test]
    ╰─────────`
 }
 exports.botmen = (sp, prefix) =>{
@@ -564,7 +572,9 @@ exports.downloadmen = (sp, prefix) =>{
    ╭──── 「 *DOWNLOAD MENU* 」
    │
    │${sp} ${prefix}ytdl [url]
-   │${sp} ${prefix}ttdl [url] 
+   │${sp} ${prefix}ttdl [url]
+   │${sp} ${prefix}gitrepo [text|text]
+   |${sp} ${prefix}gitclone [url]
    │${sp} ${prefix}tiktoknowm [url]
    │${sp} ${prefix}tiktokwm [url]
    │${sp} ${prefix}tiktokmp3 [url]
@@ -577,7 +587,6 @@ exports.downloadmen = (sp, prefix) =>{
    │${sp} ${prefix}ytmp4 [url]
    │${sp} ${prefix}getmusic [query]
    │${sp} ${prefix}getvideo [query]
-   │${sp} ${prefix}umma [url]
    │${sp} ${prefix}joox [query]
    │${sp} ${prefix}soundcloud [url]
    ╰─────────`
@@ -809,12 +818,12 @@ exports.thankto = (sp) =>{
    │${sp} Mhankbarbar
    │${sp} Nurutomo
    │${sp} Rashid
-   │${sp} ZeeoneOfc
-   │${sp} Penyedia Module
+   │${sp} tobz
    │${sp} Faiz bastomi
    │${sp} Bremana
    │${sp} Eksa
    │${sp} Rikashiki
+   │${sp} Penyedia Module
    │${sp} all support
    ╰─────────`
 }
