@@ -1874,19 +1874,19 @@ ${sp} Description : ${anu.description}`,
 	        case 'tiktoknowatermark': case 'tiktoknowm' :case 'ttnowm': {
                 m.reply(lang.wait())
                 data = await Tiktokdl(text)
-                Rika.sendMessage(m.chat, { video: { url: data.nowm }, mimetype: 'video/mp4', fileName: `RIKA-MD` }, { quoted: m })
+                await Rika.sendMessage(m.chat, { video: { url: data.nowatermark },  caption: lang.success() , mimetype: 'video/mp4', fileName: `RIKA-MD`}, { quoted: m })
             }
             break
             case 'tiktokwm': case 'tiktokwatermark': case 'ttwm': {
                 m.reply(lang.wait())
                 data = await Tiktokdl(text)
-                Rika.sendMessage(m.chat, { video: { url: data.wm }, mimetype: 'video/mp4', fileName: `RIKA-MD` }, { quoted: m })
+                await Rika.sendMessage(m.chat, { video: { url: data.watermark },  caption: lang.success() , mimetype: 'video/mp4', fileName: `RIKA-MD`}, { quoted: m })
             }
             break
             case 'tiktokmp3': case 'tiktokaudio':case'ttmp3': {
                 m.reply(lang.wait())
                 data = await Tiktokdl(text)
-                Rika.sendMessage(m.chat, { audio: { url: data.nowm }, mimetype: 'audio/mpeg', fileName:`RIKA-MD`}, { quoted: m })
+                await Rika.sendMessage(m.chat, { audio: { url: data.nowatermark }, mimetype: 'audio/mpeg', fileName:`RIKA-MD`}, { quoted: m })
             }
             break
 	        case 'instagram': case 'ig': case 'igdl': {
