@@ -14,7 +14,7 @@ const speed = require('performance-now')
 const { performance } = require('perf_hooks')
 
 const { smsg, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom, getGroupAdmins } = require('./lib/myfunc')
-const {Tiktokdl} = require('./lib/tiktokdl')
+
 
 // read database
 let _family100 = db.data.game.family100 = []
@@ -131,31 +131,29 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
             console.log(chalk.black(chalk.bgWhite('[MSG]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('> FROM'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('> IN'), chalk.green(m.isGroup ? groupName : 'Private Chat', m.chat))
         }
 	
-	// auto set bio every 5 minutes
+	// auto set bio every 10 minutes
 	if (db.data.settings[botNumber].autobio) {
 	    let setting = global.db.data.settings[botNumber]
-	    if (new Date() * 1 - setting.status > 180 * 1000) {
+	    if (new Date() * 1 - setting.status > 360 * 1000) {
 		let uptime = await runtime(process.uptime())
 		await Rika.setStatus(` ${fouter} | Runtime : ${runtime(uptime)}`)
 		setting.status = new Date() * 1
 	    }
 	}
-	    
+  
 	  // Anti Link
       if (db.data.chats[m.chat].antilink) {
-        if (budy.match(new RegExp(/(https:\/\/chat.whatsapp.com)/gi))) {
-          const valid = await Rika.groupInviteCode(m.chat)
-        if (valid) {    
+        if (budy.match(`https://chat.whatsapp.com`)){
+        const valid = (`https://chat.whatsapp.com/`+await Rika.groupInviteCode(m.chat))
          let isLinkThisGc = new RegExp(valid, 'i')
          let isgclink = isLinkThisGc.test(m.text)
-         await m.reply(antilig())
+         await m.reply(lang.antilig())
          if (!isBotAdmins) return m.reply(lang.notAdmin())
          if (isgclink) return m.reply(lang.thisGc())
          if (isAdmins) return m.reply(lang.admiGc())
          if (isCreator) return m.reply(lang.ownGc())
         Rika.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-        }
-        }
+          }
         }
       // Mute Chat
       if (db.data.chats[m.chat].mute && !isAdmins && !isCreator) {
@@ -834,6 +832,33 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                 await Rika.groupUpdateDescription(m.chat, text).then((res) => m.reply(lang.success())).catch((err) => m.reply(jsonformat(err)))
             }
             break
+            case 'setppbotfull':{
+                if (!isCreator) throw lang.ownerOnly()
+                if (!quoted) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
+                if (!/image/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
+                if (/webp/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
+                let media = await Rika.downloadAndsaveMediaMessage(qouted)
+                const { generateProfilePicture } = require('./lib/myfunc')
+                let { img } = await generateProfilePicture(media)
+                await Rika.query({ tag: 'iq',  attrs: { to: botNumber, type:'set', xmlns: 'w:profile:picture'}, content: [{ tag: 'picture', attrs: { type: 'image' }, content: img }]})
+                 await Rika.updateProfilePicture(botNumber, { url: media }).catch((err) => fs.unlinkSync(media))
+                    m.reply(lang.success())
+            }
+             break
+             case 'setppgcfull':{
+                if (!m.isGroup) throw lang.grupOnly()
+                if (!isAdmins) throw lang.adminOnly()
+                if (!quoted) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
+                if (!/image/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
+                if (/webp/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
+                let media = await Rika.downloadAndsaveMediaMessage(qouted)
+                const { generateProfilePicture } = require('./lib/myfunc')
+                let { img } = await generateProfilePicture(media)
+                await Rika.query({ tag: 'iq',  attrs: { to: m.chat, type:'set', xmlns: 'w:profile:picture'}, content: [{ tag: 'picture', attrs: { type: 'image' }, content: img }]})
+                 await Rika.updateProfilePicture(m.chat, { url: media }).catch((err) => fs.unlinkSync(media))
+                    m.reply(lang.success())
+            }
+             break
           case 'setppbot': {
                 if (!isCreator) throw lang.ownerOnly()
                 if (!quoted) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
@@ -1203,18 +1228,6 @@ break
                           displayText: "RULES",
                           id: 'rules'
                         }
-                        },
-                        {
-                        quickReplyButton: {
-                          displayText: "OWNER",
-                          id: 'owner'
-                        }
-                        },
-                        {
-                        quickReplyButton: {
-                          displayText: "MENU",
-                          id: 'menu'
-                        }
                         }
                     ]
                      let txt =`*──────「 BROADCAST 」 ──────*\n\n ${text}`
@@ -1229,9 +1242,9 @@ break
                     Rika.send5ButMsg(i, txt, `${ownername}`, `${fouter}`, btn)
                     } else if (setbot.templateLocation) {
                     Rika.send5ButLoc(i, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn)
-                    }
+                    }}
                 m.reply(`Sukses Mengirim Broadcast Ke ${anu.length} Group`)
-            }}
+            }
             break
             case 'bc': case 'broadcast': case 'bcall': {
                 if (!isCreator) throw lang.ownerOnly()
@@ -1258,18 +1271,6 @@ break
                   displayText: "RULES",
                   id: 'rules'
                 }
-                },
-                {
-                quickReplyButton: {
-                  displayText: "OWNER",
-                  id: 'owner'
-                }
-                },
-                {
-                quickReplyButton: {
-                  displayText: "MENU",
-                  id: 'menu'
-                }
                 }
             ]
             let txt =`*──────「 BROADCAST 」 ──────*\n\n ${text}`
@@ -1284,9 +1285,9 @@ break
             Rika.send5ButMsg(u, txt, `${ownername}`, `${fouter}`, btn)
             } else if (setbot.templateLocation) {
             Rika.send5ButLoc(u, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn)
-            }
-		m.reply('Sukses Broadcast')
             }}
+		m.reply('Sukses Broadcast')
+            }
             break
             case 'infochat': {
                 if (!m.quoted) m.reply('Reply Pesan')
@@ -1578,6 +1579,18 @@ break
         })
         }
         break
+        case'mediafire':{
+        if (!isUrl) throw lang.adlin()
+        m.reply(lang.wait())
+        res = await fetchJson(`https://caliphapi.com/api/mediafire?url=${text}&apikey=yvvdE26q`)
+        img = (`https://caliphapi.com/api/ssweb2?url=${text}&apikey=yvvdE26q`)
+        let msg = Rika.sendImage(m.chat,{ image:{ url: img}, caption: `────────「 MEDIAFIRE DOWNLOAD 」────────
+        name: ${p.result.judul}
+        size: ${p.result.size}
+        link: ${p.result.link}`})
+        Rika.sendMessage(m.chat,{document:{url:p.result.link},fileName:p.result.judul,mimetype:'application'},{qouted:msg})
+        }
+        break
 	    case 'play': case 'ytplay': {
                 if (!text) throw `Example : ${prefix + menu} mang chung`
                 let yts = require("yt-search")
@@ -1678,9 +1691,27 @@ ${sp} Description : ${anu.description}`,
                 Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             break
-            case 'anime': case 'waifu': case 'husbu': case 'neko': case 'shinobu': case 'megumin': case 'waifus': case 'nekos': case 'trap': case 'blowjob': {
+            case 'waifus': case 'nekos': case 'trap': case 'blowjob': {
+                m.reply('sedang perbaikan')
+               // m.reply(lang.wait())
+               // Rika.sendMessage(m.chat, { image: { url: api('zenz', '/api/morensfw/'+menu, {}, 'apikey') }, caption: 'Generate Random ' + menu }, { quoted: m })
+            }
+            break
+            case`waifu`: case`awoo`: case`shinobu`:{
                 m.reply(lang.wait())
-                Rika.sendMessage(m.chat, { image: { url: api('zenz', '/api/random/'+menu, {}, 'apikey') }, caption: 'Generate Random ' + menu }, { quoted: m })
+                nih = await fetchJson(`https://api.waifu.pics/sfw/${menu}`)
+                hasil = await getBuffer(nih.url)
+                let buttons = [
+                    {buttonId:`${menu}`,buttonText:{displayText:'next'},type:1}
+                ]
+                let buttonMessage = {
+                    image: hasil,
+                    caption: `random ${menu}`,
+                    fouter: 'anime menu',
+                    buttons:buttons,
+                    headerType:4
+                }
+                Rika.sendMessage(m.chat,buttonMessage,{qouted:m})
             }
             break
 	    case 'couple': {
@@ -1743,6 +1774,7 @@ ${sp} Description : ${anu.description}`,
             break
             case'gitrepo':{
                 if (!text) throw lang.wetext()
+                
                 m.reply(lang.wait())
                 user = text.split('|')[0] ? text.split('|')[0] : '-'
                 project = text.split('|')[1] ? text.split('|')[1] : '-'
@@ -1750,9 +1782,13 @@ ${sp} Description : ${anu.description}`,
                 }
             break
             case'gitclone':{
-                if (!isUrl) throw lang.wetext()
+                if (!isUrl) throw lang.adlin()
                 m.reply(lang.wait())
-                Rika.sendMessage(m.chat, {document: {url: `${url}/archive/refs/heads/main.zip`}, mimetype: 'application/zip', fileName: `${url}`}, {quoted:m})
+                let regex = /(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i
+                let [, user, repo] = args[0].match(regex) || []
+                let url = `https://api.github.com/repos/${user}/${repo}/zipball`
+                let filename = (await fetch(url, {method: 'HEAD'})).headers.get('content-disposition').match(/attachment; filename=(.*)/)[1]
+                Rika.sendFileUrl(m.chat,url,filename, null, m)
             }
             break
             case 'quotesanime': case 'quoteanime': {
@@ -1871,34 +1907,73 @@ ${sp} Description : ${anu.description}`,
               await Rika.send5ButLoc(m.chat,lang.choicemed(), `${fouter}`, `${thumbnaili}`, btn)
             }
             break
-	        case 'tiktoknowatermark': case 'tiktoknowm' :case 'ttnowm': {
+            case 'tiktoknowatermark': case 'tiktoknowm' :case 'ttnowm': {
                 m.reply(lang.wait())
-                data = await Tiktokdl(text)
-                await Rika.sendMessage(m.chat, { video: { url: data.nowatermark },  caption: lang.success() , mimetype: 'video/mp4', fileName: `RIKA-MD`}, { quoted: m })
+                let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
+                let buttons = [
+                    {buttonId: `ttwm ${text}`, buttonText: {displayText: 'WATERMARK'}, type: 1},
+                    {buttonId: `ttmp3 ${text}`, buttonText: {displayText: 'AUDIO'}, type: 1}
+                ]
+                let buttonMessage = {
+                    video: { url: anu.result.nowatermark },
+                    caption: `Download From ${text}`,
+                    footer: `${fouter}`,
+                    buttons: buttons,
+                    headerType: 5
+                }
+                Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             break
             case 'tiktokwm': case 'tiktokwatermark': case 'ttwm': {
                 m.reply(lang.wait())
-                data = await Tiktokdl(text)
-                await Rika.sendMessage(m.chat, { video: { url: data.watermark },  caption: lang.success() , mimetype: 'video/mp4', fileName: `RIKA-MD`}, { quoted: m })
+                let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
+                let buttons = [
+                    {buttonId: `ttnowm ${text}`, buttonText: {displayText: 'NO WATERMARK'}, type: 1},
+                    {buttonId: `ttmp3 ${text}`, buttonText: {displayText: 'AUDIO'}, type: 1}
+                ]
+                let buttonMessage = {
+                    video: { url: anu.result.watermark },
+                    caption: `Download From ${text}`,
+                    footer: `${fouter}`,
+                    buttons: buttons,
+                    headerType: 5
+                }
+                Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             break
             case 'tiktokmp3': case 'tiktokaudio':case'ttmp3': {
                 m.reply(lang.wait())
+                let anu = await fetchJson(api('zenz', '/downloader/musically', { url: text }, 'apikey'))
+                Rika.sendMessage(m.chat, { document: { url: anu.result.audio }, mimetype: 'audio/mpeg'}, { quoted: m })
+            }
+            break
+	        case 'tiktoknowatermark1': case 'tiktoknowm1' :case 'ttnowm1': {
+                m.reply(lang.wait())
+                const {Tiktokdl} = require('./lib/tiktokdl')
                 data = await Tiktokdl(text)
-                await Rika.sendMessage(m.chat, { audio: { url: data.nowatermark }, mimetype: 'audio/mpeg', fileName:`RIKA-MD`}, { quoted: m })
+                await Rika.sendMessage(m.chat, { video: { url: data.nowatermark },  caption: lang.success() , mimetype: 'video/mp4', fileName: `RIKA-MD`}, { quoted: m }) 
+            }
+            break
+            case 'tiktokwm1': case 'tiktokwatermark1': case 'ttwm1': {
+                m.reply(lang.wait())
+                const {Tiktokdl} = require('./lib/tiktokdl')
+                data = await Tiktokdl(text)
+                await Rika.sendMessage(m.chat, { video: { url: data.watermark },  caption: lang.success() , mimetype: 'video/mp4', fileName: `RIKA-MD`}, { quoted: m })
+            }
+            break
+            case 'tiktokmp31': case 'tiktokaudio1':case'ttmp31': {
+                m.reply(lang.wait())
+                const {Tiktokdl} = require('./lib/tiktokdl')
+                data = await Tiktokdl(text)
+                await Rika.sendMessage(m.chat, { audio: { url: data.nowatermark }, mimetype: 'audio/mpeg', fileName:`RIKA-MD`}, { quoted: m }) 
             }
             break
 	        case 'instagram': case 'ig': case 'igdl': {
                 if (!text) throw lang.adlin()
                 m.reply(lang.wait())
-                if (/(?:\/p\/|\/reel\/|\/tv\/)([^\s&]+)/.test(isUrl(text)[0])) {
-                    let anu = await fetchJson(api('zenz', '/downloader/instagram2', { url: isUrl(text)[0] }, 'apikey'))
-                    for (let media of anu.data) Rika.sendFileUrl(m.chat, media, `Download Url Instagram From ${isUrl(text)[0]}`, m)
-                } else if (/\/stories\/([^\s&]+)/.test(isUrl(text)[0])) {
-                    let anu = await fetchJson(api('zenz', '/downloader/instastory', { url: isUrl(text)[0] }, 'apikey'))
-                    Rika.sendFileUrl(m.chat, anu.media[0].url, `Download Url Instagram From ${isUrl(text)[0]}`, m)
-                }
+                    let anu = await fetchJson(`https://caliphapi.com/api/ig/dl?url=${text}&apikey=yvvdE26q`)
+                    for (let media of anu.result.media)
+                    Rika.sendFileUrl(m.chat, media, `Download Url Instagram From ${isUrl(text)[0]}`, m)
             }
             break
             case 'joox': case 'jooxdl': {

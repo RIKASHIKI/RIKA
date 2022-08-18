@@ -262,6 +262,13 @@ async function startRika() {
         const ResizeImage = await ImageJimp.resize(width, height)
         return ResizeImage.getBufferAsync('image/png')
       }
+    // resize video
+      Rika.ReSize = async (video, width, height) => {
+        const Jimp = require('jimp');
+        const videoJimp = await Jimp.read(video);
+        const resizevideo = await videoJimp.resize(width, height)
+        return resizevideo.getBufferAsync('video/mp4')
+      }
       // Siapa yang cita-citanya pakai resize buat keliatan thumbnailnya
       
       /** Send Button 5 Location
@@ -399,7 +406,7 @@ async function startRika() {
      * @returns
      */
     Rika.send5ButVid = async (jid , text = '' , footer = '', vid, but = [], buff, options = {}) =>{
-        let resize = await Rika.reSize(buff, 300, 150)
+        let resize = await Rika.ReSize(buff, 300, 150)
         let message = await prepareWAMessageMedia({ video: vid, jpegThumbnail: resize }, { upload: Rika.waUploadToServer })
         var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
         templateMessage: {
@@ -425,7 +432,7 @@ async function startRika() {
      * @returns
      */
     Rika.send5ButGif = async (jid , text = '' , footer = '', gif, but = [], buff, options = {}) =>{
-        let resize = await Rika.reSize(buff, 300, 150)
+        let resize = await Rika.ReSize(buff, 300, 150)
         let a = [1,2]
         let b = a[Math.floor(Math.random() * a.length)]
         let message = await prepareWAMessageMedia({ video: gif, gifPlayback: true, jpegThumbnail: resize, gifAttribution: b}, { upload: Rika.waUploadToServer })

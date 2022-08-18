@@ -1,5 +1,5 @@
 exports.ownerOnly = () => {
-    return `hanya owner`
+    return `hanya pemilik`
 }
 exports.success = () => {
     return`✅ done ok desu~`
@@ -17,19 +17,19 @@ exports.notAdmin = () => {
     return`bot bukan admin`
 }
 exports.bane = () => {
-    return`kamu telah dibanned`
+    return`anda telah dibanned`
 }
 exports.antilig = () => {
-    return`「 ANTI LINK 」\n\n kamu terdeteksi mengirim link grup, kamu akan di kick !`
+    return`──────「 ANTI LINK 」──────\n\n anda terdeteksi mengirim link grup, anda akan di kick !`
 }
 exports.thisGc = () => {
-    return`kamu di izinkan mengrim link grup ini`
+    return`anda di izinkan mengrim link grup ini`
 }
 exports.admiGc = () => {
     return`admin di izinkan mengirimkan link grup`
 }
 exports.ownGc = () =>{
-    return`owner di izinkan mengirimkan link grup`
+    return`pemilik di izinkan mengirimkan link grup`
 }
 exports.maLin = () => {
     return`tambahkan tautan Grup!`
@@ -65,7 +65,7 @@ exports.linvalid = () =>{
     return`tautan tidak sah!`
 }
 exports.otoban = () => {
-    return`「 SISTEM LARANGAN OTOMATIS 」\njangan telpon bot!\nhubungi owner untuk menghentikan larangan!`
+    return`──────「 AUTO BLOCK SISTEM 」──────\njangan telpon bot!\nhubungi owner untuk menghentikan block!`
 }
 exports.afkbefore = (reason) =>{
     return`jangan panggil dia!
@@ -99,10 +99,9 @@ exports.sc = () => {
 }
 exports.dona = (pushname, ownernumber) => {
     return `*──────「 DONATE 」 ──────*
-  hai ${pushname}
-  Kalian bisa mendukung agar bot ini tetap aktif dengan cara donasi
-
-  Berapapun donasi kalian akan sangat berarti 👍
+hai ${pushname}
+dukung bot ini tetap aktif dengan cara donasi
+Berapapun donasi kalian akan sangat berarti 👍
 
 
 dana  : 087820032793
@@ -128,7 +127,10 @@ exports.rules = () => {
 # *PERTANYAAN YANG SERING DI AJUKAN*
 🗯️ bot tidak / lambat menjawab ?
  — disebabkan oleh sinyal, banned, masalah dari server dan alasan lainnya
-    
+  
+🗯️ sering error pada command
+ — disebabkan api mati / kesalahan code
+
 🗯️ dimana bisa mendapatkan script ini ?
  — cari di github atau bikin sendiri
     
@@ -191,21 +193,23 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │
    │${sp} ${prefix}react [emoji]
    │${sp} ${prefix}chat [option]
-   │${sp} ${prefix}join [link]
    │${sp} ${prefix}leave
    │${sp} ${prefix}block @user
    │${sp} ${prefix}unblock @user
    │${sp} ${prefix}bcgroup [text]
    │${sp} ${prefix}bcall [text]
    │${sp} ${prefix}setppbot [image]
+   │${sp} ${prefix}setppbotfull [image]
    │${sp} ${prefix}setwm
    │${sp} ${prefix}setmenu [option]
+   │${sp} ${prefix}jointes [test]
    ╰─────────
 
    ╭──── 「 *BOT MENU* 」
    │
    │${sp} ${prefix}ping
    │${sp} ${prefix}owner
+   │${sp} ${prefix}join [link]
    │${sp} ${prefix}menu
    │${sp} ${prefix}allmenu
    │${sp} ${prefix}rules
@@ -225,6 +229,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}linkgroup
    │${sp} ${prefix}ephemeral [option]
    │${sp} ${prefix}setppgc [image]
+   │${sp} ${prefix}setppgcfull [image]
    │${sp} ${prefix}setnamegc [text]
    │${sp} ${prefix}setdescgc [text]
    │${sp} ${prefix}group [option]
@@ -262,10 +267,13 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}ytdl [url]
    │${sp} ${prefix}ttdl [url]
    │${sp} ${prefix}gitrepo [text|text]
-   |${sp} ${prefix}gitclone [url]
+   │${sp} ${prefix}gitclone [url]
    │${sp} ${prefix}tiktoknowm [url]
    │${sp} ${prefix}tiktokwm [url]
    │${sp} ${prefix}tiktokmp3 [url]
+   │${sp} ${prefix}tiktoknowm1 [url]
+   │${sp} ${prefix}tiktokwm1 [url]
+   │${sp} ${prefix}tiktokaudio1 [url]
    │${sp} ${prefix}instagram [url]
    │${sp} ${prefix}twitter [url]
    │${sp} ${prefix}twittermp3 [url]
@@ -273,10 +281,9 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}pinterestdl [url]
    │${sp} ${prefix}ytmp3 [url]
    │${sp} ${prefix}ytmp4 [url]
-   │${sp} ${prefix}getmusic [query]
-   │${sp} ${prefix}getvideo [query]
    │${sp} ${prefix}joox [query]
    │${sp} ${prefix}soundcloud [url]
+   │${sp} ${prefix}mediafire [url]
    ╰─────────
 
    ╭──── 「 *SEARCH MENU* 」
@@ -306,10 +313,8 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
 
    ╭──── 「 *ANIME MENU* 」
    │
-   │${sp} ${prefix}anime
    │${sp} ${prefix}waifu
-   │${sp} ${prefix}husbu
-   │${sp} ${prefix}neko
+   │${sp} ${prefix}awoo
    │${sp} ${prefix}shinobu
    ╰─────────
 
@@ -494,13 +499,13 @@ exports.ownermen = (sp, prefix) =>{
    │
    │${sp} ${prefix}react [emoji]
    │${sp} ${prefix}chat [option]
-   │${sp} ${prefix}join [link]
    │${sp} ${prefix}leave
    │${sp} ${prefix}block @user
    │${sp} ${prefix}unblock @user
    │${sp} ${prefix}bcgroup [text]
    │${sp} ${prefix}bcall [text]
    │${sp} ${prefix}setppbot [image]
+   │${sp} ${prefix}setppbotfull [image]
    │${sp} ${prefix}setwm
    │${sp} ${prefix}setmenu [option]
    ╰─────────`
@@ -511,6 +516,7 @@ exports.botmen = (sp, prefix) =>{
    │
    │${sp} ${prefix}ping
    │${sp} ${prefix}owner
+   │${sp} ${prefix}join [link]
    │${sp} ${prefix}menu
    │${sp} ${prefix}allmenu
    │${sp} ${prefix}rules
@@ -532,6 +538,7 @@ exports.grupmen = (sp, prefix) =>{
    │${sp} ${prefix}linkgroup
    │${sp} ${prefix}ephemeral [option]
    │${sp} ${prefix}setppgc [image]
+   │${sp} ${prefix}setppgcfull [image]
    │${sp} ${prefix}setnamegc [text]
    │${sp} ${prefix}setdescgc [text]
    │${sp} ${prefix}group [option]
@@ -573,10 +580,13 @@ exports.downloadmen = (sp, prefix) =>{
    │${sp} ${prefix}ytdl [url]
    │${sp} ${prefix}ttdl [url]
    │${sp} ${prefix}gitrepo [text|text]
-   |${sp} ${prefix}gitclone [url]
+   │${sp} ${prefix}gitclone [url]
    │${sp} ${prefix}tiktoknowm [url]
    │${sp} ${prefix}tiktokwm [url]
    │${sp} ${prefix}tiktokmp3 [url]
+   │${sp} ${prefix}tiktoknowm1 [url]
+   │${sp} ${prefix}tiktokwm1 [url]
+   │${sp} ${prefix}tiktokaudio1 [url]
    │${sp} ${prefix}instagram [url]
    │${sp} ${prefix}twitter [url]
    │${sp} ${prefix}twittermp3 [url]
@@ -584,10 +594,9 @@ exports.downloadmen = (sp, prefix) =>{
    │${sp} ${prefix}pinterestdl [url]
    │${sp} ${prefix}ytmp3 [url]
    │${sp} ${prefix}ytmp4 [url]
-   │${sp} ${prefix}getmusic [query]
-   │${sp} ${prefix}getvideo [query]
    │${sp} ${prefix}joox [query]
    │${sp} ${prefix}soundcloud [url]
+   │${sp} ${prefix}mediafire [url]
    ╰─────────`
 }
 exports.searchmen = (sp, prefix) =>{
@@ -623,10 +632,8 @@ exports.animemen = (sp, prefix) =>{
     return`
    ╭──── 「 *ANIME MENU* 」
    │
-   │${sp} ${prefix}anime
    │${sp} ${prefix}waifu
-   │${sp} ${prefix}husbu
-   │${sp} ${prefix}neko
+   │${sp} ${prefix}awoo
    │${sp} ${prefix}shinobu
    ╰─────────`
 }
