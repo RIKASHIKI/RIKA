@@ -22,6 +22,9 @@ exports.bane = () => {
 exports.antilig = () => {
     return`「 ANTI LINK 」\n\n You have been detected sending a group link, you will be kicked !`
 }
+exports.ret = (menu, text) => {
+    return`「 MESSAGE 」\n\n FROM @${m.sender.split('@')[0]}\n type ${menu}\n\n${text}`
+}
 exports.thisGc = () => {
     return`you are allowed to send this group link`
 }
@@ -42,6 +45,9 @@ exports.nostic = (prefix, menu) => {
 }
 exports.exampel = (prefix, menu) =>{
     return`ex : ${prefix + menu} text|text`
+}
+exports.repor = (prefix, menu) =>{
+    return`ex : ${prefix + menu} there is an error bro`
 }
 exports.onbefo = () => {
     return`been active before`
@@ -200,7 +206,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}bcgroup [text]
    │${sp} ${prefix}bcall [text]
    │${sp} ${prefix}setppbot [image]
-   │${sp} ${prefix}setppbotfull [image]
+   │${sp} ${prefix}setppbot full [image]
    │${sp} ${prefix}setwm
    │${sp} ${prefix}setmenu [option]
    │${sp} ${prefix}jointes [test]
@@ -223,6 +229,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}listonline
    │${sp} ${prefix}speed
    │${sp} ${prefix}sc
+   │${sp} ${prefix}nsfw [on/off]
    ╰─────────
     
    ╭──── 「 *GRUP MENU* 」
@@ -230,7 +237,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}linkgroup
    │${sp} ${prefix}ephemeral [option]
    │${sp} ${prefix}setppgc [image]
-   │${sp} ${prefix}setppgcfull [image]
+   │${sp} ${prefix}setppgc full [image]
    │${sp} ${prefix}setnamegc [text]
    │${sp} ${prefix}setdescgc [text]
    │${sp} ${prefix}group [option]
@@ -272,9 +279,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}tiktoknowm [url]
    │${sp} ${prefix}tiktokwm [url]
    │${sp} ${prefix}tiktokmp3 [url]
-   │${sp} ${prefix}tiktoknowm1 [url]
-   │${sp} ${prefix}tiktokwm1 [url]
-   │${sp} ${prefix}tiktokaudio1 [url]
    │${sp} ${prefix}instagram [url]
    │${sp} ${prefix}twitter [url]
    │${sp} ${prefix}twittermp3 [url]
@@ -284,7 +288,8 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}ytmp4 [url]
    │${sp} ${prefix}joox [query]
    │${sp} ${prefix}soundcloud [url]
-   │${sp} ${prefix}mediafire [url]
+   │${sp} ${prefix}mediafire 1/2  [url]
+   │${sp} ${prefix}zippyshare [url]
    ╰─────────
 
    ╭──── 「 *SEARCH MENU* 」
@@ -321,10 +326,34 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
 
    ╭──── 「 *NSFW MENU* 」
    │
-   │${sp} ${prefix}waifus (nsfw)
-   │${sp} ${prefix}nekos (nsfw)
-   │${sp} ${prefix}trap (nsfw)
-   │${sp} ${prefix}blowjob (nsfw)
+   │${sp} ${prefix}ahegao
+   │${sp} ${prefix}ass
+   │${sp} ${prefix}bdsm
+   │${sp} ${prefix}blowjob
+   │${sp} ${prefix}cuckold
+   │${sp} ${prefix}cum
+   │${sp} ${prefix}ero
+   │${sp} ${prefix}femdom
+   │${sp} ${prefix}foot
+   │${sp} ${prefix}gangbang
+   │${sp} ${prefix}glasses
+   │${sp} ${prefix}hentai
+   │${sp} ${prefix}hentaigif
+   │${sp} ${prefix}jahy
+   │${sp} ${prefix}maid
+   │${sp} ${prefix}manga
+   │${sp} ${prefix}masturbation
+   │${sp} ${prefix}mobilewall
+   │${sp} ${prefix}netorare
+   │${sp} ${prefix}nsfwneko
+   │${sp} ${prefix}sfwneko
+   │${sp} ${prefix}orgy
+   │${sp} ${prefix}panties
+   │${sp} ${prefix}pussy
+   │${sp} ${prefix}tentacles
+   │${sp} ${prefix}thighs
+   │${sp} ${prefix}yuri
+   │${sp} ${prefix}zettairyouiki
    ╰─────────
     
    ╭──── 「 *TEXTPRO MENU* 」
@@ -505,7 +534,7 @@ exports.ownermen = (sp, prefix) =>{
    │${sp} ${prefix}bcgroup [text]
    │${sp} ${prefix}bcall [text]
    │${sp} ${prefix}setppbot [image]
-   │${sp} ${prefix}setppbotfull [image]
+   │${sp} ${prefix}setppbot full [image]
    │${sp} ${prefix}setwm
    │${sp} ${prefix}setmenu [option]
    ╰─────────`
@@ -529,6 +558,7 @@ exports.botmen = (sp, prefix) =>{
    │${sp} ${prefix}listonline
    │${sp} ${prefix}speed
    │${sp} ${prefix}sc
+   │${sp} ${prefix}nsfw [on/off]
    ╰─────────`
 }
 exports.grupmen = (sp, prefix) =>{
@@ -538,7 +568,7 @@ exports.grupmen = (sp, prefix) =>{
    │${sp} ${prefix}linkgroup
    │${sp} ${prefix}ephemeral [option]
    │${sp} ${prefix}setppgc [image]
-   │${sp} ${prefix}setppgcfull [image]
+   │${sp} ${prefix}setppgc full [image]
    │${sp} ${prefix}setnamegc [text]
    │${sp} ${prefix}setdescgc [text]
    │${sp} ${prefix}group [option]
@@ -584,9 +614,6 @@ exports.downloadmen = (sp, prefix) =>{
    │${sp} ${prefix}tiktoknowm [url]
    │${sp} ${prefix}tiktokwm [url]
    │${sp} ${prefix}tiktokmp3 [url]
-   │${sp} ${prefix}tiktoknowm1 [url]
-   │${sp} ${prefix}tiktokwm1 [url]
-   │${sp} ${prefix}tiktokaudio1 [url]
    │${sp} ${prefix}instagram [url]
    │${sp} ${prefix}twitter [url]
    │${sp} ${prefix}twittermp3 [url]
@@ -596,7 +623,8 @@ exports.downloadmen = (sp, prefix) =>{
    │${sp} ${prefix}ytmp4 [url]
    │${sp} ${prefix}joox [query]
    │${sp} ${prefix}soundcloud [url]
-   │${sp} ${prefix}mediafire [url]
+   │${sp} ${prefix}mediafire 1/2 [url]
+   │${sp} ${prefix}zippyshare [url]
    ╰─────────`
 }
 exports.searchmen = (sp, prefix) =>{
@@ -641,10 +669,34 @@ exports.nsfwmen = (sp, prefix) =>{
     return`
    ╭──── 「 *NSFW MENU* 」
    │
-   │${sp} ${prefix}waifus (nsfw)
-   │${sp} ${prefix}nekos (nsfw)
-   │${sp} ${prefix}trap (nsfw)
-   │${sp} ${prefix}blowjob (nsfw)
+   │${sp} ${prefix}ahegao
+   │${sp} ${prefix}ass
+   │${sp} ${prefix}bdsm
+   │${sp} ${prefix}blowjob
+   │${sp} ${prefix}cuckold
+   │${sp} ${prefix}cum
+   │${sp} ${prefix}ero
+   │${sp} ${prefix}femdom
+   │${sp} ${prefix}foot
+   │${sp} ${prefix}gangbang
+   │${sp} ${prefix}glasses
+   │${sp} ${prefix}hentai
+   │${sp} ${prefix}hentaigif
+   │${sp} ${prefix}jahy
+   │${sp} ${prefix}maid
+   │${sp} ${prefix}manga
+   │${sp} ${prefix}masturbation
+   │${sp} ${prefix}mobilewall
+   │${sp} ${prefix}netorare
+   │${sp} ${prefix}nsfwneko
+   │${sp} ${prefix}sfwneko
+   │${sp} ${prefix}orgy
+   │${sp} ${prefix}panties
+   │${sp} ${prefix}pussy
+   │${sp} ${prefix}tentacles
+   │${sp} ${prefix}thighs
+   │${sp} ${prefix}yuri
+   │${sp} ${prefix}zettairyouiki
    ╰─────────`
 }
 exports.textpromen = (sp, prefix) =>{

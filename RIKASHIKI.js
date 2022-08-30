@@ -72,16 +72,18 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
         const groupAdmins = m.isGroup ? await getGroupAdmins(participants) : ''
     	const isBotAdmins = m.isGroup ? groupAdmins.includes(botNumber) : false
     	const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : false
-	
-	
+        //const isBanned = m.find(v => v.id === id)?.banned
+
 	try {
             let isNumber = x => typeof x === 'number' && !isNaN(x)
             let user = global.db.data.users[m.sender]
             if (typeof user !== 'object') global.db.data.users[m.sender] = {}
             if (user) {
                 if (!isNumber(user.afkTime)) user.afkTime = -1
+                if (!('Banned' in user)) user.banned = false
                 if (!('afkReason' in user)) user.afkReason = ''
             } else global.db.data.users[m.sender] = {
+                banned: false,
                 afkTime: -1,
                 afkReason: '',
             }
@@ -90,6 +92,7 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
             if (typeof chats !== 'object') global.db.data.chats[m.chat] = {}
             if (chats) {
                 if (!('mute' in chats)) chats.mute = false
+                if (!('nsfw' in chats)) chats.nsfw = false
                 if (!('antilink' in chats)) chats.antilink = false
             } else global.db.data.chats[m.chat] = {
                 mute: false,
@@ -108,6 +111,7 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
 		if (!('templateLocation' in setting)) setting.templateLocation = true
 	    } else global.db.data.settings[botNumber] = {
 		status: 0,
+        Banned: false,
 		autobio: false,
 		templateImage: false,
 		templateVideo: false,
@@ -128,7 +132,7 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
         // Push Message To Console && Auto Read
         if (m.message) {
             Rika.readMessages([m.key])
-            console.log(chalk.black(chalk.bgWhite('[MSG]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('> FROM'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('> IN'), chalk.green(m.isGroup ? groupName : 'Private Chat', m.chat))
+            console.log(chalk.black(chalk.bgWhite('> MESSAGE')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('> FROM'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('> IN'), chalk.green(m.isGroup ? groupName : 'Private Chat', m.chat))
         }
 	
 	// auto set bio every 10 minutes
@@ -158,6 +162,11 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
       // Mute Chat
       if (db.data.chats[m.chat].mute && !isAdmins && !isCreator) {
       return
+      }
+      
+      //Banned Member
+      if (db.data.users[m.sender].Banned && isBanned){
+       return m.reply(lang.bane())
       }
 
         // Respon Cmd with media
@@ -757,8 +766,8 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                     await m.reply(lang.wait())
                     await Rika.groupAcceptInvite(result).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 }
-            }*/
-                break
+            }
+                break*/
             case 'leave': {
                 if (!isCreator) throw lang.ownerOnly()
                 await Rika.groupLeave(m.chat).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
@@ -774,8 +783,8 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             break
 	case 'kick': {
 		if (!m.isGroup) throw lang.grupOnly()
-                if (!isBotAdmins) throw lang.notAdmin()
-                if (!isAdmins) throw lang.adminOnly()
+        if (!isBotAdmins) throw lang.notAdmin()
+        if (!isAdmins) throw lang.adminOnly()
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 		await Rika.groupParticipantsUpdate(m.chat, [users], 'remove').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
@@ -816,6 +825,11 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
 		await Rika.updateBlockStatus(users, 'unblock').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
+    case 'report': case 'request':{
+        if (!text) throw lang.repor(prefix, menu)
+    Rika.sendMessage(`${ownernumber}@s.whatsapp.net`,lang.ret(menu, text),{qouted:m})
+    }
+
 	    case 'setnamegc': {
                 if (!m.isGroup) throw lang.grupOnly()
                 if (!isBotAdmins) throw lang.notAdmin()
@@ -832,54 +846,40 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                 await Rika.groupUpdateDescription(m.chat, text).then((res) => m.reply(lang.success())).catch((err) => m.reply(jsonformat(err)))
             }
             break
-            case 'setppbotfull':{
-                if (!isCreator) throw lang.ownerOnly()
-                if (!quoted) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
-                if (!/image/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
-                if (/webp/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
-                let media = await Rika.downloadAndsaveMediaMessage(qouted)
-                const { generateProfilePicture } = require('./lib/myfunc')
-                let { img } = await generateProfilePicture(media)
+            case 'setppbot': {
+             
+                if (!isCreator) return m.reply(mess.owner)
+                if (!quoted) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
+                if (!/image/.test(mime)) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
+                if (/webp/.test(mime)) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
+                var media = await Rika.downloadAndSaveMediaMessage(quoted)
+                try {
+                if (args[0] === "full") {
+                const { generateProfilePicture } = require("./lib/myfunc")
+                var { img } = await generateProfilePicture(media)
                 await Rika.query({ tag: 'iq',  attrs: { to: botNumber, type:'set', xmlns: 'w:profile:picture'}, content: [{ tag: 'picture', attrs: { type: 'image' }, content: img }]})
-                 await Rika.updateProfilePicture(botNumber, { url: media }).catch((err) => fs.unlinkSync(media))
-                    m.reply(lang.success())
-            }
-             break
-             case 'setppgcfull':{
-                if (!m.isGroup) throw lang.grupOnly()
-                if (!isAdmins) throw lang.adminOnly()
-                if (!quoted) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
-                if (!/image/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
-                if (/webp/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
-                let media = await Rika.downloadAndsaveMediaMessage(qouted)
-                const { generateProfilePicture } = require('./lib/myfunc')
-                let { img } = await generateProfilePicture(media)
-                await Rika.query({ tag: 'iq',  attrs: { to: m.chat, type:'set', xmlns: 'w:profile:picture'}, content: [{ tag: 'picture', attrs: { type: 'image' }, content: img }]})
-                 await Rika.updateProfilePicture(m.chat, { url: media }).catch((err) => fs.unlinkSync(media))
-                    m.reply(lang.success())
-            }
-             break
-          case 'setppbot': {
-                if (!isCreator) throw lang.ownerOnly()
-                if (!quoted) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
-                if (!/image/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
-                if (/webp/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
-                let media = await Rika.downloadAndSaveMediaMessage(quoted)
-                await Rika.updateProfilePicture(botNumber, { url: media }).catch((err) => fs.unlinkSync(media))
-                m.reply(lang.success())
+                } else { await Rika.updateProfilePicture(botNumber, { url: media }) }
+                m.reply(mess.success)
+                } catch { m.reply('Gagal Mengganti Photo Profile') }
                 }
                 break
-           case 'setppgroup': case 'setppgrup': case 'setppgc': {
-                if (!m.isGroup) throw lang.grupOnly()
-                if (!isAdmins) throw lang.adminOnly()
-                if (!quoted) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
-                if (!/image/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
-                if (/webp/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + menu}`
-                let media = await Rika.downloadAndSaveMediaMessage(quoted)
-                await Rika.updateProfilePicture(m.chat, { url: media }).catch((err) => fs.unlinkSync(media))
-                m.reply(lang.success())
-                }
-                break
+                case 'setppgroup': {
+             
+                    if (!isCreator) return m.reply(mess.owner)
+                    if (!quoted) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
+                    if (!/image/.test(mime)) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
+                    if (/webp/.test(mime)) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
+                    var media = await Rika.downloadAndSaveMediaMessage(quoted)
+                    try {
+                    if (args[0] === "full") {
+                    const { generateProfilePicture } = require("./lib/myfunc")
+                    var { img } = await generateProfilePicture(media)
+                    await Rika.query({ tag: 'iq',  attrs: { to: m.chat, type:'set', xmlns: 'w:profile:picture'}, content: [{ tag: 'picture', attrs: { type: 'image' }, content: img }]})
+                    } else { await Rika.updateProfilePicture(m.chat, { url: media }) }
+                    m.reply(mess.success)
+                    } catch { m.reply('Gagal Mengganti Photo Profile') }
+                    }
+                    break
             case 'tagall': {
                 if (!m.isGroup) throw lang.grupOnly()
                 if (!isBotAdmins) throw lang.notAdmin()
@@ -1124,17 +1124,37 @@ break
                 if (args[0] === "on") {
                 if (db.data.chats[m.chat].antilink) return m.reply(lang.onbefo())
                 db.data.chats[m.chat].antilink = true
-                m.reply(`Antilink Aktif !`)
+                m.reply(`Antilink active !`)
                 } else if (args[0] === "off") {
                 if (!db.data.chats[m.chat].antilink) return m.reply(lang.offbefo())
                 db.data.chats[m.chat].antilink = false
-                m.reply(`Antilink Tidak Aktif !`)
+                m.reply(`Antilink unactive !`)
                 } else {
                  let buttons = [
                         { buttonId: 'antilink on', buttonText: { displayText: 'On' }, type: 1 },
                         { buttonId: 'antilink off', buttonText: { displayText: 'Off' }, type: 1 }
                     ]
                     await Rika.sendButtonText(m.chat, buttons, `Mode Antilink`, `${fouter}`, m)
+                }
+             }
+             break
+             case'nsfw':{
+                if (!isBotAdmins) throw lang.notAdmin()
+                if (!isAdmins) throw lang.adminOnly()
+                if (args[0] === "on"){
+                if (db.data.chats[m.chat].nsfw) return m.reply(lang.onbefo())
+                db.data.chats[m.chat].nsfw = true
+                m.reply('nsfw active !')
+                } else if (args[0] === "off") {
+                if (!db.data.chats[m.chat].nsfw) return m.chat(lang.offbefo())
+                db.data.chats[m.chat].nsfw = false
+                m.reply('nsfw unactive !')
+                } else {
+                    let buttons = [
+                        { buttonId: 'nsfw on', buttonText: { displayText: 'On' }, type: 1 },
+                        { buttonId: 'nsfw off', buttonText: { displayText: 'Off' }, type: 1 }
+                    ]
+                    await Rika.sendButtonText(m.chat, buttons, `Mode nsfw`, `${fouter}`, m)
                 }
              }
              break
@@ -1547,7 +1567,7 @@ break
                 if (!text) throw lang.wetext()
                 let google = require('google-it')
                 google({'query': text}).then(res => {
-                let teks = `Google Search From : ${text}\n\n`
+                let teks = `_${text}_\n\n`
                 for (let g of res) {
                 teks += `${sp} *Title* : ${g.title}\n`
                 teks += `${sp} *Description* : ${g.snippet}\n`
@@ -1582,13 +1602,19 @@ break
         case'mediafire':{
         if (!isUrl) throw lang.adlin()
         m.reply(lang.wait())
-        res = await fetchJson(`https://caliphapi.com/api/mediafire?url=${text}&apikey=yvvdE26q`)
-        img = (`https://caliphapi.com/api/ssweb2?url=${text}&apikey=yvvdE26q`)
-        let msg = Rika.sendImage(m.chat,{ image:{ url: img}, caption: `────────「 MEDIAFIRE DOWNLOAD 」────────
-        name: ${p.result.judul}
-        size: ${p.result.size}
-        link: ${p.result.link}`})
-        Rika.sendMessage(m.chat,{document:{url:p.result.link},fileName:p.result.judul,mimetype:'application'},{qouted:msg})
+        if (args[0] === '1'){
+        res = await fetchJson(api('zenz','/downloader/mediafire',{ url: isUrl(text)[0] }, 'apikey'))
+        Rika.sendMessage(m.chat,{document:{url: res},mimetype:'application',caption:'download from rika'},{qouted:m})
+        } else if (args[0] === '2') {
+            get = await fetchJson('cali',`/api/mediafire?url=${isUrl(text)[0] }&apikey=`)
+          Rika.sendMessage(m.chat,{document:{url: get},mimetype:'application',caption:'download from rika'},{qouted:m}) 
+        }}
+        break
+        case'zippyshare':{
+            if (!isUrl) throw lang.adlin()
+            m.reply(lang.wait())
+          get = await fetchJson(api("zenz", "/downloader/zippyshare", { url: isUrl(text)[0] }, "apikey"))
+          Rika.sendMessage(m.chat,{document:{url: get},mimetype:'application',caption:'download from rika'},{qouted:m})
         }
         break
 	    case 'play': case 'ytplay': {
@@ -1691,10 +1717,10 @@ ${sp} Description : ${anu.description}`,
                 Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             break
-            case 'waifus': case 'nekos': case 'trap': case 'blowjob': {
-                m.reply('sedang perbaikan')
-               // m.reply(lang.wait())
-               // Rika.sendMessage(m.chat, { image: { url: api('zenz', '/api/morensfw/'+menu, {}, 'apikey') }, caption: 'Generate Random ' + menu }, { quoted: m })
+            case 'ahegao': case 'ass': case 'bdsm': case 'blowjob': case 'cuckold': case 'cum': case 'ero': case 'femdom': case 'foot': case 'gangbang': case 'glasses': case 'hentai': case 'hentaigif': case 'jahy': case 'maid': case 'manga': case 'masturbation': case 'mobilewall': case 'netorare': case 'nsfwneko': case 'sfwneko': case 'orgy': case 'panties': case 'pussy': case 'tentacles': case 'thighs': case 'yuri': case 'zettairyouiki': {
+                if (!db.data.chats[m.chat].nsfw) return m.reply('nsfw unactive')
+                m.reply(lang.wait())
+                Rika.sendMessage(m.chat, { image: { url: api('zenz', '/api/morensfw/'+menu, {}, 'apikey') }, caption: 'Generate Random ' + menu }, { quoted: m })
             }
             break
             case`waifu`: case`awoo`: case`shinobu`:{
@@ -1774,7 +1800,6 @@ ${sp} Description : ${anu.description}`,
             break
             case'gitrepo':{
                 if (!text) throw lang.wetext()
-                
                 m.reply(lang.wait())
                 user = text.split('|')[0] ? text.split('|')[0] : '-'
                 project = text.split('|')[1] ? text.split('|')[1] : '-'
@@ -1947,7 +1972,7 @@ ${sp} Description : ${anu.description}`,
                 Rika.sendMessage(m.chat, { document: { url: anu.result.audio }, mimetype: 'audio/mpeg'}, { quoted: m })
             }
             break
-	        case 'tiktoknowatermark1': case 'tiktoknowm1' :case 'ttnowm1': {
+	        /*case 'tiktoknowatermark1': case 'tiktoknowm1' :case 'ttnowm1': {
                 m.reply(lang.wait())
                 const {Tiktokdl} = require('./lib/tiktokdl')
                 data = await Tiktokdl(text)
@@ -1966,14 +1991,14 @@ ${sp} Description : ${anu.description}`,
                 const {Tiktokdl} = require('./lib/tiktokdl')
                 data = await Tiktokdl(text)
                 await Rika.sendMessage(m.chat, { audio: { url: data.nowatermark }, mimetype: 'audio/mpeg', fileName:`RIKA-MD`}, { quoted: m }) 
-            }
+            }*/
             break
 	        case 'instagram': case 'ig': case 'igdl': {
                 if (!text) throw lang.adlin()
                 m.reply(lang.wait())
-                    let anu = await fetchJson(`https://caliphapi.com/api/ig/dl?url=${text}&apikey=yvvdE26q`)
-                    for (let media of anu.result.media)
-                    Rika.sendFileUrl(m.chat, media, `Download Url Instagram From ${isUrl(text)[0]}`, m)
+                    let anu = await fetchJson(api('zenz', '/downloader/instagram', { url:isUrl(text)[0] }, 'apikey'))
+                    for (let media of anu.result)
+                    Rika.sendFileUrl(m.chat, media.url , `Download Url Instagram From ${isUrl(text)[0]}`, m)
             }
             break
             case 'joox': case 'jooxdl': {

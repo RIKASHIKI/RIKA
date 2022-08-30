@@ -406,8 +406,8 @@ async function startRika() {
      * @returns
      */
     Rika.send5ButVid = async (jid , text = '' , footer = '', vid, but = [], buff, options = {}) =>{
-        let resize = await Rika.ReSize(buff, 300, 150)
-        let message = await prepareWAMessageMedia({ video: vid, jpegThumbnail: resize }, { upload: Rika.waUploadToServer })
+        let Resize = await Rika.ReSize(buff, 300, 150)
+        let message = await prepareWAMessageMedia({ video: vid, jpegThumbnail: Resize }, { upload: Rika.waUploadToServer })
         var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
         templateMessage: {
         hydratedTemplate: {
@@ -432,10 +432,10 @@ async function startRika() {
      * @returns
      */
     Rika.send5ButGif = async (jid , text = '' , footer = '', gif, but = [], buff, options = {}) =>{
-        let resize = await Rika.ReSize(buff, 300, 150)
+        let Resize = await Rika.ReSize(buff, 300, 150)
         let a = [1,2]
         let b = a[Math.floor(Math.random() * a.length)]
-        let message = await prepareWAMessageMedia({ video: gif, gifPlayback: true, jpegThumbnail: resize, gifAttribution: b}, { upload: Rika.waUploadToServer })
+        let message = await prepareWAMessageMedia({ video: gif, gifPlayback: true, jpegThumbnail: Resize, gifAttribution: b}, { upload: Rika.waUploadToServer })
         var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
         templateMessage: {
         hydratedTemplate: {
