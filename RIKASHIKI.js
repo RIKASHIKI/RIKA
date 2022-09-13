@@ -863,7 +863,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                 } catch { m.reply('Gagal Mengganti Photo Profile') }
                 }
                 break
-                case 'setppgroup': {
+                case 'setppgroup': case'setppgc': case'setppgrup': {
              
                     if (!isCreator) return m.reply(mess.owner)
                     if (!quoted) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
@@ -1139,8 +1139,7 @@ break
              }
              break
              case'nsfw':{
-                if (!isBotAdmins) throw lang.notAdmin()
-                if (!isAdmins) throw lang.adminOnly()
+                if (!isCreator) throw lang.ownerOnly()
                 if (args[0] === "on"){
                 if (db.data.chats[m.chat].nsfw) return m.reply(lang.onbefo())
                 db.data.chats[m.chat].nsfw = true
@@ -1606,7 +1605,7 @@ break
         res = await fetchJson(api('zenz','/downloader/mediafire',{ url: isUrl(text)[0] }, 'apikey'))
         Rika.sendMessage(m.chat,{document:{url: res},mimetype:'application',caption:'download from rika'},{qouted:m})
         } else if (args[0] === '2') {
-            get = await fetchJson('cali',`/api/mediafire?url=${isUrl(text)[0] }&apikey=`)
+            get = await fetchJson('cali',`/api/mediafire?url=${isUrl(text)[0] }&apikey=MqrYHqvR`)
           Rika.sendMessage(m.chat,{document:{url: get},mimetype:'application',caption:'download from rika'},{qouted:m}) 
         }}
         break
@@ -1718,9 +1717,10 @@ ${sp} Description : ${anu.description}`,
             }
             break
             case 'ahegao': case 'ass': case 'bdsm': case 'blowjob': case 'cuckold': case 'cum': case 'ero': case 'femdom': case 'foot': case 'gangbang': case 'glasses': case 'hentai': case 'hentaigif': case 'jahy': case 'maid': case 'manga': case 'masturbation': case 'mobilewall': case 'netorare': case 'nsfwneko': case 'sfwneko': case 'orgy': case 'panties': case 'pussy': case 'tentacles': case 'thighs': case 'yuri': case 'zettairyouiki': {
-                if (!db.data.chats[m.chat].nsfw) return m.reply('nsfw unactive')
+                if (!db.data.chats[m.chat].nsfw) throw 'nsfw unactive'
+                if (m.isGroup) throw 'tidak dapat digunakan di grup'
                 m.reply(lang.wait())
-                Rika.sendMessage(m.chat, { image: { url: api('zenz', '/api/morensfw/'+menu, {}, 'apikey') }, caption: 'Generate Random ' + menu }, { quoted: m })
+                Rika.sendMessage(m.chat, { image: { url: api('zenz', '/api/morensfw/'+menu,{},'apikey') }, caption: 'Generate Random ' + menu }, { quoted: m })
             }
             break
             case`waifu`: case`awoo`: case`shinobu`:{

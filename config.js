@@ -12,9 +12,9 @@ global.APIs = {
 }
 // Apikey Website Api
 global.APIKeys = {
-	'https://zenzapis.xyz': 'apikey',
-	'https://api.lolhuman.xyz': 'apikey',
-	'https://caliphapi.com': 'apikey'
+	'https://zenzapis.xyz': 'sonelstore',
+	'https://api.lolhuman.xyz': '3211199ba2ebb6121d3676b8', //4e5dd596c8
+	'https://caliphapi.com': 'MqrYHqvR'
 }
 // sistem
 global.modepub = true //true for public | false for self
