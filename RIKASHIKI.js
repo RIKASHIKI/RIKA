@@ -747,6 +747,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             break  
             case 'join': {
+                if (!isCreator) throw lang.ownerOnly()
                 if (!text) throw lang.maLin()
                 if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) throw lang.linvalid()
                     m.reply(lang.wait())
@@ -859,8 +860,8 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                 var { img } = await generateProfilePicture(media)
                 await Rika.query({ tag: 'iq',  attrs: { to: botNumber, type:'set', xmlns: 'w:profile:picture'}, content: [{ tag: 'picture', attrs: { type: 'image' }, content: img }]})
                 } else { await Rika.updateProfilePicture(botNumber, { url: media }) }
-                m.reply(mess.success)
-                } catch { m.reply('Gagal Mengganti Photo Profile') }
+                m.reply(lang.success())
+                } catch { m.reply(lang.nowor()) }
                 }
                 break
                 case 'setppgroup': case'setppgc': case'setppgrup': {
@@ -876,8 +877,8 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                     var { img } = await generateProfilePicture(media)
                     await Rika.query({ tag: 'iq',  attrs: { to: m.chat, type:'set', xmlns: 'w:profile:picture'}, content: [{ tag: 'picture', attrs: { type: 'image' }, content: img }]})
                     } else { await Rika.updateProfilePicture(m.chat, { url: media }) }
-                    m.reply(mess.success)
-                    } catch { m.reply('Gagal Mengganti Photo Profile') }
+                    m.reply(lang.success())
+                    } catch { m.reply(lang.nowor()) }
                     }
                     break
             case 'tagall': {
@@ -1213,11 +1214,16 @@ break
                 }
             }
             break
-            case 'delete': case 'del': case'hapus': {
+            case 'delete': case 'del': {
                 if (!m.quoted) throw false
                 let { chat, fromMe, id, isBaileys } = m.quoted
                 if (!isBaileys) throw 'Pesan tersebut bukan dikirim oleh bot!'
                 Rika.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: true, id: m.quoted.id, participant: m.quoted.sender } })
+            }
+            case'hapus': {
+                if (!m.isGroup) throw lang.grupOnly()
+                if (!isBotAdmins) throw lang.notAdmin()
+                Rika.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.quoted.id, participant: m.quoted.sender } })
             }
             break
             case 'bcgc': case 'bcgroup': {
@@ -1249,19 +1255,9 @@ break
                         }
                         }
                     ]
-                     let txt =`*──────「 BROADCAST 」 ──────*\n\n ${text}`
-                     let setbot = db.data.settings[botNumber]
-                    if (setbot.templateImage) {
-                    Rika.send5ButImg(i, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
-                    } else if (setbot.templateGif) {
-                    Rika.send5ButGif(i, txt, `${ownername}`, `${fouter}`, `${video}`, btn,`${thumbnaili}`)
-                    } else if (setbot.templateVid) {
-                    Rika.send5ButVid(i, txt, `${ownername}`, `${fouter}`,`${video}`, btn, `${thumbnaili}`)
-                    } else if (setbot.templateMsg) {
-                    Rika.send5ButMsg(i, txt, `${ownername}`, `${fouter}`, btn)
-                    } else if (setbot.templateLocation) {
-                    Rika.send5ButLoc(i, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn)
-                    }}
+                     let txt =`──────「 BROADCAST 」 ──────\n\n ${text}`
+                     Rika.send5ButImg(i, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn, `${thumbnaili}`)
+                }
                 m.reply(`Sukses Mengirim Broadcast Ke ${anu.length} Group`)
             }
             break
@@ -1292,19 +1288,9 @@ break
                 }
                 }
             ]
-            let txt =`*──────「 BROADCAST 」 ──────*\n\n ${text}`
-            let setbot = db.data.settings[botNumber]
-            if (setbot.templateImage) {
-            Rika.send5ButImg(u, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
-            } else if (setbot.templateGif) {
-            Rika.send5ButGif(u, txt, `${ownername}`, `${fouter}`, `${video}`, btn,`${thumbnaili}`)
-            } else if (setbot.templateVid) {
-            Rika.send5ButVid(u, txt, `${ownername}`, `${fouter}`,`${video}`, btn, `${thumbnaili}`)
-            } else if (setbot.templateMsg) {
-            Rika.send5ButMsg(u, txt, `${ownername}`, `${fouter}`, btn)
-            } else if (setbot.templateLocation) {
-            Rika.send5ButLoc(u, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn)
-            }}
+            let txt =`──────「 BROADCAST 」 ──────\n\n ${text}`
+            Rika.send5ButImg(u, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn, `${thumbnaili}`)
+                }
 		m.reply('Sukses Broadcast')
             }
             break
@@ -2736,6 +2722,36 @@ ${sp} Detail      : ${detail}`
                         Rika.send5ButLoc(m.chat, lang.men(pushname, salam, packname, sp ,prefix), `${fouter}`, `${thumbnaili}`, btn)
                         }
                      }
+        break
+        case'allmenu':{
+            let sections = [
+            {
+            title: "ALLMENU",
+            rows: [
+            {title: "OWNERMENU", rowId: `ownermenu`, description: `───────────────────────────`},
+            {title: "BOTMENU", rowId: `botmenu`, description: `───────────────────────────`},
+            {title: "GROUPMENU", rowId: `grupmenu`, description: `───────────────────────────`},
+            {title: "WEBMENU", rowId: `webmenu`, description: `───────────────────────────`},
+            {title: "DOWNLOADMENU", rowId: `downloadmenu`, description: `───────────────────────────`},
+            {title: "SEARCHMENU", rowId: `searchmenu`, description: `───────────────────────────`},
+            {title: "RANDOMMENU", rowId: `randommenu`, description: `───────────────────────────`},
+            {title: "ANIMEMENU", rowId: `animemenu`, description: `───────────────────────────`},
+            {title: "NSFWMENU", rowId: `nsfwmenu`, description: `───────────────────────────`},
+            {title: "TEXTPROMENU", rowId: `textpromenu`, description: `───────────────────────────`},
+            {title: "PHOTOEXYMENU", rowId: `photoexymenu`, description: `───────────────────────────`},
+            {title: "EPHOTOMENU", rowId: `ephotomenu`, description: `───────────────────────────`},
+            {title: "FUNMENU", rowId: `funmenu`, description: `───────────────────────────`},
+            {title: "CONVERTMENU", rowId: `convertmenu`, description: `───────────────────────────`},
+            {title: "DATABASEMENU", rowId: `databasemenu`, description: `───────────────────────────`},
+            {title: "ANONYMOUSMENU", rowId: `anonymousmenu`, description: `───────────────────────────`},
+            {title: "ISLAMMENU", rowId: `islammenu`, description: `───────────────────────────`},
+            {title: "VOICEMENU", rowId: `voicemenu`, description: `───────────────────────────`},
+            {title: "THANK TO", rowId: `thankto`, description: `───────────────────────────`}
+            ]
+            },
+            ]
+            Rika.sendListMsg(m.chat, `select one`, `${fouter}`, `ALLMENU`, `Click Here`, sections, m)
+            }
         break
         case'ownermenu':{m.reply (lang.ownermen(sp, prefix))}
         break

@@ -4,6 +4,9 @@ exports.ownerOnly = () => {
 exports.success = () => {
     return`✅ done ok desu~`
 }
+exports.nowor = () => {
+    return`gagal`
+}
 exports.wait = () => {
     return`⏳ tunggu...`
 }
@@ -245,6 +248,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}kick @user
    │${sp} ${prefix}hidetag [text]
    │${sp} ${prefix}tagall [text]
+   │${sp} ${prefix}hapus [reply]
    │${sp} ${prefix}totag [reply]
    │${sp} ${prefix}antilink [on/off]
    │${sp} ${prefix}mute [on/off]
@@ -577,6 +581,7 @@ exports.grupmen = (sp, prefix) =>{
    │${sp} ${prefix}kick @user
    │${sp} ${prefix}hidetag [text]
    │${sp} ${prefix}tagall [text]
+   │${sp} ${prefix}hapus [reply]
    │${sp} ${prefix}totag [reply]
    │${sp} ${prefix}antilink [on/off]
    │${sp} ${prefix}mute [on/off]
