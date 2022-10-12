@@ -9,12 +9,14 @@ global.APIs = {
 	zenz: 'https://zenzapis.xyz',
 	lolhuman :'https://api.lolhuman.xyz',
 	cali : 'https://caliphapi.com',
+	vse : 'https://api-vyvse.herokuapp.com'
 }
 // Apikey Website Api
 global.APIKeys = {
 	'https://zenzapis.xyz': 'sonelstore',
 	'https://api.lolhuman.xyz': '3211199ba2ebb6121d3676b8', //4e5dd596c8
-	'https://caliphapi.com': 'MqrYHqvR'
+	'https://caliphapi.com': 'MqrYHqvR',
+	'https://api-vyvse.herokuapp.com' : 'hsfsq2at82tBKJFW4Est'
 }
 // sistem
 global.modepub = true //true for public | false for self

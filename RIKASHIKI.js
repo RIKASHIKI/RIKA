@@ -1,5 +1,5 @@
 require('./config')
-const { BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType } = require('@adiwajshing/baileys')
+const { BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType, generateMessageID } = require('@adiwajshing/baileys')
 const fs = require('fs')
 const util = require('util')
 const chalk = require('chalk')
@@ -782,7 +782,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
           m.reply(`Exif berhasil diubah menjadi\n\n${sp} Packname : ${global.packname}\n${sp} Author : ${global.author}`)
             }
             break
-	case 'kick': {
+	/*case 'kick': {
 		if (!m.isGroup) throw lang.grupOnly()
         if (!isBotAdmins) throw lang.notAdmin()
         if (!isAdmins) throw lang.adminOnly()
@@ -797,7 +797,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
 		let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 		await Rika.groupParticipantsUpdate(m.chat, [users], 'add').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
-	break
+	break*/
 	case 'promote': {
 		if (!m.isGroup) throw lang.grupOnly()
                 if (!isBotAdmins) throw lang.notAdmin()
@@ -849,7 +849,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             break
             case 'setppbot': {
              
-                if (!isCreator) return m.reply(mess.owner)
+                if (!isCreator) return m.reply(lang.ownerOnly())
                 if (!quoted) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
                 if (!/image/.test(mime)) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
                 if (/webp/.test(mime)) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
@@ -866,7 +866,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                 break
                 case 'setppgroup': case'setppgc': case'setppgrup': {
              
-                    if (!isCreator) return m.reply(mess.owner)
+                    if (!isCreator) return m.reply(lang.ownerOnly())
                     if (!quoted) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
                     if (!/image/.test(mime)) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
                     if (/webp/.test(mime)) return m.reply(`Kirim/Reply Image Dengan Caption ${prefix + command}`)
@@ -1217,12 +1217,13 @@ break
             case 'delete': case 'del': {
                 if (!m.quoted) throw false
                 let { chat, fromMe, id, isBaileys } = m.quoted
-                if (!isBaileys) throw 'Pesan tersebut bukan dikirim oleh bot!'
+                if (!isBaileys) throw lang.mebot()
                 Rika.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: true, id: m.quoted.id, participant: m.quoted.sender } })
             }
             case'hapus': {
                 if (!m.isGroup) throw lang.grupOnly()
                 if (!isBotAdmins) throw lang.notAdmin()
+                if (isBaileys) throw lang.meus()
                 Rika.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.quoted.id, participant: m.quoted.sender } })
             }
             break
@@ -1235,28 +1236,8 @@ break
                 m.reply(`Mengirim Broadcast Ke ${anu.length} Group Chat, Waktu Selesai ${anu.length * 1.5} detik`)
                 for (let i of anu) {
                     await sleep(1500)
-                    let btn = [
-                        {
-                        urlButton: {
-                          displayText: "MY GROUP",
-                          url: `${grup}`
-                        }
-                        },
-                        {
-                        urlButton: {
-                          displayText: "WEB",              
-                          "url": `${webyou}`
-                        }
-                        },
-                        {
-                        quickReplyButton: {
-                          displayText: "RULES",
-                          id: 'rules'
-                        }
-                        }
-                    ]
-                     let txt =`──────「 BROADCAST 」 ──────\n\n ${text}`
-                     Rika.send5ButImg(i, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn, `${thumbnaili}`)
+                    let txt =`─────「 BROADCAST 」 ─────\n\n ${text}`
+                    await Rika.sendMessage(i,{image:{url: `${thumbnaili}`}, caption: txt},{qouted : m})
                 }
                 m.reply(`Sukses Mengirim Broadcast Ke ${anu.length} Group`)
             }
@@ -1267,29 +1248,9 @@ break
                 let anu = await store.chats.all().map(v => v.id)
                 m.reply(`Mengirim Broadcast Ke ${anu.length} Chat\nWaktu Selesai ${anu.length * 1.5} detik`)
 		for (let u of anu) {
-		    await sleep(1500)
-            let btn = [
-                {
-                urlButton: {
-                  displayText: "MY GROUP",
-                  url: `${grup}`
-                }
-                },
-                {
-                urlButton: {
-                  displayText: "WEB",              
-                  url: `${webyou}`
-                }
-                },
-                {
-                quickReplyButton: {
-                  displayText: "RULES",
-                  id: 'rules'
-                }
-                }
-            ]
-            let txt =`──────「 BROADCAST 」 ──────\n\n ${text}`
-            Rika.send5ButImg(u, txt, `${ownername}`, `${fouter}`, `${thumbnaili}`, btn, `${thumbnaili}`)
+		    await sleep(1500) 
+            let txt =`─────「 BROADCAST 」 ─────\n\n ${text}`
+            await Rika.sendMessage(u,{image:{url: `${thumbnaili}`}, caption: txt},{qouted : m})
                 }
 		m.reply('Sukses Broadcast')
             }
@@ -1416,10 +1377,11 @@ break
             bawah = text.split('|')[1] ? text.split('|')[1] : '-'
 	        let dwnld = await quoted.download()
 	        let { floNime } = require('./lib/uploader')
-	        let fatGans = await floNime(dwnld)
-	        let smeme = `https://api.memegen.link/images/custom/${encodeURIComponent(atas)}/${encodeURIComponent(bawah)}.png?background=${fatGans.result.url}`
-	        let SHIkI = await Rika.sendImageAsSticker(m.chat, smeme, m, { packname: `${packname}`, author: `${author}` })
-	        await fs.unlinkSync(SHIkI)
+	        let rin = await floNime(dwnld)
+	        let smeme = `https://api.memegen.link/images/custom/${encodeURIComponent(atas)}/${encodeURIComponent(bawah)}.png?background=${rin.result.url}`
+	        //let SHIkI = await Rika.sendImageAsSticker(m.chat, smeme, m, { packname: `${packname}`, author: `${author}` })
+	        //await fs.unlinkSync(SHIkI)
+            await Rika.sendImageAsSticker(m.chat, smeme, m, { packname: `${packname}`, author: `${author}` })
             }
 	       break
 	        case 'simih': case 'simisimi': {
@@ -1535,6 +1497,22 @@ break
 	    })
 	    }
 	    break
+        case'poll' :case'polling':{
+            //if (!text) throw lang.wetext()
+             pollMes =[{ 
+                pollCreationMessage:{
+                    encKey: generateMessageID(),
+                    name:'poll',
+                    selectableOptionCount: 2,
+                    options:[{
+                            optionName:'option 1'
+                        },{
+                            optionName:'option 2'
+                        },],},}]
+            
+        }
+        Rika.sendMessage(m.chat,pollMes,{qouted:m})
+        break
             case 'ytsearch' : case 'youtubesearch': case'yts':{
                 if (!text) throw lang.wetext()
                 let yts = require("yt-search")
@@ -1832,12 +1810,6 @@ ${sp} Description : ${anu.description}`,
                 Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             break
-            case '3dchristmas': case '3ddeepsea': case 'americanflag': case '3dscifi': case '3drainbow': case '3dwaterpipe': case 'halloweenskeleton': case 'sketch': case 'bluecircuit': case 'space': case 'metallic': case 'fiction': case 'greenhorror': case 'transformer': case 'berry': case 'thunder': case 'magma': case '3dcrackedstone': case '3dneonlight': case 'impressiveglitch': case 'naturalleaves': case 'fireworksparkle': case 'matrix': case 'dropwater':  case 'harrypotter': case 'foggywindow': case 'neondevils': case 'christmasholiday': case '3dgradient': case 'blackpink': case 'gluetext': {
-                if (!text) throw `Example : ${prefix + menu} text`
-                m.reply(lang.wait())
-                Rika.sendMessage(m.chat, { image: { url: api('zenz', '/textpro/' + menu, { text: text }, 'apikey') }, caption: `Text Pro ${menu}` }, { quoted: m})
-	    }
-            break
 	    case 'shadow': case 'romantic': case 'smoke': case 'burnpapper': case 'naruto': case 'lovemsg': case 'grassmsg': case 'lovetext': case 'coffecup': case 'butterfly': case 'harrypotter': case 'retrolol': {
                 if (!text) throw 'No Query Text'
                 m.reply(lang.wait())
@@ -1918,32 +1890,36 @@ ${sp} Description : ${anu.description}`,
               await Rika.send5ButLoc(m.chat,lang.choicemed(), `${fouter}`, `${thumbnaili}`, btn)
             }
             break
+            case 'tiktok': case 'tiktokdl': case 'tt1': {
+                if (!text) throw 'Masukkan Link Tiktok!'
+                res = await fetchJson(`https://api-vyvse.herokuapp.com/api/tiktok?url=${text}`)
+      var but = [
+      {buttonId: `tiktokaudio ${text}`, buttonText: { displayText: "Audio" }, type: 1 }]
+                  await Rika.sendMessage(m.chat,{ video : await getBuffer(res.parsed.withNoWatermark) ,buttons: but, footer: 'Pencet tombol dibawah untuk mendapatkan soundnya' , 
+                  caption:  `Data Berhasil Didapatkan!!\n${res.parsed.author}\n${res.parsed.videoDescription}` ,contextInfo: { forwardingScore: 250, isForwarded: true, "externalAdReply":{"title": `Unexpected`, mediaType: 2, thumbnail: global.thumb, "previewType": "VIDEO","mediaUrl": `https://youtu.be/uDw0tb6GAIw`}}},  { quoted: m})
+                       }
+                  break
             case 'tiktoknowatermark': case 'tiktoknowm' :case 'ttnowm': {
+                if (!text) throw lang.adlin()
                 m.reply(lang.wait())
-                let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
+                anu = await fetchJson(api('vse', '/api/downloader/tiktok', 'apikey',{ url: text }))
                 let buttons = [
                     {buttonId: `ttwm ${text}`, buttonText: {displayText: 'WATERMARK'}, type: 1},
                     {buttonId: `ttmp3 ${text}`, buttonText: {displayText: 'AUDIO'}, type: 1}
                 ]
-                let buttonMessage = {
-                    video: { url: anu.result.nowatermark },
-                    caption: `Download From ${text}`,
-                    footer: `${fouter}`,
-                    buttons: buttons,
-                    headerType: 5
-                }
-                Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
+               await Rika.sendMessage(m.chat,{video: {url : anu.parsed.url.withNoWatermark}},{qouted:m})
             }
             break
             case 'tiktokwm': case 'tiktokwatermark': case 'ttwm': {
+                if (!text) throw lang.adlin()
                 m.reply(lang.wait())
-                let anu = await fetchJson(api('zenz', '/downloader/tiktok', { url: text }, 'apikey'))
+               let anu = await fetchJson(`https://api-vyvse.herokuapp.com/api/tiktok?url=${ text }`)
                 let buttons = [
                     {buttonId: `ttnowm ${text}`, buttonText: {displayText: 'NO WATERMARK'}, type: 1},
                     {buttonId: `ttmp3 ${text}`, buttonText: {displayText: 'AUDIO'}, type: 1}
                 ]
-                let buttonMessage = {
-                    video: { url: anu.result.watermark },
+                 let buttonMessage = {
+                    video: { url: await getBuffer(anu.parsed.withWatermark)},
                     caption: `Download From ${text}`,
                     footer: `${fouter}`,
                     buttons: buttons,
@@ -1953,36 +1929,16 @@ ${sp} Description : ${anu.description}`,
             }
             break
             case 'tiktokmp3': case 'tiktokaudio':case'ttmp3': {
+                if (!text) throw lang.adlin()
                 m.reply(lang.wait())
-                let anu = await fetchJson(api('zenz', '/downloader/musically', { url: text }, 'apikey'))
-                Rika.sendMessage(m.chat, { document: { url: anu.result.audio }, mimetype: 'audio/mpeg'}, { quoted: m })
+                anu = await fetchJson(api('vse', '/api/downloader/tiktok', 'apikey',{ url: text }))
+                Rika.sendMessage(m.chat, { audio: await getBuffer(anu.parsed.url.withNoWatermark), mimetype: 'audio/mpeg'}, { quoted: m })
             }
-            break
-	        /*case 'tiktoknowatermark1': case 'tiktoknowm1' :case 'ttnowm1': {
-                m.reply(lang.wait())
-                const {Tiktokdl} = require('./lib/tiktokdl')
-                data = await Tiktokdl(text)
-                await Rika.sendMessage(m.chat, { video: { url: data.nowatermark },  caption: lang.success() , mimetype: 'video/mp4', fileName: `RIKA-MD`}, { quoted: m }) 
-            }
-            break
-            case 'tiktokwm1': case 'tiktokwatermark1': case 'ttwm1': {
-                m.reply(lang.wait())
-                const {Tiktokdl} = require('./lib/tiktokdl')
-                data = await Tiktokdl(text)
-                await Rika.sendMessage(m.chat, { video: { url: data.watermark },  caption: lang.success() , mimetype: 'video/mp4', fileName: `RIKA-MD`}, { quoted: m })
-            }
-            break
-            case 'tiktokmp31': case 'tiktokaudio1':case'ttmp31': {
-                m.reply(lang.wait())
-                const {Tiktokdl} = require('./lib/tiktokdl')
-                data = await Tiktokdl(text)
-                await Rika.sendMessage(m.chat, { audio: { url: data.nowatermark }, mimetype: 'audio/mpeg', fileName:`RIKA-MD`}, { quoted: m }) 
-            }*/
             break
 	        case 'instagram': case 'ig': case 'igdl': {
                 if (!text) throw lang.adlin()
                 m.reply(lang.wait())
-                    let anu = await fetchJson(api('zenz', '/downloader/instagram', { url:isUrl(text)[0] }, 'apikey'))
+                    let anu = await (`https://api-vyvse.herokuapp.com/api/aio_downloader?url=${ text }`)  
                     for (let media of anu.result)
                     Rika.sendFileUrl(m.chat, media.url , `Download Url Instagram From ${isUrl(text)[0]}`, m)
             }
@@ -2723,7 +2679,7 @@ ${sp} Detail      : ${detail}`
                         }
                      }
         break
-        case'allmenu':{
+        case'allmenu': case'menu':{
             let sections = [
             {
             title: "ALLMENU",
@@ -2737,7 +2693,6 @@ ${sp} Detail      : ${detail}`
             {title: "RANDOMMENU", rowId: `randommenu`, description: `───────────────────────────`},
             {title: "ANIMEMENU", rowId: `animemenu`, description: `───────────────────────────`},
             {title: "NSFWMENU", rowId: `nsfwmenu`, description: `───────────────────────────`},
-            {title: "TEXTPROMENU", rowId: `textpromenu`, description: `───────────────────────────`},
             {title: "PHOTOEXYMENU", rowId: `photoexymenu`, description: `───────────────────────────`},
             {title: "EPHOTOMENU", rowId: `ephotomenu`, description: `───────────────────────────`},
             {title: "FUNMENU", rowId: `funmenu`, description: `───────────────────────────`},
@@ -2750,7 +2705,7 @@ ${sp} Detail      : ${detail}`
             ]
             },
             ]
-            Rika.sendListMsg(m.chat, `select one`, `${fouter}`, `ALLMENU`, `Click Here`, sections, m)
+            Rika.sendListMsg(m.chat, `${salam}`, `${fouter}`, `ALLMENU`, `Click Here`, sections, m)
             }
         break
         case'ownermenu':{m.reply (lang.ownermen(sp, prefix))}
@@ -2770,8 +2725,6 @@ ${sp} Detail      : ${detail}`
         case'animemenu':{m.reply (lang.animemen(sp, prefix))}
         break
         case'nsfwmenu':{m.reply (lang.nsfwmen(sp, prefix))}
-        break
-        case'textpromenu':{m.reply (lang.textpromen(sp, prefix))}
         break
         case'photoexymenu':{m.reply (lang.photoexymen(sp, prefix))}
         break

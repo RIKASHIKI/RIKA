@@ -19,11 +19,20 @@ exports.grupOnly = () => {
 exports.notAdmin = () => {
     return`bot not admin`
 }
+exports.mebot = () => {
+    return`the message was not sent by a bot!`
+}
+exports.meus = () => {
+    return`the message was not sent by a user!`
+}
 exports.bane = () => {
     return`you have been banned`
 }
 exports.antilig = () => {
     return`「 ANTI LINK 」\n\n You have been detected sending a group link, you will be kicked !`
+}
+exports.broadcas = (text) => {
+    return`──────「 BROADCAST 」──────\n\n ${text}\n\n from RIKA`
 }
 exports.ret = (menu, text) => {
     return`「 MESSAGE 」\n\n FROM @${m.sender.split('@')[0]}\n type ${menu}\n\n${text}`
@@ -87,19 +96,19 @@ exports.afkafter = (user) =>{
     been`
 }
 exports.timenight = () =>{
-    return`night`
+    return`good night`
 }
 exports.timeevening = () =>{
-    return`evening`
+    return`good evening`
 }
 exports.timeafternoon = () =>{
-    return`afternoon`
+    return`good afternoon`
 }
 exports.timemidday = () =>{
-    return`midday`
+    return`good midday`
 }
 exports.timemorning = () =>{
-    return`morning`
+    return`good morning`
 }
 exports.sc = () => {
     return `*──────「 SOURCE CODE 」 ──────*
@@ -145,7 +154,7 @@ exports.rules = () => {
  — search in github or you can make it
     
 🗯️ how to add bot to group?
- — type #join linkgrup | free for now
+ — i dont know
     
 🗯️ What's the prefix?
  — multi prefix
@@ -161,7 +170,7 @@ _if it violates it will be subject to permanent ban sanctions_ ⚠`
 exports.men = (pushname, salam, packname, sp, prefix) => {
     return`
     halo ${pushname}👋
-    good ${salam}
+    ${salam}
     i'am ${packname}
 
     ╭──── 「 *MENU* 」
@@ -175,7 +184,6 @@ exports.men = (pushname, salam, packname, sp, prefix) => {
     │${sp} ${prefix}randommenu
     │${sp} ${prefix}animemenu
     │${sp} ${prefix}nsfwmenu
-    │${sp} ${prefix}textpromenu
     │${sp} ${prefix}photoexymenu
     │${sp} ${prefix}ephotomenu
     │${sp} ${prefix}funmenu
@@ -189,7 +197,7 @@ exports.men = (pushname, salam, packname, sp, prefix) => {
 }
 exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    return`
-   good ${salam} ${pushname}👋
+   ${salam} ${pushname}👋
 
    ╭──── 「 *INFO* 」
    │
@@ -213,13 +221,13 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}setwm
    │${sp} ${prefix}setmenu [option]
    │${sp} ${prefix}jointes [test]
+   │${sp} ${prefix}join [link]
    ╰─────────
 
    ╭──── 「 *BOT MENU* 」
    │
    │${sp} ${prefix}ping
    │${sp} ${prefix}owner
-   │${sp} ${prefix}join [link]
    │${sp} ${prefix}menu
    │${sp} ${prefix}allmenu
    │${sp} ${prefix}rules
@@ -245,8 +253,8 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}setdescgc [text]
    │${sp} ${prefix}group [option]
    │${sp} ${prefix}editinfo [option]
-   │${sp} ${prefix}add @user
-   │${sp} ${prefix}kick @user
+   │${sp} ${prefix}add @user not available
+   │${sp} ${prefix}kick @user not available
    │${sp} ${prefix}hidetag [text]
    │${sp} ${prefix}tagall [text]
    │${sp} ${prefix}hapus [reply]
@@ -360,41 +368,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}zettairyouiki
    ╰─────────
     
-   ╭──── 「 *TEXTPRO MENU* 」
-   │
-   │${sp} ${prefix}3dchristmas
-   │${sp} ${prefix}3ddeepsea
-   │${sp} ${prefix}americanflag
-   │${sp} ${prefix}3dscifi
-   │${sp} ${prefix}3drainbow
-   │${sp} ${prefix}3dwaterpipe
-   │${sp} ${prefix}halloweenskeleton
-   │${sp} ${prefix}sketch
-   │${sp} ${prefix}bluecircuit
-   │${sp} ${prefix}space
-   │${sp} ${prefix}metallic
-   │${sp} ${prefix}fiction
-   │${sp} ${prefix}greenhorror
-   │${sp} ${prefix}transformer
-   │${sp} ${prefix}berry
-   │${sp} ${prefix}thunder
-   │${sp} ${prefix}magma
-   │${sp} ${prefix}3dcrackedstone
-   │${sp} ${prefix}3dneonlight
-   │${sp} ${prefix}impressiveglitch
-   │${sp} ${prefix}naturalleaves
-   │${sp} ${prefix}fireworksparkle
-   │${sp} ${prefix}matrix
-   │${sp} ${prefix}dropwater
-   │${sp} ${prefix}harrypotter
-   │${sp} ${prefix}foggywindow
-   │${sp} ${prefix}neondevils
-   │${sp} ${prefix}christmasholiday
-   │${sp} ${prefix}3dgradient
-   │${sp} ${prefix}blackpink
-   │${sp} ${prefix}gluetext
-   ╰─────────
-
    ╭──── 「 *PHOTO EXY MENU* 」
    │
    │${sp} ${prefix}shadow
@@ -541,6 +514,7 @@ exports.ownermen = (sp, prefix) =>{
    │${sp} ${prefix}setppbot full [image]
    │${sp} ${prefix}setwm
    │${sp} ${prefix}setmenu [option]
+   │${sp} ${prefix}join [link]
    ╰─────────`
 }
 exports.botmen = (sp, prefix) =>{
@@ -549,7 +523,6 @@ exports.botmen = (sp, prefix) =>{
    │
    │${sp} ${prefix}ping
    │${sp} ${prefix}owner
-   │${sp} ${prefix}join [link]
    │${sp} ${prefix}menu
    │${sp} ${prefix}allmenu
    │${sp} ${prefix}rules
@@ -577,8 +550,8 @@ exports.grupmen = (sp, prefix) =>{
    │${sp} ${prefix}setdescgc [text]
    │${sp} ${prefix}group [option]
    │${sp} ${prefix}editinfo [option]
-   │${sp} ${prefix}add @user
-   │${sp} ${prefix}kick @user
+   │${sp} ${prefix}add @user not available
+   │${sp} ${prefix}kick @user not available
    │${sp} ${prefix}hidetag [text]
    │${sp} ${prefix}tagall [text]
    │${sp} ${prefix}hapus [reply]
@@ -702,43 +675,6 @@ exports.nsfwmen = (sp, prefix) =>{
    │${sp} ${prefix}thighs
    │${sp} ${prefix}yuri
    │${sp} ${prefix}zettairyouiki
-   ╰─────────`
-}
-exports.textpromen = (sp, prefix) =>{
-    return`
-   ╭──── 「 *TEXTPRO MENU* 」
-   │
-   │${sp} ${prefix}3dchristmas
-   │${sp} ${prefix}3ddeepsea
-   │${sp} ${prefix}americanflag
-   │${sp} ${prefix}3dscifi
-   │${sp} ${prefix}3drainbow
-   │${sp} ${prefix}3dwaterpipe
-   │${sp} ${prefix}halloweenskeleton
-   │${sp} ${prefix}sketch
-   │${sp} ${prefix}bluecircuit
-   │${sp} ${prefix}space
-   │${sp} ${prefix}metallic
-   │${sp} ${prefix}fiction
-   │${sp} ${prefix}greenhorror
-   │${sp} ${prefix}transformer
-   │${sp} ${prefix}berry
-   │${sp} ${prefix}thunder
-   │${sp} ${prefix}magma
-   │${sp} ${prefix}3dcrackedstone
-   │${sp} ${prefix}3dneonlight
-   │${sp} ${prefix}impressiveglitch
-   │${sp} ${prefix}naturalleaves
-   │${sp} ${prefix}fireworksparkle
-   │${sp} ${prefix}matrix
-   │${sp} ${prefix}dropwater
-   │${sp} ${prefix}harrypotter
-   │${sp} ${prefix}foggywindow
-   │${sp} ${prefix}neondevils
-   │${sp} ${prefix}christmasholiday
-   │${sp} ${prefix}3dgradient
-   │${sp} ${prefix}blackpink
-   │${sp} ${prefix}gluetext
    ╰─────────`
 }
 exports.photoexymen = (sp, prefix) =>{
