@@ -1,5 +1,5 @@
 ## <h1 align="center">RIKA</h1>
-<h5 align="center">bot whatsapp multidevice beta</h5>
+<h4 align="center">bot whatsapp multidevice beta</h4>
 <p align="center">
 	<img src="https://www.wallpapertip.com/wmimgs/174-1741670_anime-gif-wallpaper-hd.jpg">
 </p>
@@ -45,8 +45,15 @@ Edit in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
 
 ```bash
 git clone https://github.com/RIKASHIKI/RIKA
-cd Rika
+cd RIKA
 npm install
+```
+
+```bash
+git clone https://github.com/RIKASHIKI/RIKA
+cd RIKA
+pm2 start index.js
+pm2 monit
 ```
 
 ## HOW TO CONNECT TO MONGODB WHEN RUN IN HEROKU

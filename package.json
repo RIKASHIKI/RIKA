@@ -1,6 +1,6 @@
 {
   "name": "rika",
-  "version": "0.9",
+  "version": "11.1",
   "description": "WhatsApp Using Lib Baileys Multi Device",
   "main": "index.js",
   "type": "commonjs",

@@ -21,17 +21,16 @@ global.APIKeys = {
 // sistem
 global.modepub = true //true for public | false for self
 global.lang = eng //ind for indonesia | eng for english
-global.limitMember = 50 //minimum member
+//global.limitMember = 50 //minimum member
 // profile
 global.owner = ['62882020038817','6287820032793'] // owner
-global.vvip =[]
 global.packname = 'RKS MD' //pacname sticker & name bot
 global.author = '62882020038817' //author sticker
 global.ownername = 'RIKASHIKI' //your name
 global.fouter = 'RIKASHIKI | RKS-MD ©2022' //whatever
 global.ownernumber = '62882020038817' //owner number
 // media
-global.thumbnaili = './media/RKS.jpg' //thumbnail
+global.thumbnaili = fs.readFileSync('./media/RKS.jpg') //thumbnail
 global.donasnya ='./media/RKS.jpg' //donate image
 global.video = '.media/VIDEOWIBU.mp4' //video to link? switch to {url: 'yourlinkvideo' }
 global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube
@@ -42,8 +41,8 @@ global.instagram = 'https://instagram.com/@rikashiki_san' //ig
 global.grup = ' https://chat.whatsapp.com/BjK5KU9nZNNDJRqjZwfV4I' //grup whatsapp
 global.sessionName = 'session' //session
 global.prefa = ['','!','.','🐦','🐤','🗿'] 
-global.sp = '□' //mark
-
+global.sp = '◊' //mark
+//fs.readFileSync(path)
 
 let file = require.resolve(__filename)
 fs.watchFile(file, () => {

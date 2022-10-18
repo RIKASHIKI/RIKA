@@ -113,7 +113,7 @@ async function startRika() {
        }
        let wm_rks = { url : ppgc }
        if (shiki.announce == true) {
-       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup close by admin, now only admin can ssend message !`, `Group Settings Change Message`, wm_rks, [])
+       Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup close by admin, now only admin can send message !`, `Group Settings Change Message`, wm_rks, [])
        } else if (shiki.announce == false) {
        Rika.send5ButImg(shiki.id, `「 Group Settings Change 」\n\nGroup open by admin, now member can send message !`, `Group Settings Change Message`, wm_rks, [])
        } else if (shiki.restrict == true) {

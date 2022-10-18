@@ -107,8 +107,8 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
 		if (!('templateImage' in setting)) setting.templateImage = false
 		if (!('templateVideo' in setting)) setting.templateVideo = false
 		if (!('templateGif' in setting)) setting.templateGif = false
-		if (!('templateMsg' in setting)) setting.templateMsg = false
-		if (!('templateLocation' in setting)) setting.templateLocation = true
+		if (!('templateMsg' in setting)) setting.templateMsg = true
+		if (!('templateLocation' in setting)) setting.templateLocation = false
 	    } else global.db.data.settings[botNumber] = {
 		status: 0,
         Banned: false,
@@ -116,8 +116,8 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
 		templateImage: false,
 		templateVideo: false,
 		templateGif: false,
-		templateMsg: false,
-		templateLocation: true,
+		templateMsg: true,
+		templateLocation: false,
 	    }
 	    
         } catch (err) {
@@ -132,7 +132,7 @@ module.exports = Rika = async (Rika, m, chatUpdate, store) => {
         // Push Message To Console && Auto Read
         if (m.message) {
             Rika.readMessages([m.key])
-            console.log(chalk.black(chalk.bgWhite('> MESSAGE')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('> FROM'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('> IN'), chalk.green(m.isGroup ? groupName : 'Private Chat', m.chat))
+            console.log(chalk.black(chalk.bgWhite('> MESSAGE')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('> FROM'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('> IN'), chalk.green(m.isGroup ? groupName : 'PRIVATE', m.chat))
         }
 	
 	// auto set bio every 10 minutes
@@ -529,7 +529,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             break
 	    case 'donasi': case 'sewabot': case 'sewa': case 'donate': {
-             let btn = [
+            /*let btn = [
             {
             urlButton: {
               displayText: "MY GROUP",
@@ -561,11 +561,34 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             }
         ]
-         await Rika.send5ButLoc(m.chat, lang.dona(pushname, ownernumber), `${fouter}`, `${donasnya}`, btn)
-            } 
+         let setbot = db.data.settings[botNumber]
+         if (setbot.templateImage) {
+         Rika.send5ButImg(m.chat,lang.dona(pushname, ownernumber),`${fouter}`,`${thumbnaili}`,btn,`${thumbnaili}`)
+         } else if (setbot.templateGif) {
+         Rika.send5ButGif(m.chat,lang.dona(pushname, ownernumber),`${fouter}`,`${video}`,btn,`${thumbnaili}`)
+         } else if (setbot.templateVid) {
+         Rika.send5ButVid(m.chat,lang.dona(pushname, ownernumber),`${fouter}`,`${video}`,btn,`${thumbnaili}`)
+         } else if (setbot.templateMsg) {
+         Rika.send5ButMsg(m.chat,lang.dona(pushname, ownernumber),`${fouter}`,btn)
+         } else if (setbot.templateLocation) {
+         Rika.send5ButLoc(m.chat,lang.dona(pushname, ownernumber),`${fouter}`,`${thumbnaili}`,btn)*/
+         let button = [
+            {buttonId: `rules`, buttonText: {displayText: 'RULES'}, type: 1},
+            {buttonId: `owner`, buttonText: {displayText: 'OWNER'}, type: 1},
+            {buttonId: `menu`, buttonText: {displayText: 'MENU'}, type: 1}
+        ]
+        let buttonMessage = {
+            image: thumbnaili,
+            caption: lang.dona(pushname, ownernumber),
+            footer: `${fouter}`,
+            buttons: button,
+            headerType: 4
+        }
+        Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
+        }
             break
             case 'sc': case 'source': {
-               let btn = [
+               /*let btn = [
                     {
                         quickReplyButton: {
                             displayText: "DONATE",
@@ -583,8 +606,18 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                         } else if (setbot.templateMsg) {
                         Rika.send5ButMsg(m.chat, lang.sc(), `${fouter}`, btn)
                         } else if (setbot.templateLocation) {
-                        Rika.send5ButLoc(m.chat, lang.sc(), `${fouter}`, `${thumbnaili}`, btn)
+                        Rika.send5ButLoc(m.chat, lang.sc(), `${fouter}`, `${thumbnaili}`, btn)*/
+                        let button = [
+                            {buttonId: `donate`, buttonText: {displayText: 'DONATE'}, type: 1}
+                        ]
+                        let buttonMessage = {
+                            image: thumbnaili,
+                            caption: lang.sc(),
+                            footer: `${fouter}`,
+                            buttons: button,
+                            headerType: 4
                         }
+                        Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
                         } 
             break
             case 'chat': {
@@ -1215,18 +1248,20 @@ break
             }
             break
             case 'delete': case 'del': {
-                if (!m.quoted) throw false
+                /*if (!m.quoted) throw false
                 let { chat, fromMe, id, isBaileys } = m.quoted
-                if (!isBaileys) throw lang.mebot()
+                if (!isBaileys) throw lang.mebot()*/
                 Rika.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: true, id: m.quoted.id, participant: m.quoted.sender } })
+                Rika.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.quoted.id, participant: m.quoted.sender } })
             }
-            case'hapus': {
+            break
+            /*case'hapus': {
                 if (!m.isGroup) throw lang.grupOnly()
                 if (!isBotAdmins) throw lang.notAdmin()
                 if (isBaileys) throw lang.meus()
                 Rika.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: m.quoted.id, participant: m.quoted.sender } })
             }
-            break
+            break*/
             case 'bcgc': case 'bcgroup': {
                 if (!isCreator) throw lang.ownerOnly()
                 if (!text) throw `textnya ? \n\nExample : ${prefix + menu} RIKASHIKI`
@@ -1377,11 +1412,11 @@ break
             bawah = text.split('|')[1] ? text.split('|')[1] : '-'
 	        let dwnld = await quoted.download()
 	        let { floNime } = require('./lib/uploader')
-	        let rin = await floNime(dwnld)
-	        let smeme = `https://api.memegen.link/images/custom/${encodeURIComponent(atas)}/${encodeURIComponent(bawah)}.png?background=${rin.result.url}`
-	        //let SHIkI = await Rika.sendImageAsSticker(m.chat, smeme, m, { packname: `${packname}`, author: `${author}` })
-	        //await fs.unlinkSync(SHIkI)
-            await Rika.sendImageAsSticker(m.chat, smeme, m, { packname: `${packname}`, author: `${author}` })
+	        let Rina = await floNime(dwnld)
+	        let smeme = await fetchJson `https://api.memegen.link/images/custom/${encodeURIComponent(atas)}/${encodeURIComponent(bawah)}.png?background=${Rina.result.url}`
+	        let SHIkI = await Rika.sendImageAsSticker(m.chat, smeme, m, { packname: packname, author: author })
+	        await fs.unlinkSync(SHIkI)
+            //await Rika.sendImageAsSticker(m.chat, smeme, m, { packname: `${packname}`, author: `${author}` })
             }
 	       break
 	        case 'simih': case 'simisimi': {
@@ -1614,7 +1649,7 @@ ${sp} Description : ${anu.description}`,
                 if (!text) throw lang.adlin()
 		    let { yta } = require('./lib/y2mate')
 		    let media = await yta(text)
-                    let btn = [{
+                    /*let btn = [{
                           quickReplyButton: {
                           displayText: "VIDEO",
                           id: `ytmp4 ${text}`
@@ -1633,8 +1668,31 @@ ${sp} Description : ${anu.description}`,
                           }
                           }
                           ]
-                          await Rika.send5ButLoc(m.chat, lang.choicemed(), `${fouter}`, media.thumb, btn)
-                  }
+                          let setbot = db.data.settings[botNumber]
+                        if (setbot.templateImage) {
+                        Rika.send5ButImg(m.chat,lang.choicemed(),`${fouter}`,media.thumb,btn,media.thumb)
+                        } else if (setbot.templateGif) {
+                        Rika.send5ButGif(m.chat,lang.choicemed(),`${fouter}`,media.thumb,btn,media.thumb)
+                        } else if (setbot.templateVid) {
+                        Rika.send5ButVid(m.chat,lang.choicemed(),`${fouter}`,media.thumb,btn,media.thumb)
+                        } else if (setbot.templateMsg) {
+                        Rika.send5ButMsg(m.chat,lang.choicemed(),`${fouter}`, btn)
+                        } else if (setbot.templateLocation) {
+                        Rika.send5ButLoc(m.chat,lang.choicemed(),`${fouter}`,media.thumb, btn)*/
+                        let button = [
+                            {buttonId: `ytmp4 ${text}`, buttonText: {displayText: 'VIDEO'}, type: 1},
+                            {buttonId: `ytmp3 ${text}`, buttonText: {displayText: 'AUDIO'}, type: 1},
+                            {buttonId: `ytfilemp3 ${text}`, buttonText: {displayText: 'FILE AUDIO'}, type: 1},
+                        ]
+                        let buttonMessage = {
+                            image: thumbnaili,
+                            caption: lang.choicemed(),
+                            footer: `${fouter}`,
+                            buttons: button,
+                            headerType: 4
+                        }
+                        Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
+                        }
         break
 	    case 'ytmp3': case 'ytaudio': {
                 let { yta } = require('./lib/y2mate')
@@ -1868,7 +1926,7 @@ ${sp} Description : ${anu.description}`,
             break
             case 'tiktok': case 'tt': case 'ttdl': case 'tiktokdl': case 'tiktokdownload': {
               if (!text) throw lang.adlin()
-              let btn = [{
+             /* let btn = [{
                     quickReplyButton: {
                     displayText: "NO WATERMARK",
                     id: `ttnowm ${text}`
@@ -1887,39 +1945,60 @@ ${sp} Description : ${anu.description}`,
                     }
                     }
                     ]
-              await Rika.send5ButLoc(m.chat,lang.choicemed(), `${fouter}`, `${thumbnaili}`, btn)
-            }
+              let setbot = db.data.settings[botNumber]
+                        if (setbot.templateImage) {
+                        Rika.send5ButImg(m.chat,lang.choicemed(),`${fouter}`,`${thumbnaili}`,btn,`${thumbnaili}`)
+                        } else if (setbot.templateGif) {
+                        Rika.send5ButGif(m.chat,lang.choicemed(),`${fouter}`,`${thumbnaili}`,btn,`${thumbnaili}`)
+                        } else if (setbot.templateVid) {
+                        Rika.send5ButVid(m.chat,lang.choicemed(),`${fouter}`,`${thumbnaili}`,btn,`${thumbnaili}`)
+                        } else if (setbot.templateMsg) {
+                        Rika.send5ButMsg(m.chat,lang.choicemed(),`${fouter}`, btn)
+                        } else if (setbot.templateLocation) {
+                        Rika.send5ButLoc(m.chat,lang.choicemed(),`${fouter}`,`${thumbnaili}`, btn)*/
+                        let button = [
+                            {buttonId: `ttnowm ${text}`, buttonText: {displayText: 'NO WATERMARK'}, type: 1},
+                            {buttonId: `ttwm ${text}`, buttonText: {displayText: 'WATERMARK'}, type: 1},
+                            {buttonId: `ttmp3 ${text}`, buttonText: {displayText: 'AUDIO'}, type: 1},
+                        ]
+                        let buttonMessage = {
+                            image: thumbnaili,
+                            caption:  lang.choicemed(),
+                            footer: `${fouter}`,
+                            buttons: button,
+                            headerType: 4
+                        }
+                        Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
+                    }
             break
-            case 'tiktok': case 'tiktokdl': case 'tt1': {
-                if (!text) throw 'Masukkan Link Tiktok!'
-                res = await fetchJson(`https://api-vyvse.herokuapp.com/api/tiktok?url=${text}`)
-      var but = [
-      {buttonId: `tiktokaudio ${text}`, buttonText: { displayText: "Audio" }, type: 1 }]
-                  await Rika.sendMessage(m.chat,{ video : await getBuffer(res.parsed.withNoWatermark) ,buttons: but, footer: 'Pencet tombol dibawah untuk mendapatkan soundnya' , 
-                  caption:  `Data Berhasil Didapatkan!!\n${res.parsed.author}\n${res.parsed.videoDescription}` ,contextInfo: { forwardingScore: 250, isForwarded: true, "externalAdReply":{"title": `Unexpected`, mediaType: 2, thumbnail: global.thumb, "previewType": "VIDEO","mediaUrl": `https://youtu.be/uDw0tb6GAIw`}}},  { quoted: m})
-                       }
-                  break
             case 'tiktoknowatermark': case 'tiktoknowm' :case 'ttnowm': {
                 if (!text) throw lang.adlin()
                 m.reply(lang.wait())
-                anu = await fetchJson(api('vse', '/api/downloader/tiktok', 'apikey',{ url: text }))
+                anu = await fetchJson(`https://api-vyvse.herokuapp.com/api/downloader/tiktok?apikey=hsfsq2at82tBKJFW4Est&url=${text}`)
                 let buttons = [
                     {buttonId: `ttwm ${text}`, buttonText: {displayText: 'WATERMARK'}, type: 1},
                     {buttonId: `ttmp3 ${text}`, buttonText: {displayText: 'AUDIO'}, type: 1}
                 ]
-               await Rika.sendMessage(m.chat,{video: {url : anu.parsed.url.withNoWatermark}},{qouted:m})
+                let buttonMessage = {
+                    video: {url: anu.result.url.withNoWatermark} ,
+                    caption: `Download From ${text}`,
+                    footer: `${fouter}`,
+                    buttons: buttons,
+                    headerType: 5
+                }
+                Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             break
             case 'tiktokwm': case 'tiktokwatermark': case 'ttwm': {
                 if (!text) throw lang.adlin()
                 m.reply(lang.wait())
-               let anu = await fetchJson(`https://api-vyvse.herokuapp.com/api/tiktok?url=${ text }`)
+               let anu = await fetchJson(`https://api-vyvse.herokuapp.com/api/downloader/tiktok?apikey=hsfsq2at82tBKJFW4Est&url=${text}`)
                 let buttons = [
                     {buttonId: `ttnowm ${text}`, buttonText: {displayText: 'NO WATERMARK'}, type: 1},
                     {buttonId: `ttmp3 ${text}`, buttonText: {displayText: 'AUDIO'}, type: 1}
                 ]
                  let buttonMessage = {
-                    video: { url: await getBuffer(anu.parsed.withWatermark)},
+                    video: {url: anu.result.url.withWatermark} ,
                     caption: `Download From ${text}`,
                     footer: `${fouter}`,
                     buttons: buttons,
@@ -1931,8 +2010,8 @@ ${sp} Description : ${anu.description}`,
             case 'tiktokmp3': case 'tiktokaudio':case'ttmp3': {
                 if (!text) throw lang.adlin()
                 m.reply(lang.wait())
-                anu = await fetchJson(api('vse', '/api/downloader/tiktok', 'apikey',{ url: text }))
-                Rika.sendMessage(m.chat, { audio: await getBuffer(anu.parsed.url.withNoWatermark), mimetype: 'audio/mpeg'}, { quoted: m })
+                anu = await fetchJson(`https://api-vyvse.herokuapp.com/api/downloader/tiktok?apikey=hsfsq2at82tBKJFW4Est&url=${text}`)
+                Rika.sendMessage(m.chat, { audio: {url: anu.result.url.music}, mimetype: 'audio/mpeg'}, { quoted: m })
             }
             break
 	        case 'instagram': case 'ig': case 'igdl': {
@@ -2406,7 +2485,7 @@ Lihat list Pesan Dengan ${prefix}listmsg`)
                 respon = `
 Kecepatan Respon ${latensi.toFixed(4)} _Second_ \n ${oldd - neww} _miliseconds_\n\nRuntime : ${runtime(process.uptime())}
 
-💻 Info Server
+💻 Server
 RAM: ${formatp(os.totalmem() - os.freemem())} / ${formatp(os.totalmem())}
 
 _NodeJS Memory Usage_
@@ -2579,13 +2658,13 @@ ${sp} Detail      : ${detail}`
                 } else {
                 let sections = [
                 {
-                title: "CHANGE MENU BOT",
+                title: "CHANGE MENU ",
                 rows: [
-                {title: "Template Image", rowId: `setmenu templateImage`, description: `Change menu bot to Template Image`},
-                {title: "Template Video", rowId: `setmenu templateVideo`, description: `Change menu bot to Template Video`},
-                {title: "Template Gif", rowId: `setmenu templateGif`, description: `Change menu bot to Template Gif`},
-                {title: "Template Message", rowId: `setmenu templateMessage`, description: `Change menu bot to Template Message`},
-                {title: "Template Location", rowId: `setmenu templateLocation`, description: `Change menu bot to Template Location`}
+                {title: "Template Image", rowId: `setmenu templateImage`, description: `Change menu to Template Image`},
+                {title: "Template Video", rowId: `setmenu templateVideo`, description: `Change menu to Template Video`},
+                {title: "Template Gif", rowId: `setmenu templateGif`, description: `Change menu to Template Gif`},
+                {title: "Template Message", rowId: `setmenu templateMessage`, description: `Change menu to Template Message`},
+                {title: "Template Location", rowId: `setmenu templateLocation`, description: `Change menu to Template Location`}
                 ]
                 },
                 ]
@@ -2594,7 +2673,7 @@ ${sp} Detail      : ${detail}`
             }
             break
             case 'rules' :{
-                let btn = [{
+                /*let btn = [{
                     urlButton: {
                       displayText: "MY GROUP",
                       url: `${grup}`
@@ -2629,12 +2708,24 @@ ${sp} Detail      : ${detail}`
                         } else if (setbot.templateMsg) {
                         Rika.send5ButMsg(m.chat, lang.rules(), `${fouter}`, btn)
                         } else if (setbot.templateLocation) {
-                        Rika.send5ButLoc(m.chat, lang.rules(), `${fouter}`, `${thumbnaili}`, btn)
+                        Rika.send5ButLoc(m.chat, lang.rules(), `${fouter}`, `${thumbnaili}`, btn)*/
+                        let button = [
+                            {buttonId: `donate`, buttonText: {displayText: 'DONATE'}, type: 1},
+                            {buttonId: `owner`, buttonText: {displayText: 'OWNER'}, type: 1},
+                            {buttonId: `menu`, buttonText: {displayText: 'MENU'}, type: 1},
+                        ]
+                        let buttonMessage = {
+                            image: thumbnaili,
+                            caption: lang.rules(),
+                            footer: `${fouter}`,
+                            buttons: button,
+                            headerType: 4
                         }
-                        } 
+                        Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
+                        }
             break
             case 'menu': case 'help': case 'command': {
-                let btn = [{
+                /*let btn = [{
                     urlButton: {
                       displayText: "MY GROUP",
                       url: `${grup}`
@@ -2667,7 +2758,7 @@ ${sp} Detail      : ${detail}`
                 ]
                 let setbot = db.data.settings[botNumber]
                         if (setbot.templateImage) {
-                        Rika.send5ButImg(m.chat, lang.men(pushname, salam, packname, sp, prefix), `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
+                        Rika.send5ButImg(m.chat, lang.men(pushname, salam, packname, sp, prefix), `${fouter}`, `${thumbnaili}`, btn)
                         } else if (setbot.templateGif) {
                         Rika.send5ButGif(m.chat, lang.men(pushname, salam, packname, sp, prefix), `${fouter}`, `${video}`, btn,`${thumbnaili}`)
                         } else if (setbot.templateVid) {
@@ -2675,38 +2766,21 @@ ${sp} Detail      : ${detail}`
                         } else if (setbot.templateMsg) {
                         Rika.send5ButMsg(m.chat, lang.men(pushname, salam, packname, sp, prefix), `${fouter}`, btn)
                         } else if (setbot.templateLocation) {
-                        Rika.send5ButLoc(m.chat, lang.men(pushname, salam, packname, sp ,prefix), `${fouter}`, `${thumbnaili}`, btn)
+                        Rika.send5ButLoc(m.chat, lang.men(pushname, salam, packname, sp ,prefix), `${fouter}`, `${thumbnaili}`, btn)*/
+                        let button = [
+                            {buttonId: `rules`, buttonText: {displayText: 'RULES'}, type: 1},
+                            {buttonId: `listmenu`, buttonText: {displayText: 'LISTMENU'}, type: 1},
+                            {buttonId: `allmenu`, buttonText: {displayText: 'ALLMENU'}, type: 1}
+                        ]
+                        let buttonMessage = {
+                            image: thumbnaili,
+                            caption: lang.men(pushname, salam, packname, sp ,prefix),
+                            footer: `${fouter}`,
+                            buttons: button,
+                            headerType: 4
                         }
-                     }
-        break
-        case'allmenu': case'menu':{
-            let sections = [
-            {
-            title: "ALLMENU",
-            rows: [
-            {title: "OWNERMENU", rowId: `ownermenu`, description: `───────────────────────────`},
-            {title: "BOTMENU", rowId: `botmenu`, description: `───────────────────────────`},
-            {title: "GROUPMENU", rowId: `grupmenu`, description: `───────────────────────────`},
-            {title: "WEBMENU", rowId: `webmenu`, description: `───────────────────────────`},
-            {title: "DOWNLOADMENU", rowId: `downloadmenu`, description: `───────────────────────────`},
-            {title: "SEARCHMENU", rowId: `searchmenu`, description: `───────────────────────────`},
-            {title: "RANDOMMENU", rowId: `randommenu`, description: `───────────────────────────`},
-            {title: "ANIMEMENU", rowId: `animemenu`, description: `───────────────────────────`},
-            {title: "NSFWMENU", rowId: `nsfwmenu`, description: `───────────────────────────`},
-            {title: "PHOTOEXYMENU", rowId: `photoexymenu`, description: `───────────────────────────`},
-            {title: "EPHOTOMENU", rowId: `ephotomenu`, description: `───────────────────────────`},
-            {title: "FUNMENU", rowId: `funmenu`, description: `───────────────────────────`},
-            {title: "CONVERTMENU", rowId: `convertmenu`, description: `───────────────────────────`},
-            {title: "DATABASEMENU", rowId: `databasemenu`, description: `───────────────────────────`},
-            {title: "ANONYMOUSMENU", rowId: `anonymousmenu`, description: `───────────────────────────`},
-            {title: "ISLAMMENU", rowId: `islammenu`, description: `───────────────────────────`},
-            {title: "VOICEMENU", rowId: `voicemenu`, description: `───────────────────────────`},
-            {title: "THANK TO", rowId: `thankto`, description: `───────────────────────────`}
-            ]
-            },
-            ]
-            Rika.sendListMsg(m.chat, `${salam}`, `${fouter}`, `ALLMENU`, `Click Here`, sections, m)
-            }
+                        Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
+                        }
         break
         case'ownermenu':{m.reply (lang.ownermen(sp, prefix))}
         break
@@ -2744,8 +2818,37 @@ ${sp} Detail      : ${detail}`
         break
         case'thankto':{m.reply (lang.thankto(sp))}
         break
+        case'listmenu':{
+        let sections = [
+            {
+            title: "ALLMENU",
+            rows: [
+            {title: "OWNERMENU", rowId: `ownermenu`, description: `───────────────────────────`},
+            {title: "BOTMENU", rowId: `botmenu`, description: `───────────────────────────`},
+            {title: "GROUPMENU", rowId: `grupmenu`, description: `───────────────────────────`},
+            {title: "WEBMENU", rowId: `webmenu`, description: `───────────────────────────`},
+            {title: "DOWNLOADMENU", rowId: `downloadmenu`, description: `───────────────────────────`},
+            {title: "SEARCHMENU", rowId: `searchmenu`, description: `───────────────────────────`},
+            {title: "RANDOMMENU", rowId: `randommenu`, description: `───────────────────────────`},
+            {title: "ANIMEMENU", rowId: `animemenu`, description: `───────────────────────────`},
+            {title: "NSFWMENU", rowId: `nsfwmenu`, description: `───────────────────────────`},
+            {title: "PHOTOEXYMENU", rowId: `photoexymenu`, description: `───────────────────────────`},
+            {title: "EPHOTOMENU", rowId: `ephotomenu`, description: `───────────────────────────`},
+            {title: "FUNMENU", rowId: `funmenu`, description: `───────────────────────────`},
+            {title: "CONVERTMENU", rowId: `convertmenu`, description: `───────────────────────────`},
+            {title: "DATABASEMENU", rowId: `databasemenu`, description: `───────────────────────────`},
+            {title: "ANONYMOUSMENU", rowId: `anonymousmenu`, description: `───────────────────────────`},
+            {title: "ISLAMMENU", rowId: `islammenu`, description: `───────────────────────────`},
+            {title: "VOICEMENU", rowId: `voicemenu`, description: `───────────────────────────`},
+            {title: "THANK TO", rowId: `thankto`, description: `───────────────────────────`}
+            ]
+            },
+            ]
+            Rika.sendListMsg(m.chat, `${salam}`, `${fouter}`, `ALLMENU`, `Click Here`, sections, m)
+        }
+        break
             case 'allmenu':{
-                let btn = [{
+                /*let btn = [{
                     urlButton: {
                       displayText: "MY GROUP",
                       url: `${grup}`
@@ -2786,9 +2889,21 @@ ${sp} Detail      : ${detail}`
                         } else if (setbot.templateMsg) {
                         Rika.send5ButMsg(m.chat, lang.allmen(prefix, salam, pushname, time, tanggal, ownername, sp), `${fouter}`, btn)
                         } else if (setbot.templateLocation) {
-                        Rika.send5ButLoc(m.chat, lang.allmen(prefix, salam, pushname, time, tanggal, ownername, sp) , `${fouter}`, `${thumbnaili}`, btn)
-                        }
-                     }
+                        Rika.send5ButLoc(m.chat, lang.allmen(prefix, salam, pushname, time, tanggal, ownername, sp) , `${fouter}`, `${thumbnaili}`, btn)*/
+                let button = [
+                    {buttonId: `rules`, buttonText: {displayText: 'RULES'}, type: 1},
+                    {buttonId: `sc`, buttonText: {displayText: 'SC'}, type: 1},
+                    {buttonId: `owner`, buttonText: {displayText: 'OWNER'}, type: 1}
+                ]
+                let buttonMessage = {
+                    image: thumbnaili,
+                    caption: lang.allmen(prefix, salam, pushname, time, tanggal, ownername, sp) ,
+                    footer: `${fouter}`,
+                    buttons: button,
+                    headerType: 4
+                }
+                Rika.sendMessage(m.chat, buttonMessage, { quoted: m })
+                }
             break
             default:
                 if (budy.startsWith('=>')) {
