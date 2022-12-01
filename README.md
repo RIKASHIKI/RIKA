@@ -41,7 +41,7 @@ Edit in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
 * Unduh & Instal Git [`Klik Disini`](https://git-scm.com/downloads)
 * Unduh & Instal NodeJS [`Klik Disini`](https://nodejs.org/en/download)
 * Unduh & Instal FFmpeg [`Klik Disini`](https://ffmpeg.org/download.html) (**Jangan Lupa Tambahkan FFmpeg ke variabel lingkungan PATH**)
-
+* unduh & instal pm2 [`klik disini`](https://pm2.keymetrics.io/)
 
 ```bash
 git clone https://github.com/RIKASHIKI/RIKA

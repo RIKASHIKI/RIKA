@@ -67,7 +67,7 @@ async function startRika() {
     const Rika = RikaConnect({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: true,
-        browser: ['Rika Multi Device','Safari','1.0.0'],
+        browser: ['RIKA MULTI DEVICE','Safari','1.0.0'],
         auth: state
     })
 
@@ -77,7 +77,7 @@ async function startRika() {
     Rika.ws.on('CB:call', async (json) => {
     const callerId = json.content[0].attrs['call-creator']
     if (json.content[0].tag == 'offer') {
-    let pa7rick = await Rika.sendContact(callerId,`${ownernumber}`)
+    let pa7rick = await Rika.sendContact(callerId, global.ownernumber)
     Rika.sendMessage(callerId, lang.otoban(), { quoted : pa7rick })
     await sleep(8000)
     await Rika.updateBlockStatus(callerId, "block")

@@ -172,6 +172,7 @@ exports.men = (pushname, salam, packname, sp, prefix) => {
     halo ${pushname}👋
     ${salam}
     i'am ${packname}
+    _read rules before use this bot !_
 
     ╭──── 「 *MENU* 」
     │
@@ -220,7 +221,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}setppbot full [image]
    │${sp} ${prefix}setwm
    │${sp} ${prefix}setmenu [option]
-   │${sp} ${prefix}jointes [test]
    │${sp} ${prefix}join [link]
    ╰─────────
 
@@ -240,6 +240,8 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}listonline
    │${sp} ${prefix}speed
    │${sp} ${prefix}sc
+   │${sp} ${prefix}report
+   │${sp} ${prefix}request
    │${sp} ${prefix}nsfw [on/off]
    ╰─────────
     
@@ -253,8 +255,8 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}setdescgc [text]
    │${sp} ${prefix}group [option]
    │${sp} ${prefix}editinfo [option]
-   │${sp} ${prefix}add @user not available
-   │${sp} ${prefix}kick @user not available
+   │${sp} ${prefix}add @user [not available]
+   │${sp} ${prefix}kick @user [not available]
    │${sp} ${prefix}hidetag [text]
    │${sp} ${prefix}tagall [text]
    │${sp} ${prefix}hapus [reply]
@@ -400,13 +402,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    ╭──── 「 *FUN MENU* 」
    │
    │${sp} ${prefix}simih
-   │${sp} ${prefix}halah
-   │${sp} ${prefix}hilih
-   │${sp} ${prefix}huluh
-   │${sp} ${prefix}heleh
-   │${sp} ${prefix}holoh
-   │${sp} ${prefix}jadian
-   │${sp} ${prefix}jodohku
    │${sp} ${prefix}delttt
    │${sp} ${prefix}tictactoe
    │${sp} ${prefix}family100
@@ -535,6 +530,8 @@ exports.botmen = (sp, prefix) =>{
    │${sp} ${prefix}listonline
    │${sp} ${prefix}speed
    │${sp} ${prefix}sc
+   │${sp} ${prefix}report
+   │${sp} ${prefix}request
    │${sp} ${prefix}nsfw [on/off]
    ╰─────────`
 }
@@ -550,8 +547,8 @@ exports.grupmen = (sp, prefix) =>{
    │${sp} ${prefix}setdescgc [text]
    │${sp} ${prefix}group [option]
    │${sp} ${prefix}editinfo [option]
-   │${sp} ${prefix}add @user not available
-   │${sp} ${prefix}kick @user not available
+   │${sp} ${prefix}add @user [not available for now]
+   │${sp} ${prefix}kick @user [not available for now]
    │${sp} ${prefix}hidetag [text]
    │${sp} ${prefix}tagall [text]
    │${sp} ${prefix}hapus [reply]
@@ -715,13 +712,6 @@ exports.funmen = (sp, prefix) =>{
    ╭──── 「 *FUN MENU* 」
    │
    │${sp} ${prefix}simih
-   │${sp} ${prefix}halah
-   │${sp} ${prefix}hilih
-   │${sp} ${prefix}huluh
-   │${sp} ${prefix}heleh
-   │${sp} ${prefix}holoh
-   │${sp} ${prefix}jadian
-   │${sp} ${prefix}jodohku
    │${sp} ${prefix}delttt
    │${sp} ${prefix}tictactoe
    │${sp} ${prefix}family100
