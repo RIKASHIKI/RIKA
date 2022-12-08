@@ -60,6 +60,11 @@
     "120363021553886886@g.us": {
       "mute": false,
       "antilink": false
+    },
+    "6287820032793@s.whatsapp.net": {
+      "mute": false,
+      "antilink": false,
+      "nsfw": false
     }
   },
   "database": {},

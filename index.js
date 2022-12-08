@@ -78,7 +78,7 @@ async function startRika() {
     const callerId = json.content[0].attrs['call-creator']
     if (json.content[0].tag == 'offer') {
     let pa7rick = await Rika.sendContact(callerId, global.ownernumber)
-    Rika.sendMessage(callerId, lang.otoban(), { quoted : pa7rick })
+    Rika.sendMessage(callerId, langg.otoban(), { quoted : pa7rick })
     await sleep(8000)
     await Rika.updateBlockStatus(callerId, "block")
     }

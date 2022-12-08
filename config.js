@@ -1,8 +1,8 @@
 const fs = require('fs')
 const chalk = require('chalk')
 const  { ind, eng} = require(`./language`)
-lang = global.lang
-
+langg = global.lang
+                 
 
 // Website Api
 global.APIs = {
