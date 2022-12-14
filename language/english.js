@@ -242,7 +242,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}sc
    │${sp} ${prefix}report
    │${sp} ${prefix}request
-   │${sp} ${prefix}nsfw [on/off]
    ╰─────────
     
    ╭──── 「 *GRUP MENU* 」
@@ -402,6 +401,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    ╭──── 「 *FUN MENU* 」
    │
    │${sp} ${prefix}simih
+   │${sp} ${prefix}cecan
    │${sp} ${prefix}delttt
    │${sp} ${prefix}tictactoe
    │${sp} ${prefix}family100
@@ -532,7 +532,6 @@ exports.botmen = (sp, prefix) =>{
    │${sp} ${prefix}sc
    │${sp} ${prefix}report
    │${sp} ${prefix}request
-   │${sp} ${prefix}nsfw [on/off]
    ╰─────────`
 }
 exports.grupmen = (sp, prefix) =>{
@@ -712,6 +711,7 @@ exports.funmen = (sp, prefix) =>{
    ╭──── 「 *FUN MENU* 」
    │
    │${sp} ${prefix}simih
+   │${sp} ${prefix}cecan
    │${sp} ${prefix}delttt
    │${sp} ${prefix}tictactoe
    │${sp} ${prefix}family100

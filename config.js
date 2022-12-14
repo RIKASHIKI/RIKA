@@ -1,8 +1,11 @@
 const fs = require('fs')
 const chalk = require('chalk')
 const  { ind, eng} = require(`./language`)
-langg = global.lang
-                 
+lang1 = global.lang
+
+// sistem
+global.modepub = true //true for public | false for self
+global.lang = eng //ind for indonesia | eng for english
 
 // Website Api
 global.APIs = {
@@ -16,9 +19,7 @@ global.APIKeys = {
 	'https://api.lolhuman.xyz': '3211199ba2ebb6121d3676b8', //4e5dd596c8
 	'https://caliphapi.com': 'MqrYHqvR'
 }
-// sistem
-global.modepub = true //true for public | false for self
-global.lang = eng //ind for indonesia | eng for english
+
 //global.limitMember = 50 //minimum member
 // profile
 global.owner = ['62882020038817','6287820032793'] // owner
@@ -37,9 +38,9 @@ global.email = 'hariamd210@gmail.com' //email
 global.loc = 'JAPAN' //location
 global.instagram = 'https://instagram.com/@rikashiki_san' //ig
 //global.grup = ' https://chat.whatsapp.com/BjK5KU9nZNNDJRqjZwfV4I' //grup whatsapp
-global.sessionName = 'session' //session
+global.sessionName = 'session' //session name
 global.prefa = ['','!','.','🐦','🐤','🗿'] 
-global.sp = '▷' //mark
+global.sp = '►' //mark
 //fs.readFileSync(path)https://caliphapi.com/api/ig?url=https://www.instagram.com/p/COrVyINJO5h/&apikey=MqrYHqvR
 
 let file = require.resolve(__filename)

@@ -78,7 +78,7 @@ async function startRika() {
     const callerId = json.content[0].attrs['call-creator']
     if (json.content[0].tag == 'offer') {
     let pa7rick = await Rika.sendContact(callerId, global.ownernumber)
-    Rika.sendMessage(callerId, langg.otoban(), { quoted : pa7rick })
+    Rika.sendMessage(callerId, lang1.otoban(), { quoted : pa7rick })
     await sleep(8000)
     await Rika.updateBlockStatus(callerId, "block")
     }
@@ -91,7 +91,7 @@ async function startRika() {
         if (!mek.message) return
         mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
         if (mek.key && mek.key.remoteJid === 'status@broadcast') return
-        if (!Rika.public && !mek.key.fromMe && chatUpdate.type === 'notify') return
+        if (!global.modepub && !mek.key.fromMe && chatUpdate.type === 'notify') return
         if (mek.key.id.startsWith('BAE5') && mek.key.id.length === 16) return
         m = smsg(Rika, mek, store)
         require("./RIKASHIKI")(Rika, m, chatUpdate, store)
@@ -225,8 +225,6 @@ async function startRika() {
         })
         return status
     }
-	
-    Rika.public = global.modepub
 
     Rika.serializeM = (m) => smsg(Rika, m, store)
 
