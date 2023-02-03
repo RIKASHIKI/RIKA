@@ -1,9 +1,13 @@
-## <h1 align="center">RIKA</h1>
-<h4 align="center">bot whatsapp multidevice beta</h4>
+ <h1 align="center">RIKA</h1>
+<h4 align="center">BOT WHATSAPP MULTI DEVICE</h4>
 <p align="center">
 	<img src="https://www.wallpapertip.com/wmimgs/174-1741670_anime-gif-wallpaper-hd.jpg">
 </p>
 
+## WHAT'S NEW
+* change useSinglefileAuthState to useMultifileAuthState
+* fix smeme
+* fix some bug
 
 
 ## SETTING
@@ -48,12 +52,12 @@ git clone https://github.com/RIKASHIKI/RIKA
 cd RIKA
 npm install
 ```
-
 ```bash
 git clone https://github.com/RIKASHIKI/RIKA
 cd RIKA
+npm i @adiwajshing/baileys
 pm2 start index.js
-pm2 monit
+pm2 logs
 ```
 
 ## HOW TO CONNECT TO MONGODB WHEN RUN IN HEROKU
@@ -73,7 +77,7 @@ apt install git -y
 apt install nodejs -y
 apt install ffmpeg -y
 git clone https://github.com/RIKASHIKI/RIKA
-cd Rika
+cd RIKA
 npm install
 ```
 ## RECOMMENDED INSTALL ON TERMUX
@@ -89,8 +93,7 @@ $ node .
 ```
 
 ## ❗ Warning
-WhatsApp bot is still in the development stage, so there are a few bugs
-WhatsApp Connection (BETA, not working perfectly)
+```WhatsApp bot is still in the development stage, so there are a few bugs WhatsApp Connection (BETA, not working perfectly)```
 
 Editing Number Owner & session name in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
 Get Apikey zenz on [`zenz`](https://zenzapi.xyz/pricing)
@@ -107,6 +110,7 @@ WhatsApp multi device,script working with [`@adiwajshing/baileys`](https://githu
 * [`zhwzein`](https://github.com/zhwzein)
 * [`CAF-ID`](https://github.com/CAF-ID)
 * [`bintang`](https://github.com/Bintangp02)
+* [`dika ardnt`](https://github.com/DikaArdnt)
 * [`rikashiki`](https://github.com/RIKASHIKI)
 
 ```Thanks to all who have participated in the development of this script```
@@ -119,4 +123,4 @@ Support Me
 * pulsa 087820032793 XL
 ## MY GROUP
 
-- [WHATSAPP GROUP](https://chat.whatsapp.com/E4YXacQLqPh3isulcGqlSA)
+- [WHATSAPP GROUP](https://chat.whatsapp.com/EKLhAWTkGd07un1wQsKbcz)

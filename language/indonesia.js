@@ -56,7 +56,7 @@ exports.nostic = (prefix, menu) => {
     return`kirim/balas gambar/stiker dengan keterangan ${prefix + menu} text1|text2`
 }
 exports.exampel = (prefix, menu) =>{
-    return`contoh : ${prefix + menu} teks|teks`
+    return`contoh : ${prefix + menu}`
 }
 exports.repor = (prefix, menu) =>{
     return`contoh : ${prefix + menu} ada yang error bang`
@@ -73,7 +73,7 @@ exports.adlin = () => {
 exports.chochat = () => {
     return`pilihan : 1. mute\n2. unmute\n3. archive\n4. unarchive\n5. read\n6. unread\n7. delete`
 }
-exports.wetext = () => {
+exports.wetext = () =>{
     return`dimana teksnya ?`
 }
 exports.memlimit = (limitMember) =>{
@@ -82,7 +82,7 @@ exports.memlimit = (limitMember) =>{
 exports.linvalid = () =>{
     return`tautan tidak sah!`
 }
-exports.otoban = () => {
+exports.otoban = () =>{
     return`──────「 AUTO BLOCK SISTEM 」──────\njangan telpon bot!\nhubungi owner untuk menghentikan block!`
 }
 exports.afkbefore = (reason) =>{
@@ -93,6 +93,18 @@ exports.afkbefore = (reason) =>{
 exports.afkafter = (user) =>{
     return`kamu kembali online dari afk${user.afkReason ? ' setelah ' + user.afkReason : ''}
     Selama`
+}
+exports.warnin = () =>{
+     return`_baca rules sebelum menggunakan bot !_`
+}
+exports.resbot = (pushname, packname) =>{
+    return`_hallo ${pushname}_
+    
+    nama saya ${packname}
+     
+    saya adalah bot whatsapp berbasis javascript
+    silahkan tekan tombol di bawah untuk melanjutkan
+    atau ketik #menu`
 }
 exports.timenight = () =>{
     return`selamat malam`
@@ -115,6 +127,12 @@ exports.sc = () => {
     Base    : https://github.com/DikaArdnt/Hisoka-Morou
     recode  : https://github.com/RIKASHIKI`
 }
+exports.est = (shcenter) => {
+    return `*──────「 SARAN & PUSAT BANTUAN 」 ──────*
+
+_silahkan sentuh tautan untuk melanjutkan_
+${shcenter}`
+} 
 exports.dona = (pushname, ownernumber) => {
     return `*──────「 DONATE 」 ──────*
 hai ${pushname}
@@ -153,7 +171,10 @@ exports.rules = () => {
  — cari di github atau bikin sendiri
     
 🗯️ bagaimana menambahkan bot ke grup?
- — aku tidak tau
+ — chat bot atau pemilik untuk menambahkan bot ini ke grup mu
+
+🗯️ bagaimana mendapatkan pengguna premium?
+ — tidak tersedia untuk sekarang
     
 🗯️ prefix nya apa ?
  — multi prefix
@@ -161,6 +182,11 @@ exports.rules = () => {
 🗯️ pemilik tidak merespon / menjawab?
  — pemilik hanya menjawab chat penting
     
+ 🗯️ bagaimana jika sya ingin meberikan saran/membutuhkan bantuan? 
+  — ketik .suggest/help
+  
+ 
+ 
 
 
 _dengan menggunakan bot ini maka pengguna setuju dengan syarat dan ketentuan yang berlaku._
@@ -171,7 +197,6 @@ exports.men = (pushname, salam, packname, sp, prefix) => {
     hallo ${pushname}👋
     ${salam}
     saya ${packname}
-    _baca rules sebelum menggunakan bot ini !_
 
     ╭──── 「 *MENU* 」
     │
@@ -193,6 +218,7 @@ exports.men = (pushname, salam, packname, sp, prefix) => {
     │${sp} ${prefix}islammenu
     │${sp} ${prefix}voicemenu
     |${sp} ${prefix}thankto
+    │${sp} ${prefix}suggest/help
     ╰─────────`
 }
 exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
@@ -227,6 +253,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │
    │${sp} ${prefix}ping
    │${sp} ${prefix}owner
+   │${sp} ${prefix}setnamebot [text]
    │${sp} ${prefix}menu
    │${sp} ${prefix}allmenu
    │${sp} ${prefix}rules
@@ -239,8 +266,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}listonline
    │${sp} ${prefix}speed
    │${sp} ${prefix}sc
-   │${sp} ${prefix}report
-   │${sp} ${prefix}request
+   │${sp} ${prefix}suggest/help
    ╰─────────
     
    ╭──── 「 *GRUP MENU* 」
@@ -518,6 +544,7 @@ exports.botmen = (sp, prefix) =>{
    │
    │${sp} ${prefix}ping
    │${sp} ${prefix}owner
+   │${sp} ${prefix}setnamebot [text]
    │${sp} ${prefix}menu
    │${sp} ${prefix}allmenu
    │${sp} ${prefix}rules
@@ -530,8 +557,7 @@ exports.botmen = (sp, prefix) =>{
    │${sp} ${prefix}listonline
    │${sp} ${prefix}speed
    │${sp} ${prefix}sc
-   │${sp} ${prefix}report
-   │${sp} ${prefix}request
+   │${sp} ${prefix}suggest/help
    ╰─────────`
 }
 exports.grupmen = (sp, prefix) =>{

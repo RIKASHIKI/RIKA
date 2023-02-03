@@ -56,7 +56,7 @@ exports.nostic = (prefix, menu) => {
     return`Send/reply image/sticker with caption ${prefix + menu} text1|text2`
 }
 exports.exampel = (prefix, menu) =>{
-    return`ex : ${prefix + menu} text|text`
+    return`ex : ${prefix + menu}`
 }
 exports.repor = (prefix, menu) =>{
     return`ex : ${prefix + menu} there is an error bro`
@@ -95,6 +95,17 @@ exports.afkafter = (user) =>{
     return`you come back online from AFK${user.afkReason ? ' after ' + user.afkReason : ''}
     been`
 }
+exports.warnin = () => {
+    return`_read rules before use this bot !_`
+}
+exports.resbot = (pushname, packname) =>{
+    return`_hallo ${pushname}_
+    
+    my name ${packname}
+    
+    i'am bot whatsapp based javascript
+    please press button below to continue or type #menu`
+}
 exports.timenight = () =>{
     return`good night`
 }
@@ -115,6 +126,12 @@ exports.sc = () => {
 
     Base    : https://github.com/DikaArdnt/Hisoka-Morou
     recode  : https://github.com/RIKASHIKI`
+} 
+exports.est = (shcenter) => {
+    return `*──────「 SUGGESTION & HELP CENTER 」 ──────*
+
+_please click link to continue_
+${shcenter}`
 } 
 exports.dona = (pushname, ownernumber) => {
     return `*──────「 DONATION 」──────*
@@ -154,17 +171,25 @@ exports.rules = () => {
  — search in github or you can make it
     
 🗯️ how to add bot to group?
- — i dont know
-    
+ — chat bot or owner for add bot to your grup
+
+🗯️ how to get premium user?
+ — not available  for now 
+
 🗯️ What's the prefix?
  — multi prefix
     
 🗯️ owner not responding / answering?
  — the owner only answers important chats
     
+🗯️ what if want to make a suggestion/need help?
+ — type .suggest/help
+ 
 
 
-_by using this bot, the user agrees to the terms and conditions that apply._
+
+
+_by using this bot, user agrees to the terms and conditions that apply._
 _if it violates it will be subject to permanent ban sanctions_ ⚠`
 }
 exports.men = (pushname, salam, packname, sp, prefix) => {
@@ -172,7 +197,6 @@ exports.men = (pushname, salam, packname, sp, prefix) => {
     halo ${pushname}👋
     ${salam}
     i'am ${packname}
-    _read rules before use this bot !_
 
     ╭──── 「 *MENU* 」
     │
@@ -194,6 +218,7 @@ exports.men = (pushname, salam, packname, sp, prefix) => {
     │${sp} ${prefix}islammenu
     │${sp} ${prefix}voicemenu
     │${sp} ${prefix}thankto
+    │${sp} ${prefix}suggest/help
     ╰─────────`
 }
 exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
@@ -228,6 +253,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │
    │${sp} ${prefix}ping
    │${sp} ${prefix}owner
+   │${sp} ${prefix}setnamebot [text]
    │${sp} ${prefix}menu
    │${sp} ${prefix}allmenu
    │${sp} ${prefix}rules
@@ -240,8 +266,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}listonline
    │${sp} ${prefix}speed
    │${sp} ${prefix}sc
-   │${sp} ${prefix}report
-   │${sp} ${prefix}request
+   │${sp} ${prefix}suggest/help
    ╰─────────
     
    ╭──── 「 *GRUP MENU* 」
@@ -518,6 +543,7 @@ exports.botmen = (sp, prefix) =>{
    │
    │${sp} ${prefix}ping
    │${sp} ${prefix}owner
+   │${sp} ${prefix}setnamebot [text]
    │${sp} ${prefix}menu
    │${sp} ${prefix}allmenu
    │${sp} ${prefix}rules
@@ -530,8 +556,7 @@ exports.botmen = (sp, prefix) =>{
    │${sp} ${prefix}listonline
    │${sp} ${prefix}speed
    │${sp} ${prefix}sc
-   │${sp} ${prefix}report
-   │${sp} ${prefix}request
+   │${sp} ${prefix}suggest/help
    ╰─────────`
 }
 exports.grupmen = (sp, prefix) =>{

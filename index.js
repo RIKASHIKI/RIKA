@@ -1,8 +1,8 @@
 
 
 require('./config')
-const { default: RikaConnect, useSingleFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require("@adiwajshing/baileys")
-const { state, saveState } = useSingleFileAuthState(`./${sessionName}.json`)
+const { default: RikaConnect , useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require("@adiwajshing/baileys")
+//const { state, saveState } = useSingleFileAuthState(`./${sessionName}.json`)
 const pino = require('pino')
 const { Boom } = require('@hapi/boom')
 const fs = require('fs')
@@ -58,12 +58,14 @@ global.loadDatabase = async function loadDatabase() {
 }
 loadDatabase()
 
+
 //save database every 5 minutes
 if (global.db) setInterval(async () => {
     if (global.db.data) await global.db.write()
   }, 180 * 1000)
 
 async function startRika() {
+    const { state, saveCreds } = await useMultiFileAuthState(`${sessionName}`)
     const Rika = RikaConnect({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: true,
@@ -77,8 +79,8 @@ async function startRika() {
     Rika.ws.on('CB:call', async (json) => {
     const callerId = json.content[0].attrs['call-creator']
     if (json.content[0].tag == 'offer') {
-    let pa7rick = await Rika.sendContact(callerId, global.ownernumber)
-    Rika.sendMessage(callerId, lang1.otoban(), { quoted : pa7rick })
+    let pa7rick = await Rika.sendContact(callerId,global.ownernumber)
+    Rika.sendMessage(callerId,`「 AUTO BLOCK SISTEM 」\nDon't call bot!\nchat owner for unblock!`, { quoted : pa7rick })
     await sleep(8000)
     await Rika.updateBlockStatus(callerId, "block")
     }
@@ -232,7 +234,7 @@ async function startRika() {
         const { connection, lastDisconnect } = update	    
         if (connection === 'close') {
         let reason = new Boom(lastDisconnect?.error)?.output.statusCode
-            if (reason === DisconnectReason.badSession) { console.log(`Bad Session File, Please Delete Session and Scan Again`); Rika.logout(); }
+            if (reason === DisconnectReason.badSession) { console.log(`Bad Session File, Delete Session and Scan Again`); Rika.logout(); }
             else if (reason === DisconnectReason.connectionClosed) { console.log("Connection closed, reconnecting...."); startRika(); }
             else if (reason === DisconnectReason.connectionLost) { console.log("Connection Lost from Server, reconnecting..."); startRika(); }
             else if (reason === DisconnectReason.connectionReplaced) { console.log("Connection Replaced, Another New Session Opened, Please Close Current Session First"); Rika.logout(); }
@@ -243,8 +245,8 @@ async function startRika() {
         }
         console.log('Connected...', update)
     })
-
-    Rika.ev.on('creds.update', saveState)
+    Rika.ev.on('creds.update', saveCreds)
+    //Rika.ev.on('creds.update', saveState)
 
     // Add Other
       
@@ -260,13 +262,13 @@ async function startRika() {
         const ResizeImage = await ImageJimp.resize(width, height)
         return ResizeImage.getBufferAsync('image/png')
       }
-    // resize video
+    /* resize video
       Rika.ReSize = async (video, width, height) => {
         const Jimp = require('jimp');
         const videoJimp = await Jimp.read(video);
         const resizevideo = await videoJimp.resize(width, height)
         return resizevideo.getBufferAsync('video/mp4')
-      }
+      }*/
       // Siapa yang cita-citanya pakai resize buat keliatan thumbnailnya
       
       /** Send Button 5 Location

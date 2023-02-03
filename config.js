@@ -1,11 +1,10 @@
 const fs = require('fs')
 const chalk = require('chalk')
 const  { ind, eng} = require(`./language`)
-lang1 = global.lang
-
+lang1 = global.lang1
 // sistem
 global.modepub = true //true for public | false for self
-global.lang = eng //ind for indonesia | eng for english
+global.lang1 = eng //ind for indonesia | eng for english
 
 // Website Api
 global.APIs = {
@@ -28,20 +27,28 @@ global.author = '62882020038817' //author sticker
 global.ownername = 'RIKASHIKI' //your name
 global.fouter = 'RIKASHIKI | RKS-MD ©2022' //whatever
 global.ownernumber = ['62882020038817'] //owner number
+global.sessionName = 'session'
 // media
-global.thumbnaili = fs.readFileSync('./media/RKS.jpg') //thumbnail
-global.donasnya ='./media/RKS.jpg' //donate image
-global.video = '.media/VIDEOWIBU.mp4' //video to link? switch to {url: 'yourlinkvideo' }
-//global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube
-//global.webyou = 'https://github.com/RIKASHIKI' //github
+global.thumbnaili = fs.readFileSync('./media/RKS.png') //thumbnail
+global.donasnya = fs.readFileSync('./media/logo1.mp4') //donate image
+global.video = ('.media/logo1.mp4') //video to link? switch to {url: 'yourlinkvideo' }
+global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube
+global.webyou = 'https://github.com/RIKASHIKI' //github
 global.email = 'hariamd210@gmail.com' //email
 global.loc = 'JAPAN' //location
 global.instagram = 'https://instagram.com/@rikashiki_san' //ig
-//global.grup = ' https://chat.whatsapp.com/BjK5KU9nZNNDJRqjZwfV4I' //grup whatsapp
-global.sessionName = 'session' //session name
+global.grup = 'https://chat.whatsapp.com/BjK5KU9nZNNDJRqjZwfV4I' //grupwhatsapp
+global.shcenter = 'https://chat.whatsapp.com/EKLhAWTkGd07un1wQsKbcz' //suggest & help center
 global.prefa = ['','!','.','🐦','🐤','🗿'] 
 global.sp = '►' //mark
-//fs.readFileSync(path)https://caliphapi.com/api/ig?url=https://www.instagram.com/p/COrVyINJO5h/&apikey=MqrYHqvR
+
+global.tim = {
+    night: 'good night',
+	evening: 'good evening',
+	afternoon: 'good afternoon',
+	midday: 'good midday',
+	morning: 'good morning',
+}
 
 let file = require.resolve(__filename)
 fs.watchFile(file, () => {
