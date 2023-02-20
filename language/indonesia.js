@@ -192,6 +192,20 @@ exports.rules = () => {
 _dengan menggunakan bot ini maka pengguna setuju dengan syarat dan ketentuan yang berlaku._
 _jika melanggar maka akan dikenakan sanksi banned permanen_ ⚠`
 }
+exports.inspek = (gt) => {
+    return`
+
+    ──── 「 *GROUP LINK INSPECTOR* 」────
+    
+SUBJEK   : ${gt.subjek}
+ID       : ${gt.id}
+SUBJEK DIPERBARUI OLEH : ${gt.subjectOwner.split('@'[0])}
+PEMILIK  : ${gt.owner.split("@")[0]}
+MEMBER   : ${gt.size}
+DESK ID  : ${gt.descId}
+DESKRIPSI  : ${gt.desc ||'TIDAK ADA DESKIRPSI'}
+    ───────────────────────────`
+}
 exports.men = (pushname, salam, packname, sp, prefix) => {
     return`
     hallo ${pushname}👋
@@ -237,7 +251,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │
    │${sp} ${prefix}react [emoji]
    │${sp} ${prefix}chat [option]
-   │${sp} ${prefix}leave
+   │${sp} ${prefix}leave [id grup]
    │${sp} ${prefix}block @user
    │${sp} ${prefix}unblock @user
    │${sp} ${prefix}bcgroup [text]
@@ -247,13 +261,13 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}setwm
    │${sp} ${prefix}setmenu [option]
    │${sp} ${prefix}join [link]
+   │${sp} ${prefix}setnamebot [text]
    ╰─────────
 
    ╭──── 「 *BOT MENU* 」
    │
    │${sp} ${prefix}ping
    │${sp} ${prefix}owner
-   │${sp} ${prefix}setnamebot [text]
    │${sp} ${prefix}menu
    │${sp} ${prefix}allmenu
    │${sp} ${prefix}rules
@@ -341,6 +355,7 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}wikimedia [query]
    │${sp} ${prefix}ringtone [query]
    │${sp} ${prefix}stalk [option] [query]
+   │${sp} ${prefix}inspect [linkgroup]
    ╰─────────
     
    ╭──── 「 *RANDOM MENU* 」
@@ -526,7 +541,7 @@ exports.ownermen = (sp, prefix) =>{
    │
    │${sp} ${prefix}react [emoji]
    │${sp} ${prefix}chat [option]
-   │${sp} ${prefix}leave
+   │${sp} ${prefix}leave [id grup]
    │${sp} ${prefix}block @user
    │${sp} ${prefix}unblock @user
    │${sp} ${prefix}bcgroup [text]
@@ -536,6 +551,7 @@ exports.ownermen = (sp, prefix) =>{
    │${sp} ${prefix}setwm
    │${sp} ${prefix}setmenu [option]
    │${sp} ${prefix}join [link]
+   │${sp} ${prefix}setnamebot [text]
    ╰─────────`
 }
 exports.botmen = (sp, prefix) =>{
@@ -544,7 +560,6 @@ exports.botmen = (sp, prefix) =>{
    │
    │${sp} ${prefix}ping
    │${sp} ${prefix}owner
-   │${sp} ${prefix}setnamebot [text]
    │${sp} ${prefix}menu
    │${sp} ${prefix}allmenu
    │${sp} ${prefix}rules
@@ -640,6 +655,7 @@ exports.searchmen = (sp, prefix) =>{
    │${sp} ${prefix}wikimedia [query]
    │${sp} ${prefix}ringtone [query]
    │${sp} ${prefix}stalk [option] [query]
+   │${sp} ${prefix}inspect [linkgroup]
    ╰─────────`
 }
 exports.randommen = (sp, prefix) =>{

@@ -19,7 +19,7 @@ global.APIKeys = {
 	'https://caliphapi.com': 'MqrYHqvR'
 }
 
-//global.limitMember = 50 //minimum member
+global.limitMember = 50 //minimum member
 // profile
 global.owner = ['62882020038817','6287820032793'] // owner
 global.packname = 'RKS MD' //pacname sticker & name bot
@@ -29,7 +29,7 @@ global.fouter = 'RIKASHIKI | RKS-MD ©2022' //whatever
 global.ownernumber = ['62882020038817'] //owner number
 global.sessionName = 'session'
 // media
-global.thumbnaili = fs.readFileSync('./media/RKS.png') //thumbnail
+global.thumbnaili = fs.readFileSync('./media/RKS.jpg') //thumbnail
 global.donasnya = fs.readFileSync('./media/logo1.mp4') //donate image
 global.video = ('.media/logo1.mp4') //video to link? switch to {url: 'yourlinkvideo' }
 global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube

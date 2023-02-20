@@ -69,8 +69,21 @@ async function startRika() {
     const Rika = RikaConnect({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: true,
+        shouldSyncHistoryMessage: false,
         browser: ['RIKA MULTI DEVICE','Safari','1.0.0'],
-        auth: state
+        auth: state,
+        patchMessageBeforeSending: (message) => 
+        { const requiresPatch = !!(
+            message.buttonsMessage
+             || message.templateButtons
+             || message.listMes //|| message.templateMessage || message.buttonsResponseMessage
+             ); 
+             if (requiresPatch) { 
+                message = { 
+                    viewOnceMessage: { 
+                        message: { 
+                            messageContextInfo: { 
+                                deviceListMetadataVersion: 2, deviceListMetadata: {}, }, ...message, }, }, }; } return message; }
     })
 
     store.bind(Rika.ev)
@@ -262,13 +275,13 @@ async function startRika() {
         const ResizeImage = await ImageJimp.resize(width, height)
         return ResizeImage.getBufferAsync('image/png')
       }
-    /* resize video
+     //resize video
       Rika.ReSize = async (video, width, height) => {
         const Jimp = require('jimp');
         const videoJimp = await Jimp.read(video);
         const resizevideo = await videoJimp.resize(width, height)
         return resizevideo.getBufferAsync('video/mp4')
-      }*/
+      }
       // Siapa yang cita-citanya pakai resize buat keliatan thumbnailnya
       
       /** Send Button 5 Location
@@ -280,7 +293,7 @@ async function startRika() {
        * @param [*] button
        * @param {*} options
        */
-      Rika.send5ButLoc = async (jid , text = '' , footer = '', lok, but = [], options = {}) =>{
+      Rika.send5ButLoc = async (jid , text = '', footer = '', lok, but = [], options = {}) =>{
        let resize = await Rika.reSize(lok, 300, 150)
        var template = generateWAMessageFromContent(jid, {
        "templateMessage": {
@@ -296,9 +309,8 @@ async function startRika() {
        }
        }
        }, options)
-       Rika.relayMessage(jid, template.message, { messageId: template.key.id })
+       Rika.relayMessage(jid, template.message, { messageId: template.key.id})
       }
-
       /**
       *
       * @param {*} jid

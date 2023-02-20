@@ -658,7 +658,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                 } else if (args[0] === 'unread') {
                     Rika.chatModify({ markRead: false }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === 'delete') {
-                    Rika.chatModify({ clear: { message: { id: m.quoted.id, fromMe: true }} }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                    Rika.chatModify({ clear: { message: [{ id: m.quoted.id, fromMe: true,timestamp:'1654823909' }]} }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 }
             }
             break
@@ -771,13 +771,28 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                 if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) throw lang1.linvalid()
                     m.reply(lang1.wait())
                 let result = args[0].split('https://chat.whatsapp.com/')[1]
+                let gt = await Rika.groupGetInviteInfo(result)
+                if(gt.size < global.limitMeber) throw lang1.memlimit(limitMember)
                 await Rika.groupAcceptInvite(result).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+            }
+            break
+            case'inspect':{
+                if (!isCreator) throw lang1.ownerOnly()
+                if (!text) throw lang1.maLin()
+                if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) throw lang1.linvalid()
+                let result = args[0].split('https://chat.whatsapp.com/')[1]
+                let gt = await Rika.groupGetInviteInfo(result)
+                m.reply(gt.id)
+                await m.reply(lang1.inspek(gt))
             }
             break
             case 'leave': {
                 if (!isCreator) throw lang1.ownerOnly()
-                await Rika.groupLeave(m.chat).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
-            }
+                if(!text) {
+                    await Rika.groupLeave(m.chat).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+            }else{
+                await Rika.groupLeave(text).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+            }}
             break
             case 'setwm': {
                if (!isCreator) throw lang1.ownerOnly()
@@ -856,6 +871,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             break
             case'setnamebot':{
                 if (!isCreator) return m.reply(lang1.ownerOnly())
+                if (!text) throw lang1.wetext()
             await Rika.updateProfileName(text).then((res) => m.reply(lang1.success())).catch((err) => m.reply(jsonformat(err)))
             }
             break
@@ -1176,22 +1192,7 @@ break
                     m.reply(lang1.success())
                 }
              }
-            break/*
-             case 'bahasa': case 'language': {
-                if (args[0] === 'ind'){
-                 global.lang1 = ind
-                } else if (args[0] === 'eng'){
-                 global.lang1 = eng
-                } else {
-                let buttons = [
-                        { buttonId: 'language ind', buttonText: { displayText: 'INDONESIA' }, type: 1 },
-                        { buttonId: 'language eng', buttonText: { displayText: 'ENGLISH' }, type: 1 }
-                    ]
-                    await Rika.sendButtonText(m.chat, buttons, `change language`, `${fouter}`, m)
-
-             }
-            }
-            break*/
+            break
              case 'mute': {
                 if (!m.isGroup) throw lang1.grupOnly()
                 if (!isBotAdmins) throw lang1.notAdmin()
@@ -2660,17 +2661,17 @@ ${sp} Detail      : ${detail}`
                     }
                     }
                 ]
-               let setbot = db.data.settings[botNumber]
-                        if (setbot.templateImage) {
-                        Rika.send5ButImg(m.chat, lang1.rules(), `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
-                        } else if (setbot.templateGif) {
-                        Rika.send5ButGif(m.chat, lang1.rules(), `${fouter}`, `${video}`, btn,`${thumbnaili}`)
-                        } else if (setbot.templateVid) {
-                        Rika.send5ButVid(m.chat, lang1.rules(), `${fouter}`,`${video}`, btn, `${thumbnaili}`)
-                        } else if (setbot.templateMsg) {
-                        Rika.send5ButMsg(m.chat, lang1.rules(), `${fouter}`, btn)
-                        } else if (setbot.templateLocation) {
-                        Rika.send5ButLoc(m.chat, lang1.rules(), `${fouter}`, `${thumbnaili}`, btn)*/
+               //let setbot = db.data.settings[botNumber]
+                        //if (setbot.templateImage) {
+                        //Rika.send5ButImg(m.chat, lang1.rules(), `${fouter}`, `${thumbnaili}`, btn,`${thumbnaili}`)
+                        //} else if (setbot.templateGif) {
+                        //Rika.send5ButGif(m.chat, lang1.rules(), `${fouter}`, `${video}`, btn,`${thumbnaili}`)
+                       // } else if (setbot.templateVid) {
+                        //Rika.send5ButVid(m.chat, lang1.rules(), `${fouter}`,`${video}`, btn, `${thumbnaili}`)
+                       // } else if (setbot.templateMsg) {
+                        //Rika.send5ButMsg(m.chat, lang1.rules(), `${fouter}`, btn)
+                       // } else if (setbot.templateLocation) {
+                        //Rika.send5ButLoc(m.chat, lang1.rules(), `${fouter}`, `${thumbnaili}`, btn)*/ 
                         let button = [
                             {buttonId: `donate`, buttonText: {displayText: 'DONATE'}, type: 1},
                             {buttonId: `owner`, buttonText: {displayText: 'OWNER'}, type: 1},
