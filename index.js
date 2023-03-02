@@ -71,7 +71,6 @@ async function startRika() {
     const Rika = RikaConnect({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: true,
-        shouldSyncHistoryMessage: false,
         browser: ['RIKA MULTI DEVICE','Safari','1.0.0'],
         auth: state,
         patchMessageBeforeSending: (message) => 
