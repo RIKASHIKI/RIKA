@@ -5,8 +5,8 @@
 </p>
 
 ## WHAT'S NEW
-* change useSinglefileAuthState to useMultifileAuthState
-* fix smeme
+* change adiwajshing/baileys to whiskeydockets/baileys
+* delete anonymous
 * fix some bug
 
 

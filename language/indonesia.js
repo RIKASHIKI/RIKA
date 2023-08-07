@@ -228,7 +228,6 @@ exports.men = (pushname, salam, packname, sp, prefix) => {
     │${sp} ${prefix}funmenu
     │${sp} ${prefix}convertmenu
     │${sp} ${prefix}databasemenu
-    │${sp} ${prefix}anonymousmenu
     │${sp} ${prefix}islammenu
     │${sp} ${prefix}voicemenu
     |${sp} ${prefix}thankto
@@ -259,7 +258,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}setppbot [image]
    │${sp} ${prefix}setppbot full [image]
    │${sp} ${prefix}setwm
-   │${sp} ${prefix}setmenu [option]
    │${sp} ${prefix}join [link]
    │${sp} ${prefix}setnamebot [text]
    ╰─────────
@@ -303,11 +301,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}mute [on/off]
    │${sp} ${prefix}promote @user
    │${sp} ${prefix}demote @user
-   │${sp} ${prefix}vote [text]
-   │${sp} ${prefix}devote
-   │${sp} ${prefix}upvote
-   │${sp} ${prefix}cekvote
-   │${sp} ${prefix}hapusvote
    ╰─────────
 
    ╭──── 「 *WEB MENU* 」
@@ -483,14 +476,6 @@ exports.allmen = (prefix, salam, pushname, time, tanggal, ownername, sp) => {
    │${sp} ${prefix}delmsg
    ╰─────────
 
-   ╭──── 「 *ANONYMOUS MENU* 」
-   │
-   │${sp} ${prefix}anonymous
-   │${sp} ${prefix}start
-   │${sp} ${prefix}next
-   │${sp} ${prefix}keluar
-   ╰─────────
-
    ╭──── 「 *ISLAM MENU* 」
    │
    │${sp} ${prefix}iqra
@@ -549,7 +534,6 @@ exports.ownermen = (sp, prefix) =>{
    │${sp} ${prefix}setppbot [image]
    │${sp} ${prefix}setppbot full [image]
    │${sp} ${prefix}setwm
-   │${sp} ${prefix}setmenu [option]
    │${sp} ${prefix}join [link]
    │${sp} ${prefix}setnamebot [text]
    ╰─────────`
@@ -597,11 +581,6 @@ exports.grupmen = (sp, prefix) =>{
    │${sp} ${prefix}mute [on/off]
    │${sp} ${prefix}promote @user
    │${sp} ${prefix}demote @user
-   │${sp} ${prefix}vote [text]
-   │${sp} ${prefix}devote
-   │${sp} ${prefix}upvote
-   │${sp} ${prefix}cekvote
-   │${sp} ${prefix}hapusvote
    ╰─────────`
 }
 exports.webmen = (sp, prefix) =>{
@@ -797,16 +776,6 @@ exports.databasemen = (sp, prefix) =>{
    │${sp} ${prefix}listmsg
    │${sp} ${prefix}getmsg
    │${sp} ${prefix}delmsg
-   ╰─────────`
-}
-exports.anonymousmen = (sp, prefix) =>{
-    return`
-   ╭──── 「 *ANONYMOUS MENU* 」
-   │
-   │${sp} ${prefix}anonymous
-   │${sp} ${prefix}start
-   │${sp} ${prefix}next
-   │${sp} ${prefix}keluar
    ╰─────────`
 }
 exports.islammen = (sp, prefix) =>{

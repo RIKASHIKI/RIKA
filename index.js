@@ -1,8 +1,7 @@
 
 
 require('./config')
-const { default: RikaConnect , useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require("@adiwajshing/baileys")
-//const { state, saveState } = useSingleFileAuthState(`./${sessionName}.json`)
+const { default: RikaConnect , useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require("@whiskeysockets/baileys")
 const pino = require('pino')
 const { Boom } = require('@hapi/boom')
 const fs = require('fs')
@@ -64,7 +63,13 @@ loadDatabase()
 //save database every 5 minutes
 if (global.db) setInterval(async () => {
     if (global.db.data) await global.db.write()
-  }, 180 * 1000)
+  }, 300 * 1000)
+//delete database every 2 day
+if (global.db) setInterval(async () => {
+    if (global.db.data) await global.db.deleteDatabase()
+},  2 * 24 * 60 * 60 * 1000)
+  
+
 
 async function startRika() {
     const { state, saveCreds } = await useMultiFileAuthState(`${sessionName}`)
@@ -76,8 +81,10 @@ async function startRika() {
         patchMessageBeforeSending: (message) => 
         { const requiresPatch = !!(
             message.buttonsMessage
+             || message.sendListMsg
              || message.templateButtons
-             || message.listMes //|| message.templateMessage || message.buttonsResponseMessage
+             || message.listMes
+             || message.send5ButImg
              ); 
              if (requiresPatch) { 
                 message = { 

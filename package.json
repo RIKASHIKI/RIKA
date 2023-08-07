@@ -20,6 +20,8 @@
   "dependencies": {
     "@adiwajshing/baileys": "^5.0.0",
     "@adiwajshing/keyed-db": "^0.2.4",
+    "@arugaz/ai2d": "^1.0.1-z.8",
+    "@whiskeysockets/baileys": "github:WhiskeySockets/baileys",
     "awesome-phonenumber": "^3.3.0",
     "axios": "^0.24.0",
     "chalk": "^4.1.2",
