@@ -1,6 +1,6 @@
 {
   "name": "rika",
-  "version": "11.1",
+  "version": "12.2",
   "description": "WhatsApp Using Lib Baileys Multi Device",
   "main": "index.js",
   "type": "commonjs",
@@ -18,10 +18,9 @@
   "author": "RIKASHIKI",
   "license": "MIT",
   "dependencies": {
-    "@adiwajshing/baileys": "^5.0.0",
+    "@whiskeysockets/baileys": "^6.7.2",
     "@adiwajshing/keyed-db": "^0.2.4",
     "@arugaz/ai2d": "^1.0.1-z.8",
-    "@whiskeysockets/baileys": "github:WhiskeySockets/baileys",
     "awesome-phonenumber": "^3.3.0",
     "axios": "^0.24.0",
     "chalk": "^4.1.2",
@@ -57,17 +56,5 @@
     "util": "^0.12.4",
     "yargs": "^17.2.1",
     "yt-search": "^2.10.2"
-  },
-  "directories": {
-    "lib": "lib",
-    "src": "src"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RIKASHIKI/RIKA.git"
-  },
-  "bugs": {
-    "url": "https://github.com/RIKASHIKI/RIKA/issues"
-  },
-  "homepage": "https://github.com/RIKASHIKI/RIKA#readme"
+  }
 }

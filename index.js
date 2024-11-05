@@ -75,7 +75,7 @@ async function startRika() {
     const { state, saveCreds } = await useMultiFileAuthState(`${sessionName}`)
     const Rika = RikaConnect({
         logger: pino({ level: 'silent' }),
-        printQRInTerminal: true,
+        printQRInTerminal: !pairingCode,
         browser: ['RIKA MULTI DEVICE','Safari','1.0.0'],
         auth: state,
         patchMessageBeforeSending: (message) => 
