@@ -22,7 +22,6 @@ global.APIKeys = {
 global.limitMember = 50 //minimum member
 // profile
 global.owner = ['62882020038817','6287820032793'] // owner
-global.botnumber = '6288247144135'
 global.packname = 'RKS MD' //pacname sticker & name bot
 global.author = '62882020038817' //author sticker
 global.ownername = 'RIKASHIKI' //your name

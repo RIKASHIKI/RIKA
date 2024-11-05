@@ -69,8 +69,8 @@ if (global.db) setInterval(async () => {
     if (global.db.data) await global.db.deleteDatabase()
 },  2 * 24 * 60 * 60 * 1000)
   
-let botno = "6288247144135"
-const pairingCode = !!botno || process.argv.includes("--pairing-code")
+let botnumber = "6288247144135"
+const pairingCode = !!botnumber || process.argv.includes("--pairing-code")
 async function startRika() {
     const { state, saveCreds } = await useMultiFileAuthState(`${sessionName}`)
     const Rika = RikaConnect({
