@@ -1,7 +1,7 @@
 
 
 require('./config')
-const { default: RikaConnect , useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require("@whiskeysockets/baileys")
+const { default: RikaConnect , useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto, derivePairingCodeKey } = require("@whiskeysockets/baileys")
 const pino = require('pino')
 const { Boom } = require('@hapi/boom')
 const fs = require('fs')
@@ -69,8 +69,8 @@ if (global.db) setInterval(async () => {
     if (global.db.data) await global.db.deleteDatabase()
 },  2 * 24 * 60 * 60 * 1000)
   
-
-
+let botno = "6288247144135"
+const pairingCode = !!botno || process.argv.includes("--pairing-code")
 async function startRika() {
     const { state, saveCreds } = await useMultiFileAuthState(`${sessionName}`)
     const Rika = RikaConnect({
