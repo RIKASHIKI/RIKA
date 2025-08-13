@@ -131,17 +131,146 @@ async function startRika() {
     })
 
     // Serve QR and logs via localhost
-    const server = require('http').createServer((req, res) => {
-        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-        let html = `<html><head><title>RIKA Bot QR & Logs</title>
-        <style>body{font-family:sans-serif;background:#f9f9f9;} .logs{background:#222;color:#eee;padding:10px;margin-top:20px;max-height:400px;overflow:auto;font-size:13px;} .qr{margin-bottom:20px;} h2{margin:0 0 10px 0;}</style>
-        <meta http-equiv="refresh" content="3">
-        </head><body>
-        <div class="qr">${qrCodeHtml || '<h2>QR belum tersedia, tunggu koneksi...</h2>'}</div>
-        <div class="logs"><h2>Bot Logs</h2><pre>${logs.join('\n')}</pre></div>
-        </body></html>`;
-        res.end(html);
+        const server = require('http').createServer((req, res) => {
+    res.writeHead(500, { 'Content-Type': 'text/html; charset=utf-8' });
+        let html = `
+<html>
+<head>
+<title>RIKA BOT</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="3">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg-light: #f4f6f8;
+        --bg-dark: #121212;
+        --card-light: #ffffff;
+        --card-dark: #1f1f1f;
+        --text-light: #333333;
+        --text-dark: #f0f0f0;
+        --accent: #4f8cff;
+    }
+
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        background: linear-gradient(135deg, #e3f2fd, #fce4ec);
+        font-family: 'Poppins', sans-serif;
+        color: var(--text-light);
+        transition: all 0.3s ease;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: var(--text-dark);
+        }
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        max-width: 900px;
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .card {
+        background: var(--card-light);
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        animation: fadeIn 0.5s ease-in-out;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .card {
+            background: var(--card-dark);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .card h2 {
+        margin-top: 0;
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--accent);
+    }
+
+    .qr {
+        text-align: center;
+    }
+
+    .logs-card {
+        flex: 1; /* ambil semua sisa tinggi halaman */
+        display: flex;
+        flex-direction: column;
+        min-height: 0; /* penting supaya flex-scroll berfungsi */
+    }
+
+    .logs {
+        flex: 1;
+        background: #0e0e0e;
+        color: #00ff88;
+        font-family: monospace;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-y: auto;
+        font-size: 13px;
+        white-space: pre-wrap;
+        box-shadow: inset 0 0 8px rgba(0,255,136,0.3);
+    }
+
+    /* Scrollbar modern */
+    .logs::-webkit-scrollbar {
+        width: 6px;
+    }
+    .logs::-webkit-scrollbar-thumb {
+        background-color: #4f8cff;
+        border-radius: 3px;
+    }
+
+    /* Animasi */
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="card qr">
+        ${qrCodeHtml}
+    </div>
+    <div class="card logs-card">
+        <h2>Bot Logs</h2>
+        <div class="logs">${logs.join('\n')}</div>
+    </div>
+</div>
+</body>
+</html>
+`;
+    res.end(html);
     });
+
+    
+
     server.listen(adre);
     server.on('error', (err) => {
         if (err.code === 'EADDRINUSE') {
