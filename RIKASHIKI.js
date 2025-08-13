@@ -1,4 +1,5 @@
 require('./config')
+global.prefix = '.'
 const { BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType, generateMessageID, WAProto } = require('@whiskeysockets/baileys')
 const fs = require('fs')
 const util = require('util')
@@ -32,6 +33,8 @@ let tebaktebakan = db.data.game.tebakan = []
 
 module.exports = Rika = async (Rika, m, chatUpdate, store) => {
  try {
+  // Delay 2 detik sebelum membalas pesan
+  await sleep(2000);
   var body = (m.mtype === 'conversation') ? m.message.conversation : (m.mtype == 'imageMessage') ? m.message.imageMessage.caption : (m.mtype == 'videoMessage') ? m.message.videoMessage.caption : (m.mtype == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.mtype == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.mtype == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.mtype == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.mtype === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ''
   var budy = (typeof m.text == 'string' ? m.text : '')
   var prefix = prefa ? /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi.test(body) ? body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi)[0] : "" : prefa ?? global.prefix
@@ -2128,22 +2131,39 @@ Format yang tersedia : pdf, docx, pptx, xlsx`)
             }
             break
             case'ownermenu':{m.reply (lang1.ownermen(sp, prefix))}
+            break
             case'botmenu':{m.reply (lang1.botmen(sp, prefix))}
+            break
             case'grupmenu':{m.reply (lang1.grupmen(sp, prefix))}
+            break
             case'webmenu':{m.reply (lang1.webmen(sp, prefix))}
+            break
             case'downloadmenu':{m.reply (lang1.downloadmen(sp, prefix))}
+            break
             case'searchmenu':{m.reply (lang1.searchmen(sp, prefix))}
+            break
             case'randommenu':{m.reply (lang1.randommen(sp, prefix))}
+            break
             case'animemenu':{m.reply (lang1.animemen(sp, prefix))}
+            break
             case'nsfwmenu':{m.reply (lang1.nsfwmen(sp, prefix))}
+            break
             case'photoexymenu':{m.reply (lang1.photoexymen(sp, prefix))}
+            break
             case'ephotomenu':{m.reply (lang1.ephotomen(sp, prefix))}
+            break
             case'funmenu':{m.reply (lang1.funmen(sp, prefix))}
+            break
             case'convertmenu':{m.reply (lang1.convertmen(sp, prefix))}
+            break
             case'databasemenu':{m.reply (lang1.databasemen(sp, prefix))}
+            break
             case'islammenu':{m.reply (lang1.islammen(sp, prefix))}
+            break
             case'voicemenu':{m.reply (lang1.voicemen(sp, prefix))}
+            break
             case'thankto':{m.reply (lang1.thankto(sp))}
+            break
             case 'allmenu':{
             Rika.sendMessage(m.chat,{image: thumbnaili,caption: lang1.allmen(prefix, salam, pushname, time, tanggal, ownername, sp)}, { quoted: m })
             }

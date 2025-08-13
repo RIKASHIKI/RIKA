@@ -1,7 +1,5 @@
-
-
 require('./config')
-const { default: RikaConnect , useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto, derivePairingCodeKey } = require("@whiskeysockets/baileys")
+const { default: RikaConnect , DisconnectReason, makeCacheableSignalKeyStore, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, jidDecode, proto, derivePairingCodeKey, useMultiFileAuthState } = require("@whiskeysockets/baileys")
 const pino = require('pino')
 const { Boom } = require('@hapi/boom')
 const fs = require('fs')
@@ -23,13 +21,13 @@ try {
 }
 
 const { Low, JSONFile } = low
-const mongoDB = require('./lib/mongoDB')
 
-require("http").createServer((_, res)=> res.end("Uptime!")).listen(8080)
+const adre = 8082;
+const mongoDB = require('./lib/mongoDB')
 
 global.api = (name, path = '/', query = {}, apikeyqueryname) => (name in global.APIs ? global.APIs[name] : name) + path + (query || apikeyqueryname ? '?' + new URLSearchParams(Object.entries({ ...query, ...(apikeyqueryname ? { [apikeyqueryname]: global.APIKeys[name in global.APIs ? global.APIs[name] : name] } : {}) })) : '')
 
-const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
+const store = {};
 
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
 global.db = new Low(
@@ -69,13 +67,13 @@ if (global.db) setInterval(async () => {
     if (global.db.data) await global.db.deleteDatabase()
 },  2 * 24 * 60 * 60 * 1000)
   
-let botnumber = "6288247144135"
+let botnumber = "62882020038817"
+const sessionName = "session";
 const pairingCode = !!botnumber || process.argv.includes("--pairing-code")
 async function startRika() {
     const { state, saveCreds } = await useMultiFileAuthState(`${sessionName}`)
     const Rika = RikaConnect({
         logger: pino({ level: 'silent' }),
-        printQRInTerminal: !pairingCode,
         browser: ['RIKA MULTI DEVICE','Safari','1.0.0'],
         auth: state,
         patchMessageBeforeSending: (message) => 
@@ -94,11 +92,56 @@ async function startRika() {
                                 deviceListMetadataVersion: 2, deviceListMetadata: {}, }, ...message, }, }, }; } return message; }
     })
 
-    store.bind(Rika.ev)
+    // Show QR code in terminal and via localhost
+    let qrCodeHtml = '';
+    Rika.ev.on('connection.update', async (update) => {
+        if (update.qr) {
+            // Terminal QR
+            try {
+                require('qrcode-terminal').generate(update.qr, { small: true });
+            } catch (e) {
+                console.log('Install qrcode-terminal for QR in terminal: npm install qrcode-terminal');
+                console.log('QR:', update.qr);
+            }
+            // HTML QR for localhost
+            qrCodeHtml = `<html><body><h2>Scan QR WhatsApp</h2><img src='https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(update.qr)}&size=300x300'><br><p>QR: ${update.qr}</p></body></html>`;
+        }
+        // ...existing code...
+        const { connection, lastDisconnect } = update        
+        if (connection === 'close') {
+        let reason = new Boom(lastDisconnect?.error)?.output.statusCode
+            if (reason === DisconnectReason.badSession) { console.log(`Bad Session File, Delete Session and Scan Again`); Rika.logout(); }
+            else if (reason === DisconnectReason.connectionClosed) { console.log("Connection closed, reconnecting...."); startRika(); }
+            else if (reason === DisconnectReason.connectionLost) { console.log("Connection Lost from Server, reconnecting..."); startRika(); }
+            else if (reason === DisconnectReason.connectionReplaced) { console.log("Connection Replaced, Another New Session Opened, Please Close Current Session First"); Rika.logout(); }
+            else if (reason === DisconnectReason.loggedOut) { console.log(`Device Logged Out, Please Scan Again And Run.`); Rika.logout(); }
+            else if (reason === DisconnectReason.restartRequired) { console.log("Restart Required, Restarting..."); startRika(); }
+            else if (reason === DisconnectReason.timedOut) { console.log("Connection TimedOut, Reconnecting..."); startRika(); }
+            else Rika.end(`Unknown DisconnectReason: ${reason}|${connection}`)
+        }
+        console.log('Connected...', update)
+    })
+
+    // Serve QR via localhost:8080
+    const server = require('http').createServer((_, res) => {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(qrCodeHtml || '<h2>QR belum tersedia, tunggu koneksi...</h2>');
+    });
+    server.listen(adre);
+    server.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+            console.log(`Port ${adre} is already in use. Please close the other process or use a different port.`);
+        } else {
+            console.error('HTTP server error:', err);
+        }
+    });
+
+    // store.bind(Rika.ev) // Removed: store is a plain object
     
     // anticall auto block
     Rika.ws.on('CB:call', async (json) => {
-    const callerId = json.content[0].attrs['call-creator']
+    const callerId = json.content[0].attr
+    s['call-creator']
     if (json.content[0].tag == 'offer') {
     let pa7rick = await Rika.sendContact(callerId,global.ownernumber)
     Rika.sendMessage(callerId,`「 AUTO BLOCK SISTEM 」\nDon't call bot!\nchat owner for unblock!`, { quoted : pa7rick })

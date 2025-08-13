@@ -5,7 +5,8 @@
 </p>
 
 ## WHAT'S NEW
-* change adiwajshing/baileys to whiskeydockets/baileys
+* update version (pm2, whiskeysockets/baileys)
+* add qrcode-terminal
 * delete anonymous
 * fix some bug
 
@@ -13,29 +14,30 @@
 ## SETTING
 ````ts
 // sistem
-global.modepub = true //public mode or self
-global.lang = ind //change your language
+global.modepub = true // public mode or self
+global.lang = ind // change your language
 
 // profile
 global.owner = ['6287820032793','6288744328279'] // your number
-global.packname = 'RKS MD' //pacname sticker & name bot
-global.author = '088744328279' //author sticker
-global.ownername = 'RIKASHIKI' //your name
-global.fouter = 'RIKASHIKI | RKS-MD ©2022' //credits
-global.ownernumber = '6287820032793' //your master number
+global.packname = 'RKS MD' // pacname sticker & name bot
+global.author = '088744328279' // author sticker
+global.ownername = 'RIKASHIKI' // your name
+global.fouter = 'RIKASHIKI | RKS-MD ©2022' // credits
+global.ownernumber = '6287820032793' // your master number
 
 // media
-global.thumbnaili = './media/RKS.jpg' //thumbnail
-global.video = './media/VIDEOWIBU.mp4' //video to link? switch to {url: 'yourlinkvideo' }
-global.youtube = 'https://youtube.com/c/RIKASHIKI' //youtube
-global.webyou = 'https://github.com/RIKASHIKI/RIKA' //your  web
-global.email = 'hariamd210@gmail.com' //email
-global.loc = 'JAPAN' //location
-global.instagram = 'https://instagram.com/@rikashiki_san' //ig
-global.grup = 'https://chat.whatsapp.com/E4YXacQLqPh3isulcGqlSA' //grup whatsapp
-global.sessionName = 'session' //session
-global.prefa = ['','!','.','🐦','🐤','🗿'] 
-global.sp = 'Ξ' //mark
+global.thumbnaili = './media/RKS.jpg' // thumbnail
+global.video = './media/VIDEOWIBU.mp4' // video to link? switch to {url: 'yourlinkvideo' }
+global.youtube = 'https://youtube.com/c/RIKASHIKI' // youtube
+global.webyou = 'https://github.com/RIKASHIKI/RIKA' // your web
+global.email = 'hariamd210@gmail.com' // email
+global.loc = 'JAPAN' // location
+global.instagram = 'https://instagram.com/@rikashiki_san' // ig
+global.grup = 'https://chat.whatsapp.com/E4YXacQLqPh3isulcGqlSA' // grup whatsapp
+global.sessionName = 'session' // session
+global.prefa = ['','!','.','🐦','🐤','🗿'] // daftar prefix, default utama adalah '.'
+global.prefix = '.' // prefix utama bot
+global.sp = 'Ξ' // mark
 ````
 Edit in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
 
@@ -45,17 +47,12 @@ Edit in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
 * Unduh & Instal Git [`Klik Disini`](https://git-scm.com/downloads)
 * Unduh & Instal NodeJS [`Klik Disini`](https://nodejs.org/en/download)
 * Unduh & Instal FFmpeg [`Klik Disini`](https://ffmpeg.org/download.html) (**Jangan Lupa Tambahkan FFmpeg ke variabel lingkungan PATH**)
-* unduh & instal pm2 [`klik disini`](https://pm2.keymetrics.io/)
+* Unduh & Instal pm2 [`klik disini`](https://pm2.keymetrics.io/)
 
 ```bash
 git clone https://github.com/RIKASHIKI/RIKA
 cd RIKA
 npm install
-```
-```bash
-git clone https://github.com/RIKASHIKI/RIKA
-cd RIKA
-npm i @adiwajshing/baileys
 pm2 start index.js
 pm2 logs
 ```
@@ -92,13 +89,20 @@ yarn
 $ node .
 ```
 
+## QR Code
+QR code untuk login WhatsApp akan muncul di terminal dan juga bisa diakses melalui browser di alamat:
+
+```
+http://localhost:8082
+```
+
 ## ❗ Warning
 ```WhatsApp bot is still in the development stage, so there are a few bugs WhatsApp Connection (BETA, not working perfectly)```
 
 Editing Number Owner & session name in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
 Get Apikey zenz on [`zenz`](https://zenzapi.xyz/pricing)
 
-WhatsApp multi device,script working with [`@adiwajshing/baileys`](https://github.com/adiwajshing/baileys)
+WhatsApp multi device, script working with [`@whiskeysockets/baileys`](https://github.com/WhiskeySockets/Baileys)
 ## Thanks To
 * [`@adiwajshing/baileys`](https://github.com/adiwajshing/baileys)
 * [`Nurutomo`](https://github.com/Nurutomo)
