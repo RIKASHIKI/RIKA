@@ -89,6 +89,17 @@ yarn
 $ node .
 ```
 
+## Running
+```
+npm start
+```
+```
+node index.js
+```
+```
+pm2 start index.js
+```
+
 ## QR Code
 QR code untuk login WhatsApp akan muncul di terminal dan juga bisa diakses melalui browser di alamat:
 
