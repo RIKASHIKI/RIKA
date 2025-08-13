@@ -134,3 +134,4 @@ WhatsApp multi device, script working with [`@whiskeysockets/baileys`](https://g
 License: [MIT](https://en.wikipedia.org/wiki/MIT_License)
 
 Support Me
+https://link.dana.id/minta?full_url=https://qr.dana.id/v1/281012012022012676807598
