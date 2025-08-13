@@ -92,47 +92,62 @@ async function startRika() {
                                 deviceListMetadataVersion: 2, deviceListMetadata: {}, }, ...message, }, }, }; } return message; }
     })
 
-    // Show QR code in terminal and via localhost
+    // Show QR code in terminal and via localhost, plus logs
     let qrCodeHtml = '';
+    let logs = [];
+    function addLog(msg) {
+        const time = new Date().toLocaleString();
+        logs.push(`[${time}] ${msg}`);
+        if (logs.length > 100) logs.shift(); // keep last 100 logs
+    }
+
     Rika.ev.on('connection.update', async (update) => {
         if (update.qr) {
             // Terminal QR
             try {
                 require('qrcode-terminal').generate(update.qr, { small: true });
             } catch (e) {
-                console.log('Install qrcode-terminal for QR in terminal: npm install qrcode-terminal');
-                console.log('QR:', update.qr);
+                addLog('Install qrcode-terminal for QR in terminal: npm install qrcode-terminal');
+                addLog('QR: ' + update.qr);
             }
             // HTML QR for localhost
-            qrCodeHtml = `<html><body><h2>Scan QR WhatsApp</h2><img src='https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(update.qr)}&size=300x300'><br><p>QR: ${update.qr}</p></body></html>`;
+            qrCodeHtml = `<h2>Scan QR WhatsApp</h2><img src='https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(update.qr)}&size=300x300'><br><p>QR: ${update.qr}</p>`;
+            addLog('QR code updated');
         }
         // ...existing code...
         const { connection, lastDisconnect } = update        
         if (connection === 'close') {
         let reason = new Boom(lastDisconnect?.error)?.output.statusCode
-            if (reason === DisconnectReason.badSession) { console.log(`Bad Session File, Delete Session and Scan Again`); Rika.logout(); }
-            else if (reason === DisconnectReason.connectionClosed) { console.log("Connection closed, reconnecting...."); startRika(); }
-            else if (reason === DisconnectReason.connectionLost) { console.log("Connection Lost from Server, reconnecting..."); startRika(); }
-            else if (reason === DisconnectReason.connectionReplaced) { console.log("Connection Replaced, Another New Session Opened, Please Close Current Session First"); Rika.logout(); }
-            else if (reason === DisconnectReason.loggedOut) { console.log(`Device Logged Out, Please Scan Again And Run.`); Rika.logout(); }
-            else if (reason === DisconnectReason.restartRequired) { console.log("Restart Required, Restarting..."); startRika(); }
-            else if (reason === DisconnectReason.timedOut) { console.log("Connection TimedOut, Reconnecting..."); startRika(); }
+            if (reason === DisconnectReason.badSession) { addLog('Bad Session File, Delete Session and Scan Again'); Rika.logout(); }
+            else if (reason === DisconnectReason.connectionClosed) { addLog('Connection closed, reconnecting....'); startRika(); }
+            else if (reason === DisconnectReason.connectionLost) { addLog('Connection Lost from Server, reconnecting...'); startRika(); }
+            else if (reason === DisconnectReason.connectionReplaced) { addLog('Connection Replaced, Another New Session Opened, Please Close Current Session First'); Rika.logout(); }
+            else if (reason === DisconnectReason.loggedOut) { addLog('Device Logged Out, Please Scan Again And Run.'); Rika.logout(); }
+            else if (reason === DisconnectReason.restartRequired) { addLog('Restart Required, Restarting...'); startRika(); }
+            else if (reason === DisconnectReason.timedOut) { addLog('Connection TimedOut, Reconnecting...'); startRika(); }
             else Rika.end(`Unknown DisconnectReason: ${reason}|${connection}`)
         }
-        console.log('Connected...', update)
+        addLog('Connected... ' + JSON.stringify(update));
     })
 
-    // Serve QR via localhost:8080
-    const server = require('http').createServer((_, res) => {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(qrCodeHtml || '<h2>QR belum tersedia, tunggu koneksi...</h2>');
+    // Serve QR and logs via localhost
+    const server = require('http').createServer((req, res) => {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        let html = `<html><head><title>RIKA Bot QR & Logs</title>
+        <style>body{font-family:sans-serif;background:#f9f9f9;} .logs{background:#222;color:#eee;padding:10px;margin-top:20px;max-height:400px;overflow:auto;font-size:13px;} .qr{margin-bottom:20px;} h2{margin:0 0 10px 0;}</style>
+        <meta http-equiv="refresh" content="3">
+        </head><body>
+        <div class="qr">${qrCodeHtml || '<h2>QR belum tersedia, tunggu koneksi...</h2>'}</div>
+        <div class="logs"><h2>Bot Logs</h2><pre>${logs.join('\n')}</pre></div>
+        </body></html>`;
+        res.end(html);
     });
     server.listen(adre);
     server.on('error', (err) => {
         if (err.code === 'EADDRINUSE') {
-            console.log(`Port ${adre} is already in use. Please close the other process or use a different port.`);
+            addLog(`Port ${adre} is already in use. Please close the other process or use a different port.`);
         } else {
-            console.error('HTTP server error:', err);
+            addLog('HTTP server error: ' + err);
         }
     });
 
@@ -151,7 +166,6 @@ async function startRika() {
     })
 
     Rika.ev.on('messages.upsert', async chatUpdate => {
-        //console.log(JSON.stringify(chatUpdate, undefined, 2))
         try {
         mek = chatUpdate.messages[0]
         if (!mek.message) return
@@ -160,9 +174,10 @@ async function startRika() {
         if (!global.modepub && !mek.key.fromMe && chatUpdate.type === 'notify') return
         if (mek.key.id.startsWith('BAE5') && mek.key.id.length === 16) return
         m = smsg(Rika, mek, store)
+        addLog(`Message from ${m.sender}: ${m.text || '[non-text]'}`);
         require("./RIKASHIKI")(Rika, m, chatUpdate, store)
         } catch (err) {
-            console.log(err)
+            addLog('Error: ' + err);
         }
     })
     

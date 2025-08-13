@@ -846,12 +846,15 @@ let teks = `「 *TAGALL* 」
                }
                 break
                 case 'test': {
-                const {AI2D} = require('./lib/AI2D')
-                let dw = await qouted.download()
-                let res = await AI2D(dw)
-                Rika.sendFile(m.chat,res,'image.jpg','iya bang messi',m)
+                const { AI2D } = require('./lib/AI2D');
+                if (!m.quoted) return m.reply('Reply gambar yang ingin diolah dengan caption test');
+                if (!/image/.test(mime)) return m.reply('Reply gambar dengan caption test');
+                m.reply('Processing...');
+                let dw = await m.quoted.download();
+                let res = await AI2D(dw);
+                await Rika.sendImage(m.chat, res, 'iya bang messi', m);
                 }
-                    break
+                break
 	            case 'style':   case 'styletext': {
 		        let { styletext } = require('./lib/scraper')
 		        if (!text) throw lang1.wetext()
