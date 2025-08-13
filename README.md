@@ -134,8 +134,3 @@ WhatsApp multi device, script working with [`@whiskeysockets/baileys`](https://g
 License: [MIT](https://en.wikipedia.org/wiki/MIT_License)
 
 Support Me
-* dana  087820032793
-* pulsa 087820032793 XL
-## MY GROUP
-
-- [WHATSAPP GROUP](https://chat.whatsapp.com/EKLhAWTkGd07un1wQsKbcz)
