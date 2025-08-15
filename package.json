@@ -1,11 +1,15 @@
 {
   "name": "rika",
-  "version": "12.2",
+  "version": "12.6.0",
   "description": "WhatsApp Using Lib Baileys Multi Device",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node index.js"
+    "prestart": "npm install",
+    "start": "pm2 start index.js --name rika && pm2 save",
+    "stop": "pm2 stop rika",
+    "restart": "pm2 restart rika",
+    "delete": "pm2 delete rika"
   },
   "keywords": [
     "whatsapp",

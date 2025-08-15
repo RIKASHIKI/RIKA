@@ -52,9 +52,7 @@ Edit in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
 ```bash
 git clone https://github.com/RIKASHIKI/RIKA
 cd RIKA
-npm install
-pm2 start index.js
-pm2 logs
+npm start
 ```
 
 ## HOW TO CONNECT TO MONGODB WHEN RUN IN HEROKU
@@ -75,7 +73,7 @@ apt install nodejs -y
 apt install ffmpeg -y
 git clone https://github.com/RIKASHIKI/RIKA
 cd RIKA
-npm install
+npm start
 ```
 ## RECOMMENDED INSTALL ON TERMUX
 
@@ -134,4 +132,8 @@ WhatsApp multi device, script working with [`@whiskeysockets/baileys`](https://g
 License: [MIT](https://en.wikipedia.org/wiki/MIT_License)
 
 Support Me
-https://link.dana.id/minta?full_url=https://qr.dana.id/v1/281012012022012676807598
+* dana  087820032793
+* pulsa 087820032793 XL
+## MY GROUP
+
+- [WHATSAPP GROUP](https://chat.whatsapp.com/EKLhAWTkGd07un1wQsKbcz)
