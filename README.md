@@ -1,8 +1,10 @@
- <h1 align="center">RIKA</h1>
+ <h1 align="center">RIKA</h1><hr>
 <h4 align="center">BOT WHATSAPP MULTI DEVICE</h4>
 <p align="center">
-	<img src="https://www.wallpapertip.com/wmimgs/174-1741670_anime-gif-wallpaper-hd.jpg">
+	<img src="media/image.png" style="width:100%; object-fit:contain;">
 </p>
+
+```This WhatsApp bot is still in the development stage, so there are a few bugs WhatsApp Connection (BETA, not working perfectly)```
 
 ## WHAT'S NEW
 * update version (pm2, whiskeysockets/baileys)
@@ -40,14 +42,15 @@ global.prefix = '.' // prefix utama bot
 global.sp = 'Ξ' // mark
 ````
 Edit in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
+Editing Number Owner & session name in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
+Get Apikey zenz on [`zenz`](https://zenzapi.xyz/pricing)
 
+## FOR WINDOWS/RDP USERS
 
-## FOR USER WINDOWS/RDP
-
-* Unduh & Instal Git [`Klik Disini`](https://git-scm.com/downloads)
-* Unduh & Instal NodeJS [`Klik Disini`](https://nodejs.org/en/download)
-* Unduh & Instal FFmpeg [`Klik Disini`](https://ffmpeg.org/download.html) (**Jangan Lupa Tambahkan FFmpeg ke variabel lingkungan PATH**)
-* Unduh & Instal pm2 [`klik disini`](https://pm2.keymetrics.io/)
+* Download & Install Git [`Click Here`](https://git-scm.com/downloads)
+* Download & Install NodeJS [`Click Here`](https://nodejs.org/en/download)
+* Download & Install FFmpeg [`Click Here`](https://ffmpeg.org/download.html) (**Jangan Lupa Tambahkan FFmpeg ke variabel lingkungan PATH**)
+* Download & Instal pm2 [`Click Here`](https://pm2.keymetrics.io/)
 
 ```bash
 git clone https://github.com/RIKASHIKI/RIKA
@@ -55,14 +58,10 @@ cd RIKA
 npm start
 ```
 
-## HOW TO CONNECT TO MONGODB WHEN RUN IN HEROKU
-
+## HOW TO CONNECT TO MONGODB ON HEROKU
 * Create account and database in mongodb atlas [`watch here`](https://youtu.be/rPqRyYJmx2g)
 * when you already have a database, you just need to take mongourl
 * Put mongourl in Procfile `web: node . --db 'mongourl'`
-* Example `web: node . -- db 'Your Mongo URI'`
-
-
 
 ## FOR TERMUX/UBUNTU/SSH USER
 
@@ -88,52 +87,48 @@ $ node .
 ```
 
 ## Running
-```
+```bash
 npm start
 ```
+
+## stop
+```bash
+pm2 stop rika
 ```
-node index.js
+
+## restart
+```bash
+pm2 restart rika
 ```
-```
-pm2 start index.js
+
+## delete
+```bash
+pm2 delete rika
 ```
 
 ## QR Code
-QR code untuk login WhatsApp akan muncul di terminal dan juga bisa diakses melalui browser di alamat:
+QR Code for WhatsApp login will appear in the terminal and can also be accessed via browser at:
 
 ```
 http://localhost:8082
 ```
 
-## ❗ Warning
-```WhatsApp bot is still in the development stage, so there are a few bugs WhatsApp Connection (BETA, not working perfectly)```
+License: [MIT](https://en.wikipedia.org/wiki/MIT_License)
 
-Editing Number Owner & session name in [`config.js`](https://github.com/RIKASHIKI/RIKA/blob/master/config.js)
-Get Apikey zenz on [`zenz`](https://zenzapi.xyz/pricing)
-
-WhatsApp multi device, script working with [`@whiskeysockets/baileys`](https://github.com/WhiskeySockets/Baileys)
 ## Thanks To
-* [`@adiwajshing/baileys`](https://github.com/adiwajshing/baileys)
-* [`Nurutomo`](https://github.com/Nurutomo)
-* [`Mhankbarbar`](https://github.com/MhankBarBar)
-* [`Faiz`](https://github.com/FaizBastomi)
-* [`Gimenz`](https://github.com/Gimenz)
-* [`rayy`](https://github.com/rayyreall)
-* [`Fatih Arridho`](https://github.com/FatihArridho)
-* [`zhwzein`](https://github.com/zhwzein)
-* [`CAF-ID`](https://github.com/CAF-ID)
-* [`bintang`](https://github.com/Bintangp02)
-* [`dika ardnt`](https://github.com/DikaArdnt)
-* [`rikashiki`](https://github.com/RIKASHIKI)
+* [@adiwajshing/baileys](https://github.com/adiwajshing/baileys)
+* [@whiskeysockets/baileys](https://github.com/WhiskeySockets/Baileys)
+* [Nurutomo](https://github.com/Nurutomo)
+* [Mhankbarbar](https://github.com/MhankBarBar)
+* [Faiz](https://github.com/FaizBastomi)
+* [Gimenz](https://github.com/Gimenz)
+* [rayy](https://github.com/rayyreall)
+* [Fatih Arridho](https://github.com/FatihArridho)
+* [zhwzein](https://github.com/zhwzein)
+* [CAF-ID](https://github.com/CAF-ID)
+* [bintang](https://github.com/Bintangp02)
+* [dika ardnt](https://github.com/DikaArdnt)
+* [rikashiki](https://github.com/RIKASHIKI)
 
 ```Thanks to all who have participated in the development of this script```
 
-
-License: [MIT](https://en.wikipedia.org/wiki/MIT_License)
-
-Support Me
-* dana  087820032793
-* pulsa 087820032793 XL
-## MY GROUP
-
-- [WHATSAPP GROUP](https://chat.whatsapp.com/EKLhAWTkGd07un1wQsKbcz)
